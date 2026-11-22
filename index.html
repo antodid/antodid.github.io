@@ -212,6 +212,7 @@
     .facts div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid rgba(255,255,255,.14); }
     .facts dt { color: var(--amber); font: 500 .9rem var(--mono); }
     .facts dd { color: #fff; }
+    .origin { font-size: .95rem; color: var(--mut); max-width: 46ch; margin-bottom: 1.4rem; padding-left: .8rem; border-left: 3px solid var(--study); }
     footer .note { max-width: 60ch; margin-bottom: .5rem; color: rgba(255,255,255,.82); }
     footer { background: var(--board); color: rgba(255,255,255,.7); padding: 1.4rem 0 2rem; font-size: .9rem; border-top: 1px solid rgba(255,255,255,.1); }
 
@@ -287,6 +288,7 @@
   <header class="hero" id="top">
     <div class="wrap">
       <div>
+        <p class="origin" data-i18n="site.note">This site started as a small project I built outside university for an application. I liked it, so I kept it.</p>
         <h1>Antonio Di Domenico</h1>
         <p class="hero-sub" data-i18n="hero.sub">Looking for private equity, venture capital and M&amp;A internships for summer 2027.</p>
         <p class="hero-loc" data-i18n="hero.loc">Based in Rotterdam. Italian, English, Portuguese.</p>
@@ -589,7 +591,7 @@
     </div>
   </section>
   </main>
-  <footer><div class="wrap"><p class="note" data-i18n="site.note">This site started as a small project I built outside university for an application. I liked it, so I kept it.</p><p data-i18n="footer.text">© 2026 Antonio Di Domenico, Rotterdam</p></div></footer>
+  <footer><div class="wrap"><p data-i18n="footer.text">© 2026 Antonio Di Domenico, Rotterdam</p></div></footer>
   <script>
 (function () {
   'use strict';
