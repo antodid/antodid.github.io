@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-xvHjnCC9Mscmnd3vC2bPBTGS01PRi5s6NAusbwtGS9A='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-lbvbqzwNZz5f3nvHvi/NmpITy62somIHuY+Kt4CI3mI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Antonio Di Domenico — Portfolio</title>
   <meta name="description" content="Antonio Di Domenico, MSc Finance & Investments student at RSM Rotterdam, looking for private equity, venture capital and M&A internships for summer 2027.">
@@ -26,485 +26,511 @@
   <meta name="twitter:image"       content="https://antodid.github.io/images/antonio.jpg">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="fonts/fraunces-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/overpass-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 
   <script>document.documentElement.classList.add('js');</script>
 
   <style>
-    @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/fraunces-latin-normal.woff2) format('woff2'); }
-    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/inter-latin-normal.woff2) format('woff2'); }
-
+    @font-face { font-family: 'Overpass'; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/overpass-latin-wght-normal.woff2) format('woff2'); }
     :root {
-      --bg: #FFFFFF;
-      --soft: #F5F6F8;
-      --ink: #101215;
-      --mut: #5A5F67;
-      --line: #E5E7EB;
-      --accent: #2446A6;        /* 8.0:1 on white */
-      --accent-soft: #EEF2FB;
-      --accent-on-dark: #9DB2F2;
-      --serif: 'Fraunces', Georgia, serif;
-      --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --paper: #FFFFFF; --mist: #EEF1F6; --ink: #0E1A33; --mut: #4E5A70; --rule: #D9DEE7;
+      --study: #F2B705; --work: #1E5BD8; --board: #0E2350; --board-ink: #FFFFFF; --board-time: #FFD23F;
+      --f: 'Overpass', system-ui, sans-serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --wrap: 1080px;
-      --r: 14px;
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-    img { max-width: 100%; display: block; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.55 var(--f); -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
     a { color: inherit; }
-    h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; line-height: 1.08; margin: 0; text-wrap: balance; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { font-weight: 800; letter-spacing: -0.035em; line-height: .95; text-wrap: balance; }
     p { text-wrap: pretty; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
-    .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
-    .skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: #fff; padding: .6rem 1rem; z-index: 100; }
+    :focus-visible { outline: 3px solid var(--work); outline-offset: 3px; border-radius: 4px; }
+    .wrap { width: min(100% - 2.5rem, 1200px); margin-inline: auto; }
+    .skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: #fff; padding: .6rem 1rem; z-index: 99; }
     .skip:focus { left: 1rem; top: 1rem; }
-    .eyebrow { display: inline-block; font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: .9rem; }
 
-    /* ---------- nav ---------- */
-    #nav { position: fixed; inset: 0 0 auto 0; z-index: 50; display: flex; align-items: center; gap: 1.5rem; padding: .85rem clamp(1.25rem, 4vw, 2.5rem); transition: background .3s, box-shadow .3s; }
-    #nav.solid { background: rgba(255,255,255,.86); -webkit-backdrop-filter: saturate(180%) blur(14px); backdrop-filter: saturate(180%) blur(14px); box-shadow: 0 1px 0 var(--line); }
-    .brand { font-family: var(--serif); font-size: 1.05rem; white-space: nowrap; text-decoration: none; margin-right: auto; opacity: 0; transition: opacity .3s; }
-    #nav.solid .brand { opacity: 1; }
-    .nav-links { display: flex; gap: 1.6rem; }
-    .nav-links a { text-decoration: none; font-size: .92rem; color: var(--mut); transition: color .2s; }
-    .nav-links a:hover, .nav-links a.on { color: var(--ink); }
-    .lang { display: flex; align-items: center; gap: .1rem; background: var(--soft); border-radius: 999px; padding: 3px; }
-    .lang button { border: 0; background: transparent; font: 600 .75rem var(--sans); color: var(--mut); padding: .35rem .6rem; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
-    .lang button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(16,18,21,.12); }
-    #burger { display: none; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; position: relative; }
-    #burger i { position: absolute; left: 12px; right: 12px; height: 1.6px; background: var(--ink); transition: transform .3s var(--ease), opacity .2s; }
-    #burger i:nth-child(1) { top: 16px; } #burger i:nth-child(2) { top: 22px; } #burger i:nth-child(3) { top: 28px; }
-    #burger[aria-expanded="true"] i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    #burger[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
-    #burger[aria-expanded="true"] i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-    #menu { position: fixed; inset: 0; z-index: 40; background: #fff; display: flex; flex-direction: column; justify-content: center; gap: .4rem; padding: 0 2rem; opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
-    #menu.open { opacity: 1; visibility: visible; }
-    #menu a { font-family: var(--serif); font-size: 2.2rem; text-decoration: none; padding: .4rem 0; }
+    /* nav */
+    #nav { position: fixed; z-index: 50; inset: 0 0 auto; display: flex; align-items: center; gap: 1.8rem; padding: .9rem clamp(1.25rem, 3.5vw, 2.5rem); background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+    #nav.solid { border-color: var(--rule); }
+    .brand { font-weight: 800; letter-spacing: -.02em; text-decoration: none; margin-right: auto; display: flex; align-items: center; gap: .55rem; white-space: nowrap; }
+    .brand i { width: 14px; height: 14px; border-radius: 50%; border: 3.5px solid var(--work); box-shadow: 6px 0 0 -3.5px var(--study); }
+    .links { display: flex; gap: 1.6rem; }
+    .links a { text-decoration: none; font-weight: 600; font-size: .95rem; color: var(--mut); }
+    .links a:hover { color: var(--ink); }
+    .lang { display: flex; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; }
+    .lang button { border: 0; background: transparent; color: var(--ink); font: 700 .78rem var(--f); padding: .42rem .6rem; min-width: 38px; cursor: pointer; }
+    .lang button + button { border-left: 1.5px solid var(--ink); }
+    .lang button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    #burger { display: none; }
 
-    /* ---------- hero ---------- */
-    .hero { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 6rem 0 4rem; position: relative; }
-    .hero-photo { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.6rem; filter: grayscale(1); box-shadow: 0 0 0 6px #fff, 0 0 0 7px var(--line), 0 18px 40px -18px rgba(16,18,21,.35); }
-    .now { display: inline-flex; align-items: center; gap: .55rem; font-size: .82rem; color: var(--mut); background: var(--soft); border-radius: 999px; padding: .4rem .9rem; margin-bottom: 1.4rem; }
-    .now i { width: 8px; height: 8px; border-radius: 50%; background: #1F9D55; box-shadow: 0 0 0 0 rgba(31,157,85,.5); animation: pulse 2.4s infinite; }
-    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(31,157,85,0); } 100% { box-shadow: 0 0 0 0 rgba(31,157,85,0); } }
-    .hero h1 { font-size: clamp(2.9rem, 9vw, 6.2rem); margin-bottom: 1.1rem; }
-    .hero h1 .ch { display: inline-block; }
-    html.js .hero h1 .ch { opacity: 0; transform: translateY(.35em); transition: opacity .55s var(--ease), transform .55s var(--ease); }
-    html.js .hero h1.go .ch { opacity: 1; transform: none; }
-    .hero-sub { color: var(--mut); font-size: clamp(1rem, 2.2vw, 1.15rem); max-width: 36ch; margin: 0 auto 2rem; }
-    .cta { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-height: 46px; padding: 0 1.4rem; border-radius: 999px; font: 500 .95rem var(--sans); text-decoration: none; transition: transform .2s var(--ease), background .2s, color .2s, box-shadow .2s; }
+    /* hero */
+    .hero { min-height: 100svh; display: grid; align-items: center; padding: 7rem 0 4rem; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: end; }
+    .hero-photo { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; filter: grayscale(1) contrast(1.05); margin-bottom: 1.8rem; outline: 4px solid var(--study); outline-offset: 4px; }
+    .hero h1 { font-size: clamp(3.4rem, 8.4vw, 7.6rem); margin-bottom: 1.6rem; }
+    .hero-sub { font-size: clamp(1.1rem, 1.8vw, 1.3rem); color: var(--mut); max-width: 30ch; margin-bottom: 2rem; }
+    .btns { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; min-height: 50px; padding: 0 1.4rem; border-radius: 8px; font: 700 1rem var(--f); text-decoration: none; transition: transform .15s var(--ease), background .2s; }
     .btn:active { transform: scale(.97); }
-    .btn-fill { background: var(--ink); color: #fff; }
-    .btn-fill:hover { background: var(--accent); }
-    .btn-line { box-shadow: inset 0 0 0 1px var(--line); }
-    .btn-line:hover { box-shadow: inset 0 0 0 1px var(--ink); }
-    .btn-sm { min-height: 40px; font-size: .88rem; margin-top: .9rem; }
-    .scroll-cue { position: absolute; bottom: 1.6rem; left: 50%; width: 22px; height: 36px; margin-left: -11px; border: 1.5px solid var(--line); border-radius: 12px; }
-    .scroll-cue::after { content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--mut); animation: cue 1.8s var(--ease) infinite; }
-    @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+    .btn-ink { background: var(--ink); color: #fff; }
+    .btn-ink:hover { background: var(--work); }
+    .btn-out { box-shadow: inset 0 0 0 2px var(--ink); }
+    .btn-out:hover { background: var(--study); }
 
-    /* ---------- sections ---------- */
-    section { padding: clamp(4.5rem, 10vw, 8rem) 0; }
-    .sec-head { max-width: 640px; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
-    .sec-head h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
-    .sec-head p { color: var(--mut); margin: 1rem 0 0; }
-    .intro { margin-top: 1.1rem; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--ink); max-width: 60ch; }
-    .intro p { margin: 0 0 .9rem; }
-    .intro p + p { color: var(--mut); font-size: .95em; }
+    /* departures board */
+    .board { background: var(--board); color: var(--board-ink); border-radius: 10px; padding: 1.2rem 1.3rem 1.3rem; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 6px var(--mist); }
+    .board-top { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: .8rem; border-bottom: 2px solid rgba(255,255,255,.14); margin-bottom: .3rem; }
+    .board-top h2 { font-size: 1.25rem; letter-spacing: -.01em; line-height: 1.2; }
+    .clock { font-weight: 700; color: var(--board-time); font-size: 1.1rem; }
+    .row { display: grid; grid-template-columns: 6.2rem 1fr; gap: .2rem 1rem; padding: .85rem 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .row:last-child { border-bottom: 0; }
+    .row-k { color: var(--board-time); font-weight: 700; }
+    .row-v { font-weight: 700; font-size: 1.08rem; line-height: 1.3; }
+    .row-p { grid-column: 2; color: rgba(255,255,255,.72); font-size: .92rem; }
+    .row.next .row-k::after { content: ''; display: inline-block; width: 8px; height: 8px; margin-left: .45rem; border-radius: 50%; background: var(--board-time); animation: blink 1.4s steps(2, start) infinite; vertical-align: middle; }
+    @keyframes blink { to { visibility: hidden; } }
+    .flip { display: inline-block; }
 
-    /* ---------- journey ---------- */
-    #journey { background: var(--soft); }
-    .filters { display: inline-flex; gap: .3rem; background: #fff; border-radius: 999px; padding: 4px; box-shadow: 0 1px 2px rgba(16,18,21,.06); margin: 1.4rem 0 0; }
-    .filters button { border: 0; background: transparent; font: 500 .86rem var(--sans); color: var(--mut); min-height: 38px; padding: 0 1rem; border-radius: 999px; cursor: pointer; transition: background .25s var(--ease), color .25s; }
-    .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
-    .jr { position: relative; list-style: none; margin: 0; padding: 0; }
-    .jr-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-    .jr-ghost { fill: none; stroke: #D5D9E0; stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; }
-    .jr-draw { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
-    .jr > li { position: relative; display: grid; grid-template-columns: 1fr 96px 1fr; align-items: center; }
-    .yr { padding: 1.4rem 0; }
-    .yr span { grid-column: 2; justify-self: center; position: relative; z-index: 2; font: 600 .78rem var(--sans); letter-spacing: .08em; color: var(--mut); background: var(--soft); padding: .3rem .6rem; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); }
-    .stop { padding: .7rem 0; }
-    .node { grid-column: 2; grid-row: 1; justify-self: center; position: relative; z-index: 2; width: 54px; height: 54px; border-radius: 50%; background: #fff; display: grid; place-items: center; overflow: hidden; box-shadow: 0 0 0 1.5px var(--line), 0 6px 16px -8px rgba(16,18,21,.25); transition: box-shadow .4s var(--ease), transform .4s var(--ease); color: var(--ink); }
-    .stop.lit .node { box-shadow: 0 0 0 2px var(--accent), 0 8px 20px -8px rgba(36,70,166,.45); }
-    .node-logo { width: 72%; height: 72%; object-fit: contain; }
-    .node-logo.fill { width: 100%; height: 100%; object-fit: cover; }
-    .node-icon { width: 54%; height: 54%; }
-    .node-txt { font: 700 .95rem var(--sans); color: var(--accent); letter-spacing: .02em; }
-    .card { grid-row: 1; background: #fff; border-radius: var(--r); box-shadow: 0 1px 2px rgba(16,18,21,.05), 0 0 0 1px rgba(16,18,21,.05); transition: box-shadow .3s var(--ease), transform .3s var(--ease), opacity .35s; }
-    .side-l .card { grid-column: 1; }
-    .side-r .card { grid-column: 3; }
-    .card:hover { box-shadow: 0 14px 34px -16px rgba(16,18,21,.25), 0 0 0 1px rgba(16,18,21,.06); transform: translateY(-2px); }
-    .card-head { all: unset; box-sizing: border-box; display: grid; gap: .2rem; width: 100%; padding: 1.05rem 3rem 1.05rem 1.25rem; cursor: pointer; position: relative; border-radius: var(--r); }
-    .card-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .card-meta { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-size: .8rem; color: var(--mut); font-variant-numeric: tabular-nums; }
-    .tag { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: .14rem .5rem; border-radius: 999px; background: var(--soft); color: var(--mut); }
-    .tag-study { background: var(--accent-soft); color: var(--accent); }
-    .tag-next { background: #E9F7EF; color: #17703F; }
-    .card-title { font-family: var(--serif); font-size: 1.22rem; line-height: 1.25; color: var(--ink); }
-    .card-org { font-size: .9rem; color: var(--mut); }
-    .card-toggle { position: absolute; right: 1rem; top: 1.15rem; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); transition: background .25s, transform .35s var(--ease); }
-    .card-toggle::before, .card-toggle::after { content: ''; position: absolute; left: 8px; right: 8px; top: 12.25px; height: 1.5px; background: var(--ink); transition: transform .35s var(--ease); }
-    .card-toggle::after { transform: rotate(90deg); }
-    .card-head[aria-expanded="true"] .card-toggle { transform: rotate(180deg); background: var(--accent-soft); }
-    .card-head[aria-expanded="true"] .card-toggle::after { transform: rotate(0deg); }
-    .card-more { display: grid; grid-template-rows: 1fr; }
-    html.js .card-more { grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
-    html.js .card-head[aria-expanded="true"] + .card-more { grid-template-rows: 1fr; }
-    .card-more-in { overflow: hidden; min-height: 0; padding: 0 1.25rem; }
-    .card-more-in p { margin: 0; padding: .1rem 0 1.15rem; color: #2F343B; font-size: .95rem; border-top: 1px solid var(--line); padding-top: .85rem; }
-    .card-more-in .btn { margin: 0 0 1.15rem; }
-    .more-logos { display: flex; gap: .5rem; padding-bottom: 1.1rem; margin-top: -.3rem; }
-    .more-logos img { width: 40px; height: 40px; border-radius: 9px; object-fit: cover; box-shadow: 0 0 0 1px var(--line); }
-    .stop.lead .card { box-shadow: 0 0 0 1.5px var(--accent), 0 18px 40px -22px rgba(36,70,166,.55); }
-    .stop.next .card { background: transparent; box-shadow: inset 0 0 0 1.5px #C9CED6; box-shadow: 0 0 0 1.5px #C9CED6; border: 0; }
-    .stop.next .card { outline: 1.5px dashed #B9BFC9; outline-offset: -1.5px; box-shadow: none; background: rgba(255,255,255,.55); }
-    .stop.next .node { color: #17703F; }
-    .jr[data-f="study"] .stop:not([data-t="study"]) .card,
-    .jr[data-f="work"]  .stop:not([data-t="work"])  .card { opacity: .28; }
-    .jr[data-f="study"] .stop:not([data-t="study"]) .node,
-    .jr[data-f="work"]  .stop:not([data-t="work"])  .node { opacity: .4; }
-    html.js .stop .card { opacity: 0; transform: translateY(18px); }
-    html.js .stop.in .card { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease), box-shadow .3s; }
-    html.js .jr[data-f="study"] .stop.in:not([data-t="study"]) .card,
-    html.js .jr[data-f="work"]  .stop.in:not([data-t="work"])  .card { opacity: .28; }
+    /* section titles */
+    .sec { padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
+    .sec h2 { font-size: clamp(2.4rem, 5.6vw, 4.6rem); }
+    .lede { color: var(--mut); max-width: 58ch; margin-top: 1.2rem; font-size: 1.08rem; }
+    .lede + .lede { margin-top: .7rem; }
+    .key { display: flex; gap: 1.4rem; margin-top: 1.4rem; font-weight: 700; font-size: .92rem; align-items: center; flex-wrap: wrap; }
+    .key span { display: inline-flex; align-items: center; gap: .5rem; }
+    .key i { width: 26px; height: 6px; border-radius: 3px; }
+    .key .ks { background: var(--study); } .key .kw { background: var(--work); }
+    .key em { font-style: normal; font-weight: 400; color: var(--mut); }
 
-    /* travellers */
-    .trav { position: absolute; left: 0; top: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .3s; color: var(--accent); }
+    /* ---------- desktop route ---------- */
+    #route { background: var(--mist); }
+    .d-route { display: block; height: 330vh; position: relative; }
+    .d-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; padding: 6rem 0 2.2rem; }
+    .d-viewport { position: relative; overflow: hidden; align-self: stretch; display: flex; align-items: center; min-height: 0; }
+    .d-track { position: relative; width: max-content; will-change: transform; }
+    .d-map { display: block; overflow: visible; font-family: var(--f); }
+    .line { fill: none; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+    .l-study { stroke: var(--study); } .l-work { stroke: var(--work); }
+    .flight { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 3 9; stroke-linecap: round; opacity: .45; }
+    .tick line { stroke: var(--mut); stroke-width: 2; } .tick text { fill: var(--mut); font-weight: 700; font-size: 15px; }
+    .d-st { cursor: pointer; outline: none; }
+    .d-st .hit { fill: transparent; }
+    .d-st .ring { fill: #fff; stroke: var(--ink); stroke-width: 5; transition: r .3s var(--ease), fill .3s, stroke-width .3s; }
+    .d-st.t-next .ring { stroke-dasharray: 5 5; }
+    .d-name { font-size: 17px; font-weight: 700; fill: var(--ink); transition: font-size .3s var(--ease); }
+    .d-st.on .ring { r: 17; fill: var(--ink); }
+    .d-st.t-next.on .ring { fill: var(--study); r: 22; }
+    .d-st.on .d-name { font-size: 20px; }
+    .d-st:focus-visible .ring { stroke: var(--work); stroke-width: 7; }
+    @media (max-height: 800px) { .d-sticky { padding-top: 4.6rem; padding-bottom: 1.2rem; } #route .d-sticky h2 { font-size: 2.2rem; } .key { margin-top: .8rem; } .d-detail { min-height: 0; padding: .9rem 1.2rem; } .d-desc { font-size: .95rem; } }
+    .d-detail { width: min(100% - 2.5rem, 1200px); margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 1.4rem; align-items: start; background: var(--board); color: #fff; border-radius: 10px; padding: 1.2rem 1.4rem; min-height: 168px; }
+    .d-detail .dl { width: 58px; height: 58px; border-radius: 50%; background: #fff; display: grid; place-items: center; overflow: hidden; color: var(--board); font-weight: 800; }
+    .d-detail .dl img { width: 100%; height: 100%; object-fit: cover; }
+    .d-when { color: var(--board-time); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .d-title { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: .15rem 0 .1rem; }
+    .d-org { color: rgba(255,255,255,.72); margin-bottom: .55rem; }
+    .d-desc { max-width: 78ch; color: rgba(255,255,255,.92); }
+    .d-detail .btn-ink { background: var(--study); color: var(--ink); margin-top: .8rem; }
+    .d-detail .logos { display: flex; gap: .5rem; margin-top: .7rem; }
+    .d-detail .logos img, .m-more .logos img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+    .trav { position: absolute; left: 0; top: 0; pointer-events: none; color: var(--ink); opacity: 0; transition: opacity .25s; z-index: 3; }
     .trav.on { opacity: 1; }
-    .trav-rot { position: absolute; transform: rotate(var(--ang,0deg)) scaleX(var(--flip,1)); }
-    #plane .trav-rot { width: 118px; height: 74px; margin: -37px 0 0 -59px; }
-    #bike  .trav-rot { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
-    .trav-veh { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 4px 8px rgba(16,18,21,.15)); }
-    .veh-body  { fill: #fff; stroke: currentColor; stroke-width: 3.4; stroke-linejoin: round; stroke-linecap: round; }
-    .veh-solid { fill: currentColor; }
-    .veh-line  { fill: none; stroke: currentColor; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
-    .veh-thin  { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
-    .veh-wheel { fill: #fff; stroke: currentColor; stroke-width: 3.6; }
-    .veh-pod-o { fill: none; stroke: currentColor; stroke-width: 13; stroke-linecap: round; }
-    .veh-pod-i { fill: none; stroke: #fff; stroke-width: 6.6; stroke-linecap: round; }
-    .trav-face { position: absolute; border-radius: 50%; object-fit: cover; object-position: 50% 42%; border: 2.5px solid currentColor; background: #fff; transform: scaleX(var(--flip,1)) rotate(calc(-1 * var(--ang,0deg))); filter: grayscale(1); }
-    #plane .trav-face { left: 47.5px; top: 23.5px; width: 28px; height: 28px; }
-    #bike  .trav-face { left: 23px; top: 2px; width: 38px; height: 38px; }
+    .veh { display: block; width: 100%; height: 100%; overflow: visible; }
+    .vb { fill: #fff; stroke: currentColor; stroke-width: 4; stroke-linejoin: round; }
+    .vs { fill: currentColor; }
+    .vl { fill: none; stroke: currentColor; stroke-width: 4.4; stroke-linecap: round; stroke-linejoin: round; }
+    .vt { fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; }
+    .vw { fill: #fff; stroke: currentColor; stroke-width: 4.4; }
+    .po { fill: none; stroke: currentColor; stroke-width: 13; stroke-linecap: round; } .pi { fill: none; stroke: #fff; stroke-width: 6.6; stroke-linecap: round; }
+    .face { position: absolute; border-radius: 50%; object-fit: cover; object-position: 50% 40%; filter: grayscale(1); border: 3px solid var(--ink); background: #fff; }
+    .d-plane { width: 132px; height: 83px; margin: -42px 0 0 -66px; }
+    .d-plane .face { left: 39.5%; top: 26%; width: 31px; height: 31px; }
+    .d-bike { width: 92px; height: 92px; margin: -78px 0 0 -46px; }
+    .d-bike .face { left: 22px; top: 1px; width: 42px; height: 42px; }
 
-    /* ---------- projects ---------- */
-    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 1.75rem); }
-    .proj { margin: 0; }
-    .proj-vis { position: relative; aspect-ratio: 4 / 5; border-radius: var(--r); overflow: hidden; background: var(--soft); box-shadow: 0 0 0 1px rgba(16,18,21,.05); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
-    .proj:hover .proj-vis { transform: translateY(-4px); box-shadow: 0 24px 48px -24px rgba(16,18,21,.35); }
-    .proj-vis > * { position: absolute; inset: 0; }
-    .proj-vis svg { width: 100%; height: 100%; display: block; }
-    .proj-vis .photo { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
-    .proj:hover .photo { transform: scale(1.04); }
-    .proj figcaption { padding: 1.1rem .2rem 0; }
-    .proj-kicker { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
-    .proj h3 { font-size: 1.45rem; margin: .35rem 0 .5rem; }
-    .proj p { margin: 0 0 .8rem; color: var(--mut); font-size: .95rem; }
-    .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .chip { font-size: .76rem; color: var(--mut); padding: .22rem .6rem; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); }
-    /* newsletter cover (its own navy/yellow palette) */
-    .nl { background: #17375B; color: #fff; display: flex; flex-direction: column; padding: 1.5rem 1.4rem 1.25rem; overflow: hidden; }
-    .nl::after { content: ''; position: absolute; right: -30%; bottom: -22%; width: 78%; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; }
-    .nl-c { font-size: .58rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: #FFCE00; margin-bottom: .7rem; }
-    .nl-m { font-size: 2.1rem; font-weight: 600; line-height: .95; letter-spacing: -.015em; }
-    .nl-e { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.85); margin-top: .75rem; padding-top: .65rem; border-top: 1px solid rgba(255,255,255,.22); display: flex; justify-content: space-between; }
+    /* ---------- mobile route ---------- */
+    .m-route { display: none; list-style: none; margin: 2rem 0 0; padding: 0; }
+    .m-only { display: none; }
+    #route .d-sticky h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); }
+    #route .about { padding: 3.5rem 0 1rem; }
+    #route .about .lede:first-child { color: var(--ink); font-size: 1.25rem; font-weight: 600; }
+    html:not(.js) .d-route { display: none; } html:not(.js) .m-route { display: block; }
+
+    /* side trips */
+    .trips { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: 2.2rem 3rem; margin-top: 3rem; }
+    .trip { margin: 0; display: grid; gap: 1rem; }
+    .trip-big { grid-row: span 2; }
+    .trip-small { grid-template-columns: 170px 1fr; align-items: start; }
+    .vis { position: relative; border-radius: 8px; overflow: hidden; background: var(--mist); }
+    .trip-big .vis { aspect-ratio: 4 / 5; max-height: 640px; }
+    .trip-small .vis { aspect-ratio: 4 / 5; }
+    .vis > * { position: absolute; inset: 0; }
+    .vis svg { width: 100%; height: 100%; display: block; }
+    .vis .photo { width: 100%; height: 100%; object-fit: cover; }
+    .vis::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(14,26,51,.08); pointer-events: none; }
+    .trip h3 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+    .trip .kind { display: inline-block; font-weight: 700; font-size: .85rem; color: var(--work); margin-bottom: .3rem; }
+    .trip p { color: var(--mut); margin: .5rem 0 .8rem; max-width: 60ch; }
+    .tools { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .tools span { font-size: .8rem; font-weight: 600; padding: .2rem .55rem; border-radius: 4px; background: var(--mist); color: var(--mut); }
+    .nl { background: #17375B; color: #fff; display: flex; flex-direction: column; padding: 1.4rem 1.3rem 1.2rem; font-family: Inter, system-ui, sans-serif; }
+    .nl-c { font-size: .58rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: #FFCE00; margin-bottom: .6rem; }
+    .nl-m { font-size: 1.9rem; font-weight: 700; line-height: .95; }
     .nl-mid { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .nl-k { font-size: .58rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #FFCE00; margin-bottom: .6rem; }
-    .nl-h { font-size: 1.95rem; font-weight: 600; line-height: 1.08; }
-    .nl-h em { font-style: normal; color: #FFCE00; }
-    .nl-sq { width: 34px; height: 34px; background: #FFCE00; margin-top: .9rem; }
-    .nl-f { border-top: 1px solid rgba(255,255,255,.22); padding-top: .8rem; font-size: .72rem; color: rgba(255,255,255,.85); }
-    .nl-f div + div { margin-top: .25rem; }
-    .nl-f i { font-style: normal; color: #FFCE00; font-weight: 600; margin-right: .45rem; font-size: .6rem; }
-    .vol-note { position: absolute; left: 0; right: 0; bottom: 0; top: auto !important; padding: 2.6rem 1.2rem 1.1rem; color: #fff; background: linear-gradient(to top, rgba(10,12,14,.85) 30%, rgba(10,12,14,0)); }
-    .vol-k { font-size: .6rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #C9D5F7; margin-bottom: .25rem; }
-    .vol-m { font-family: var(--serif); font-size: 1.15rem; line-height: 1.25; }
+    .nl-h { font-size: 1.55rem; font-weight: 700; line-height: 1.08; } .nl-h em { font-style: normal; color: #FFCE00; }
+    .nl-sq { width: 28px; height: 28px; background: #FFCE00; margin-top: .8rem; }
+    .trip-small .nl { padding: 1rem .9rem; } .trip-small .nl-m { font-size: 1.4rem; } .trip-small .nl-h { font-size: 1.05rem; } .trip-small .nl-c { font-size: .48rem; }
 
-    /* ---------- contact ---------- */
-    #contact { background: var(--ink); color: #fff; }
-    #contact .eyebrow { color: var(--accent-on-dark); }
-    #contact h2 { font-size: clamp(2.3rem, 7vw, 4.6rem); max-width: 14ch; margin-bottom: 2.4rem; }
-    .c-links { display: flex; gap: .8rem; flex-wrap: wrap; }
-    .c-links a { display: inline-flex; align-items: center; gap: .6rem; min-height: 54px; padding: 0 1.5rem; border-radius: 999px; text-decoration: none; font-size: 1.05rem; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); transition: background .25s, color .25s, box-shadow .25s; }
-    .c-links a:first-child { background: #fff; color: var(--ink); box-shadow: none; }
-    .c-links a:hover { background: var(--accent); color: #fff; box-shadow: none; }
-    .c-links svg { width: 16px; height: 16px; transition: transform .3s var(--ease); }
-    .c-links a:hover svg { transform: translate(2px, -2px); }
-    footer { background: var(--ink); color: rgba(255,255,255,.6); font-size: .85rem; text-align: center; padding: 1.6rem 1rem 2rem; border-top: 1px solid rgba(255,255,255,.08); }
+    /* last stop */
+    #contact { background: var(--work); color: #fff; }
+    #contact h2 { max-width: 13ch; }
+    #contact .sub { color: #F0F4FD; margin: 1rem 0 2.4rem; font-weight: 600; }
+    .signs { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .sign { display: inline-flex; align-items: center; gap: .9rem; min-height: 64px; padding: 0 1.4rem 0 .7rem; border-radius: 10px; background: var(--study); color: var(--ink); text-decoration: none; font-weight: 800; font-size: 1.15rem; letter-spacing: -.01em; transition: transform .15s var(--ease); }
+    .sign:hover { transform: translateY(-3px); }
+    .sign:active { transform: scale(.98); }
+    .sign b { width: 44px; height: 44px; border-radius: 7px; background: var(--ink); color: var(--study); display: grid; place-items: center; font-size: 1.2rem; }
+    .sign.alt { background: #fff; }
+    footer { background: var(--work); color: #F0F4FD; padding: 1.4rem 0 2rem; font-size: .9rem; border-top: 1px solid rgba(255,255,255,.18); }
 
-    html.js .rise { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-    html.js .rise.in { opacity: 1; transform: none; }
-
-    /* ---------- mobile ---------- */
-    @media (max-width: 860px) {
-      .nav-links { display: none; }
-      #burger { display: block; }
-      .brand { opacity: 1; font-size: .98rem; }
-      .lang button { padding: .3rem .45rem; }
-      #nav { gap: .5rem; padding: .6rem 1rem; }
-      .lang button { min-height: 36px; min-width: 38px; }
-      .jr > li { grid-template-columns: 52px 1fr; column-gap: .9rem; }
-      .yr span, .node { grid-column: 1; }
-      .side-l .card, .side-r .card { grid-column: 2; }
-      .node { width: 44px; height: 44px; }
-      .card-title { font-size: 1.12rem; }
-      .card-head { padding: .95rem 2.9rem .95rem 1.05rem; }
-      .card-more-in { padding: 0 1.05rem; }
-      .card:hover { transform: none; }
-      #plane .trav-rot { width: 70px; height: 44px; margin: -22px 0 0 -35px; }
-      #bike  .trav-rot { width: 52px; height: 52px; margin: -26px 0 0 -26px; }
-      #plane .trav-face { left: 28px; top: 14px; width: 17px; height: 17px; border-width: 1.5px; }
-      #bike  .trav-face { left: 14px; top: 1px; width: 24px; height: 24px; border-width: 1.5px; }
-      .proj-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 1.25rem 1rem; margin: 0 -1.25rem; scrollbar-width: none; }
-      .proj-grid::-webkit-scrollbar { display: none; }
-      .proj { scroll-snap-align: center; }
-      .filters { display: flex; width: 100%; }
-      .filters button { flex: 1; }
+    /* ============ phone & tablet ============ */
+    @media (max-width: 1023px) {
+      .links { display: none; }
+      #nav { gap: .7rem; padding: .7rem 1rem; }
+      .lang button { min-height: 40px; min-width: 40px; }
+      .hero { padding: 5.5rem 0 3rem; min-height: auto; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+      .hero-photo { width: 84px; height: 84px; margin-bottom: 1.3rem; }
+      .hero h1 { font-size: clamp(3.3rem, 15.5vw, 5.4rem); }
+      .d-route { display: none; }
+      .m-route { display: block; }
+      .m-only { display: block; font-size: clamp(2.3rem, 10vw, 3.2rem); }
+      #route { padding: 4rem 0 3.5rem; }
+      #route .about { padding: 2rem 0 0; }
+      .m-route { --rail: 26px; }
+      .m-st, .m-year, .m-trip { position: relative; padding-left: calc(var(--rail) + 30px); }
+      .m-st::before, .m-trip::before, .m-year::before { content: ''; position: absolute; left: calc(var(--rail) - 5px); top: 0; bottom: 0; width: 10px; background: var(--rail-c, var(--ink)); }
+      .m-st.t-study { --rail-c: var(--study); } .m-st.t-work { --rail-c: var(--work); } .m-st.t-next { --rail-c: transparent; }
+      .m-st.t-next::before { background: repeating-linear-gradient(var(--ink) 0 6px, transparent 6px 12px); width: 3px; left: calc(var(--rail) - 1.5px); bottom: 50%; }
+      .m-year { font-weight: 800; color: var(--mut); padding-top: .9rem; padding-bottom: .9rem; font-size: .95rem; }
+      .m-year.t-study { --rail-c: var(--study); } .m-year.t-work { --rail-c: var(--work); }
+      .m-year.t-next::before { background: repeating-linear-gradient(var(--ink) 0 6px, transparent 6px 12px); width: 3px; left: calc(var(--rail) - 1.5px); }
+      .m-head { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: .2rem .8rem; width: 100%; min-height: 64px; padding: .9rem 0; cursor: pointer; position: relative; }
+      .m-head:active .m-name { opacity: .6; }
+      .m-head:focus-visible { outline: 3px solid var(--work); outline-offset: 2px; }
+      .m-dot { position: absolute; left: calc(-30px - 11px); top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: 50%; background: #fff; border: 5px solid var(--ink); transition: transform .3s var(--ease), background .3s; }
+      .m-head[aria-expanded="true"] .m-dot { background: var(--ink); transform: scale(1.15); }
+      .t-next .m-dot { border-style: dashed; }
+      .m-name { font-weight: 800; font-size: 1.35rem; letter-spacing: -.02em; line-height: 1.15; }
+      .m-when { font-size: .85rem; font-weight: 700; color: var(--mut); font-variant-numeric: tabular-nums; text-align: right; }
+      .m-more { display: grid; grid-template-rows: 1fr; }
+      html.js .m-more { grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease); }
+      html.js .m-head[aria-expanded="true"] + .m-more { grid-template-rows: 1fr; }
+      .m-more-in { overflow: hidden; min-height: 0; }
+      .m-title { font-weight: 800; font-size: 1.05rem; }
+      .m-org { color: var(--mut); font-size: .95rem; }
+      .m-desc { margin: .5rem 0 1.1rem; }
+      .m-more .btn { margin-bottom: 1.2rem; }
+      .m-more .logos { display: flex; gap: .5rem; margin: -.4rem 0 1.1rem; }
+      .m-trip { height: 140px; }
+      .m-trip::before { background: none; border-left: 3px dashed var(--ink); width: 0; left: calc(var(--rail) - 1.5px); opacity: .5; }
+      .m-trip-in { position: absolute; inset: 0; }
+      .m-trip .trav { left: calc(var(--rail)); }
+      .m-trip .t-plane { width: 84px; height: 53px; margin: -26px 0 0 -42px; transform: rotate(90deg); }
+      .m-trip .t-plane .face { left: 40%; top: 26%; width: 20px; height: 20px; border-width: 2px; transform: rotate(-90deg); }
+      .m-trip .t-bike { width: 58px; height: 58px; margin: -40px 0 0 -29px; }
+      .m-trip .t-bike .face { left: 14px; top: 0; width: 26px; height: 26px; border-width: 2px; }
+      .trips { grid-template-columns: none; grid-template-rows: none; grid-auto-flow: column; grid-auto-columns: 80%; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; margin: 2.2rem -1.25rem 0; padding: 0 1.25rem 1rem; scrollbar-width: none; }
+      .trips::-webkit-scrollbar { display: none; }
+      .trip, .trip-small { grid-template-columns: none; scroll-snap-align: start; }
+      .trip-big { grid-row: auto; }
+      .trip-small .nl { padding: 1.4rem 1.3rem 1.2rem; } .trip-small .nl-m { font-size: 1.9rem; } .trip-small .nl-h { font-size: 1.55rem; } .trip-small .nl-c { font-size: .58rem; }
+      .sign { width: 100%; }
     }
+    @media (max-width: 420px) { .brand span { font-size: .92rem; } }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
-      html.js .rise, html.js .stop .card, html.js .hero h1 .ch { opacity: 1 !important; transform: none !important; }
-      .trav { display: none; }
+      .trav { display: none !important; }
     }
-    @media (prefers-reduced-transparency: reduce) { #nav.solid { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; } }
   </style>
 </head>
 <body>
-  <a href="#main" class="skip">Skip to content</a>
-
+  <a class="skip" href="#main">Skip to content</a>
   <nav id="nav" aria-label="Main">
-    <a href="#top" class="brand">Antonio Di Domenico</a>
-    <div class="nav-links">
-      <a href="#journey" data-i18n="nav.journey">Journey</a>
-      <a href="#projects" data-i18n="nav.projects">Projects</a>
+    <a class="brand" href="#top"><i aria-hidden="true"></i><span>Antonio Di Domenico</span></a>
+    <div class="links">
+      <a href="#route" data-i18n="nav.journey">Journey</a>
+      <a href="#trips" data-i18n="nav.projects">Projects</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
     </div>
     <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang="en" class="on" aria-pressed="true">EN</button><button type="button" data-lang="it" aria-pressed="false">IT</button><button type="button" data-lang="nl" aria-pressed="false">NL</button>
+      <button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="it" aria-pressed="false">IT</button><button type="button" data-lang="nl" aria-pressed="false">NL</button>
     </div>
-    <button id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
   </nav>
-  <div id="menu">
-    <a href="#journey" data-i18n="nav.journey">Journey</a>
-    <a href="#projects" data-i18n="nav.projects">Projects</a>
-    <a href="#contact" data-i18n="nav.contact">Contact</a>
-  </div>
 
-  <header id="top" class="hero">
-    <div class="wrap">
-      <img class="hero-photo" src="images/antonio.jpg" alt="Portrait of Antonio Di Domenico" width="200" height="200">
-      <div class="now"><i aria-hidden="true"></i><span data-i18n="hero.now">Now: IFSA private equity track · RSM</span></div>
-      <h1 id="heroName">Antonio Di Domenico</h1>
-      <p class="hero-sub" data-i18n="hero.sub">Looking for private equity, venture capital and M&amp;A internships for summer 2027.</p>
-      <div class="cta">
-        <a href="#journey" class="btn btn-fill" data-i18n="hero.cta1j">See my journey</a>
-        <a href="#contact" class="btn btn-line" data-i18n="hero.cta2">Get in touch</a>
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <img class="hero-photo" src="images/antonio.jpg" alt="Portrait of Antonio Di Domenico" width="200" height="200">
+        <h1>Antonio Di Domenico</h1>
+        <p class="hero-sub" data-i18n="hero.sub">Looking for private equity, venture capital and M&amp;A internships for summer 2027.</p>
+        <div class="btns">
+          <a class="btn btn-ink" href="#route" data-i18n="route.cta">See the route</a>
+          <a class="btn btn-out" href="#contact" data-i18n="hero.cta2">Get in touch</a>
+        </div>
       </div>
+      <section class="board" aria-labelledby="boardTitle">
+        <div class="board-top"><h2 id="boardTitle" data-i18n="board.title">Departures</h2><span class="clock" id="clock" aria-hidden="true">--:--</span></div>
+        <div class="row"><span class="row-k flip" data-i18n="b1k">Now</span><span class="row-v flip" data-i18n="b1v">IFSA private equity track</span><span class="row-p" data-i18n="b1p">Rotterdam</span></div>
+        <div class="row"><span class="row-k flip" data-i18n="b2k">Studying</span><span class="row-v flip" data-i18n="b2v">MSc Finance &amp; Investments</span><span class="row-p" data-i18n="b2p">RSM</span></div>
+        <div class="row next"><span class="row-k flip" data-i18n="b3k">Next</span><span class="row-v flip" data-i18n="b3v">Internship in PE, VC or M&amp;A</span><span class="row-p" data-i18n="b3p">Summer 2027</span></div>
+      </section>
     </div>
-    <span class="scroll-cue" aria-hidden="true"></span>
   </header>
 
   <main id="main">
-  <section id="journey">
-    <div class="wrap">
-      <div class="sec-head rise">
-        <span class="eyebrow" data-i18n="j.eyebrow">Journey</span>
-        <h2 data-i18n="j.title">From Utrecht to Rio to Rotterdam.</h2>
-        <div class="intro"><p data-i18n="about.p1">I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.</p><p data-i18n="about.p2">This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.</p></div>
-        <div class="filters" role="group" aria-label="Filter">
-          <button type="button" data-f="all" aria-pressed="true" data-i18n="f.all">All</button>
-          <button type="button" data-f="study" aria-pressed="false" data-i18n="f.study">Study</button>
-          <button type="button" data-f="work" aria-pressed="false" data-i18n="f.work">Work</button>
+  <section id="route">
+    <div class="d-route" id="dRoute">
+      <div class="d-sticky">
+        <div class="wrap">
+          <h2 data-i18n="j.title">From Utrecht to Rio to Rotterdam.</h2>
+          <div class="key"><span><i class="ks"></i><b data-i18n="tag.study">Study</b></span><span><i class="kw"></i><b data-i18n="tag.work">Work</b></span><em data-i18n="legend.d">Scroll to travel the line, or click a station.</em></div>
         </div>
-        <p class="hint" data-i18n="j.hint">Tap any stop for the details.</p>
+        <div class="d-viewport" id="dView"><div class="d-track" id="dTrack">
+    <svg class="d-map" id="dMap" viewBox="0 0 2620 380" width="2620" height="380" aria-hidden="false">
+      <path class="flight" id="flight" d="M170,130 Q670.0,-60 1170,130"/>
+      <path class="line l-study" id="lStudy" d="M60,130 L2282.5,130 L2348.5,196 L2420,196"/>
+      <path class="line l-work" d="M310,262 L2282.5,262 L2348.5,196 L2420,196"/>
+      <g class="tick"><line x1="55.0" y1="340" x2="55.0" y2="358"/><text x="63.0" y="354">2023</text></g><g class="tick"><line x1="305.0" y1="340" x2="305.0" y2="358"/><text x="313.0" y="354">2024</text></g><g class="tick"><line x1="1055.0" y1="340" x2="1055.0" y2="358"/><text x="1063.0" y="354">2025</text></g><g class="tick"><line x1="1305.0" y1="340" x2="1305.0" y2="358"/><text x="1313.0" y="354">2026</text></g><g class="tick"><line x1="2305.0" y1="340" x2="2305.0" y2="358"/><text x="2313.0" y="354">2027</text></g>
+      <g class="d-st t-study" data-id="uu" tabindex="0" role="button" aria-label="Utrecht University">
+      <circle class="hit" cx="170" cy="130" r="34"/>
+      <circle class="ring" cx="170" cy="130" r="12"/>
+      <text class="d-name" x="170" y="100" text-anchor="middle">Utrecht University</text>
+    </g>
+<g class="d-st t-work" data-id="pj" tabindex="0" role="button" aria-label="Picnic &amp; Jumbo">
+      <circle class="hit" cx="420" cy="262" r="34"/>
+      <circle class="ring" cx="420" cy="262" r="12"/>
+      <text class="d-name" x="420" y="306" text-anchor="middle">Picnic &amp; Jumbo</text>
+    </g>
+<g class="d-st t-work" data-id="pr" tabindex="0" role="button" aria-label="Honours Programme">
+      <circle class="hit" cx="670" cy="262" r="34"/>
+      <circle class="ring" cx="670" cy="262" r="12"/>
+      <text class="d-name" x="670" y="306" text-anchor="middle" data-i18n="pr.short">Honours Programme</text>
+    </g>
+<g class="d-st t-work" data-id="ath" tabindex="0" role="button" aria-label="AthenaStudies">
+      <circle class="hit" cx="920" cy="262" r="34"/>
+      <circle class="ring" cx="920" cy="262" r="12"/>
+      <text class="d-name" x="920" y="306" text-anchor="middle">AthenaStudies</text>
+    </g>
+<g class="d-st t-study" data-id="puc" tabindex="0" role="button" aria-label="PUC-Rio">
+      <circle class="hit" cx="1170" cy="130" r="34"/>
+      <circle class="ring" cx="1170" cy="130" r="12"/>
+      <text class="d-name" x="1170" y="100" text-anchor="middle">PUC-Rio</text>
+    </g>
+<g class="d-st t-study" data-id="ais" tabindex="0" role="button" aria-label="AI Scouts">
+      <circle class="hit" cx="1420" cy="130" r="34"/>
+      <circle class="ring" cx="1420" cy="130" r="12"/>
+      <text class="d-name" x="1420" y="100" text-anchor="middle">AI Scouts</text>
+    </g>
+<g class="d-st t-work" data-id="exp" tabindex="0" role="button" aria-label="Exprimo">
+      <circle class="hit" cx="1670" cy="262" r="34"/>
+      <circle class="ring" cx="1670" cy="262" r="12"/>
+      <text class="d-name" x="1670" y="306" text-anchor="middle">Exprimo</text>
+    </g>
+<g class="d-st t-study" data-id="rsm" tabindex="0" role="button" aria-label="RSM">
+      <circle class="hit" cx="1920" cy="130" r="34"/>
+      <circle class="ring" cx="1920" cy="130" r="12"/>
+      <text class="d-name" x="1920" y="100" text-anchor="middle">RSM</text>
+    </g>
+<g class="d-st t-work" data-id="ifsa" tabindex="0" role="button" aria-label="IFSA">
+      <circle class="hit" cx="2170" cy="262" r="34"/>
+      <circle class="ring" cx="2170" cy="262" r="12"/>
+      <text class="d-name" x="2170" y="306" text-anchor="middle">IFSA</text>
+    </g>
+<g class="d-st t-next" data-id="next" tabindex="0" role="button" aria-label="Your team?">
+      <circle class="hit" cx="2420" cy="196" r="34"/>
+      <circle class="ring" cx="2420" cy="196" r="17"/>
+      <text class="d-name" x="2420" y="246" text-anchor="middle" data-i18n="next.org">Your team?</text>
+    </g>
+    </svg>
+    <span class="trav d-plane" id="dPlane" aria-hidden="true"><svg class="veh" viewBox="0 0 160 100" aria-hidden="true">
+  <path class="vb" d="M106,32 L84,4 L66,7 L92,34 Z"/><path class="vb" d="M36,28 L24,2 L38,2 L54,27 Z"/><path class="vb" d="M26,24 L5,20 L8,29 Z"/>
+  <path class="vb" d="M152,52 C151,41 142,33 126,31 L52,31 C36,31 24,27 10,18 C17,33 25,51 35,63 C41,70 47,73 57,73 L126,73 C142,71 151,63 152,52 Z"/>
+  <path class="vb" d="M114,68 L60,92 L88,98 L130,70 Z"/>
+  <path class="po" d="M92,81 L108,74"/><path class="pi" d="M93,80.5 L107,74.5"/><path class="po" d="M73,89 L89,82"/><path class="pi" d="M74,88.5 L88,82.5"/>
+  <path class="vs" d="M133,42 C139,43 143,46 144,50 C140,51 135,50 132,48 Z"/><circle class="vs" cx="118" cy="47" r="2.6"/><circle class="vs" cx="50" cy="44" r="2.6"/>
+  <circle class="vb" cx="84" cy="52" r="20"/>
+</svg><img class="face" src="images/face.jpg" alt=""></span>
+    <span class="trav d-bike" id="dBike" aria-hidden="true"><svg class="veh" viewBox="0 0 100 100" aria-hidden="true">
+  <circle class="vw" cx="21" cy="79" r="16"/><circle class="vw" cx="83" cy="79" r="16"/><circle class="vs" cx="21" cy="79" r="2.6"/><circle class="vs" cx="83" cy="79" r="2.6"/>
+  <path class="vl" d="M21,79 L45,55 L55,79 Z"/><path class="vl" d="M55,79 L73,55"/><path class="vl" d="M73,55 L83,79"/><path class="vl" d="M45,55 L42,49"/>
+  <path class="vt" d="M35,48 L50,48"/><path class="vt" d="M67,50 L80,50"/><path class="vl" d="M52,79 L58,72"/><path class="vl" d="M44,48 L52,34"/><path class="vl" d="M52,37 L73,50"/>
+</svg><img class="face" src="images/face.jpg" alt=""></span>
+        </div></div>
+        <div class="d-detail" id="dDetail" aria-live="polite"></div>
       </div>
-
-      <ol class="jr" id="jr" data-f="all">
-        <svg class="jr-svg" id="jrSvg" aria-hidden="true"><path class="jr-ghost" id="jrGhost" d=""/><path class="jr-draw" id="jrDraw" d=""/></svg>
-        <div class="trav" id="plane" aria-hidden="true"><span class="trav-rot"><svg class="trav-veh" viewBox="0 0 160 100">
-  <path class="veh-body" d="M106,32 L84,4 L66,7 L92,34 Z"/>
-  <path class="veh-body" d="M36,28 L24,2 L38,2 L54,27 Z"/>
-  <path class="veh-body" d="M26,24 L5,20 L8,29 Z"/>
-  <path class="veh-body" d="M152,52 C151,41 142,33 126,31 L52,31 C36,31 24,27 10,18 C17,33 25,51 35,63 C41,70 47,73 57,73 L126,73 C142,71 151,63 152,52 Z"/>
-  <path class="veh-body" d="M114,68 L60,92 L88,98 L130,70 Z"/>
-  <path class="veh-pod-o" d="M92,81 L108,74"/><path class="veh-pod-i" d="M93,80.5 L107,74.5"/>
-  <path class="veh-pod-o" d="M73,89 L89,82"/><path class="veh-pod-i" d="M74,88.5 L88,82.5"/>
-  <path class="veh-solid" d="M133,42 C139,43 143,46 144,50 C140,51 135,50 132,48 Z"/>
-  <circle class="veh-solid" cx="118" cy="47" r="2.6"/><circle class="veh-solid" cx="50" cy="44" r="2.6"/>
-  <circle class="veh-body" cx="84" cy="52" r="20"/>
-</svg><img class="trav-face" src="images/face.jpg" alt=""></span></div>
-        <div class="trav" id="bike" aria-hidden="true"><span class="trav-rot"><svg class="trav-veh" viewBox="0 0 100 100">
-  <circle class="veh-wheel" cx="21" cy="79" r="16"/><circle class="veh-wheel" cx="83" cy="79" r="16"/>
-  <circle class="veh-solid" cx="21" cy="79" r="2.6"/><circle class="veh-solid" cx="83" cy="79" r="2.6"/>
-  <path class="veh-line" d="M21,79 L45,55 L55,79 Z"/><path class="veh-line" d="M55,79 L73,55"/>
-  <path class="veh-line" d="M73,55 L83,79"/><path class="veh-line" d="M45,55 L42,49"/>
-  <path class="veh-thin" d="M35,48 L50,48"/><path class="veh-thin" d="M67,50 L80,50"/>
-  <path class="veh-line" d="M52,79 L58,72"/><path class="veh-line" d="M44,48 L52,34"/>
-  <path class="veh-line" d="M52,37 L73,50"/>
-</svg><img class="trav-face" src="images/face.jpg" alt=""></span></div>
-        <li class="yr" aria-hidden="true"><span>2023</span></li>
-        <li class="stop side-l" data-t="study" id="s-uu">
-          <div class="node" aria-hidden="true"><img class="node-logo" src="images/logo-uu.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-uu">
-              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="uu.period">2023 – 2026</span></span>
-              <span class="card-title" data-i18n="uu.title">BSc Economics (Honours)</span>
-              <span class="card-org" data-i18n="uu.org">Utrecht University</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-uu">
-              <div class="card-more-in"><p data-i18n="uu.desc">Honours bachelor in Economics and Business Economics, with a minor in Law.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="yr" aria-hidden="true"><span>2024</span></li>
-        <li class="stop side-r" data-t="work" id="s-pj">
-          <div class="node" aria-hidden="true"><svg class="node-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18 L24 11 L40 18 L40 37 L24 44 L8 37 Z"/><path d="M8 18 L24 25 L40 18"/><path d="M24 25 L24 44"/></svg></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-pj">
-              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp5.period">Feb 2024 – Nov 2026</span></span>
-              <span class="card-title" data-i18n="exp5.role">Warehouse Operations</span>
-              <span class="card-org" data-i18n="exp5.org">Picnic &amp; Jumbo</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-pj">
-              <div class="card-more-in"><p data-i18n="exp5.desc">Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.</p><div class="more-logos"><img src="images/logo-picnic.png" alt="Picnic" loading="lazy"><img src="images/logo-jumbo-tile.png" alt="Jumbo" loading="lazy"></div></div>
-            </div>
-          </div>
-        </li>
-        <li class="stop side-l" data-t="work" id="s-pr">
-          <div class="node" aria-hidden="true"><img class="node-logo" src="images/logo-uu.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-pr">
-              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp3.period">Feb 2024 – Jul 2025</span></span>
-              <span class="card-title" data-i18n="exp3.role">Head of Public Relations</span>
-              <span class="card-org" data-i18n="exp3.org">Utrecht University Honours Programme</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-pr">
-              <div class="card-more-in"><p data-i18n="exp3.desc">I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="stop side-r" data-t="work" id="s-ath">
-          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-athena.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-ath">
-              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp4.period">Oct 2024 – Jun 2025</span></span>
-              <span class="card-title" data-i18n="exp4.role">Mathematics and Statistics Tutor</span>
-              <span class="card-org" data-i18n="exp4.org">AthenaStudies</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-ath">
-              <div class="card-more-in"><p data-i18n="exp4.desc">I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="yr" aria-hidden="true"><span>2025</span></li>
-        <li class="stop side-l" data-t="study" id="s-puc">
-          <div class="node" aria-hidden="true"><img class="node-logo" src="images/logo-puc.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-puc">
-              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="puc.period">Aug 2025 – Jan 2026</span></span>
-              <span class="card-title" data-i18n="puc.title">Exchange semester</span>
-              <span class="card-org" data-i18n="puc.org">PUC-Rio, Rio de Janeiro</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-puc">
-              <div class="card-more-in"><p data-i18n="puc.desc">Six months studying in Rio de Janeiro.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="yr" aria-hidden="true"><span>2026</span></li>
-        <li class="stop side-r" data-t="study" id="s-ais">
-          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-aiscouts.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-ais">
-              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="exp2.period">Feb – May 2026</span></span>
-              <span class="card-title" data-i18n="exp2.role">AI Scouts</span>
-              <span class="card-org" data-i18n="exp2.org">Berkeley-led programme, remote</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-ais">
-              <div class="card-more-in"><p data-i18n="exp2.desc">I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="stop side-l" data-t="work" id="s-exp">
-          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-exprimo.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-exp">
-              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp1.period">Jun 2026 – Present</span></span>
-              <span class="card-title" data-i18n="exp1.role">Accounting Assistant</span>
-              <span class="card-org" data-i18n="exp1.org">Exprimo Comunicazione, Italy (remote)</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-exp">
-              <div class="card-more-in"><p data-i18n="exp1.desc">I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="stop side-r" data-t="study" id="s-rsm">
-          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-rsm.png" alt="" loading="lazy" decoding="async"></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-rsm">
-              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="rsm.period">Sep 2026 – Aug 2027</span></span>
-              <span class="card-title" data-i18n="rsm.title">MSc Finance &amp; Investments</span>
-              <span class="card-org" data-i18n="rsm.org">RSM · Erasmus University Rotterdam</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-rsm">
-              <div class="card-more-in"><p data-i18n="rsm.desc">Where I am now. Alongside the master’s I’m on IFSA Rotterdam’s private equity track.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="stop side-l lead open" data-t="work" id="s-ifsa">
-          <div class="node" aria-hidden="true"><span class="node-txt">IF</span></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="true" aria-controls="m-ifsa">
-              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp0.period">Sep 2026 – Present</span></span>
-              <span class="card-title" data-i18n="exp0.role">Analyst, Private Equity &amp; Tech M&amp;A Track</span>
-              <span class="card-org" data-i18n="exp0.org">IFSA Rotterdam</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-ifsa">
-              <div class="card-more-in"><p data-i18n="exp0.desc">In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.</p></div>
-            </div>
-          </div>
-        </li>
-        <li class="yr" aria-hidden="true"><span>2027</span></li>
-        <li class="stop side-r next" data-t="next" id="s-next">
-          <div class="node" aria-hidden="true"><svg class="node-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 42 L14 7"/><path d="M14 9 C22 4 28 14 36 9 L36 25 C28 30 22 20 14 25"/></svg></div>
-          <div class="card">
-            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-next">
-              <span class="card-meta"><span class="tag tag-next" data-i18n="tag.next">Next</span><span class="period" data-i18n="next.period">Summer 2027</span></span>
-              <span class="card-title" data-i18n="next.title">Internship in PE, VC or M&amp;A</span>
-              <span class="card-org" data-i18n="next.org">Your team?</span>
-              <span class="card-toggle" aria-hidden="true"></span>
-            </button>
-            <div class="card-more" id="m-next">
-              <div class="card-more-in"><p data-i18n="next.desc">The next stop. If your team is hiring for summer 2027, I’d like to hear from you.</p><a class="btn btn-fill btn-sm" href="#contact" data-i18n="hero.cta2">Get in touch</a></div>
-            </div>
-          </div>
-        </li>
+    </div>
+    <div class="wrap m-wrap">
+      <div class="m-head-block">
+        <h2 class="m-only" data-i18n="j.title">From Utrecht to Rio to Rotterdam.</h2>
+      </div>
+      <ol class="m-route" id="mRoute">
+      <li class="m-year t-study" aria-hidden="true">2023</li>
+      <li class="m-st t-study" id="m-uu">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-uu">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">Utrecht University</span>
+          <span class="m-when" data-i18n="uu.period">2023 – 2026</span>
+        </button>
+        <div class="m-more" id="md-uu"><div class="m-more-in">
+          <p class="m-title" data-i18n="uu.title">BSc Economics (Honours)</p>
+          <p class="m-org" data-i18n="uu.org">Utrecht University</p>
+          <p class="m-desc" data-i18n="uu.desc">Honours bachelor in Economics and Business Economics, with a minor in Law.</p>
+        </div></div>
+      </li>
+      <li class="m-year t-work" aria-hidden="true">2024</li>
+      <li class="m-st t-work" id="m-pj">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-pj">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">Picnic &amp; Jumbo</span>
+          <span class="m-when" data-i18n="exp5.period">Feb 2024 – Nov 2026</span>
+        </button>
+        <div class="m-more" id="md-pj"><div class="m-more-in">
+          <p class="m-title" data-i18n="exp5.role">Warehouse Operations</p>
+          <p class="m-org" data-i18n="exp5.org">Picnic &amp; Jumbo</p>
+          <p class="m-desc" data-i18n="exp5.desc">Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.</p><div class="logos"><img src="images/logo-picnic.png" alt="Picnic" loading="lazy"><img src="images/logo-jumbo-tile.png" alt="Jumbo" loading="lazy"></div>
+        </div></div>
+      </li>
+      <li class="m-st t-work" id="m-pr">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-pr">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name"><span data-i18n="pr.short">Honours Programme</span></span>
+          <span class="m-when" data-i18n="exp3.period">Feb 2024 – Jul 2025</span>
+        </button>
+        <div class="m-more" id="md-pr"><div class="m-more-in">
+          <p class="m-title" data-i18n="exp3.role">Head of Public Relations</p>
+          <p class="m-org" data-i18n="exp3.org">Utrecht University Honours Programme</p>
+          <p class="m-desc" data-i18n="exp3.desc">I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.</p>
+        </div></div>
+      </li>
+      <li class="m-st t-work" id="m-ath">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-ath">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">AthenaStudies</span>
+          <span class="m-when" data-i18n="exp4.period">Oct 2024 – Jun 2025</span>
+        </button>
+        <div class="m-more" id="md-ath"><div class="m-more-in">
+          <p class="m-title" data-i18n="exp4.role">Mathematics and Statistics Tutor</p>
+          <p class="m-org" data-i18n="exp4.org">AthenaStudies</p>
+          <p class="m-desc" data-i18n="exp4.desc">I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.</p>
+        </div></div>
+      </li>
+      <li class="m-year t-study" aria-hidden="true">2025</li>
+      <li class="m-trip" aria-hidden="true" data-trip="plane"><div class="m-trip-in"><span class="trav t-plane"><svg class="veh" viewBox="0 0 160 100" aria-hidden="true">
+  <path class="vb" d="M106,32 L84,4 L66,7 L92,34 Z"/><path class="vb" d="M36,28 L24,2 L38,2 L54,27 Z"/><path class="vb" d="M26,24 L5,20 L8,29 Z"/>
+  <path class="vb" d="M152,52 C151,41 142,33 126,31 L52,31 C36,31 24,27 10,18 C17,33 25,51 35,63 C41,70 47,73 57,73 L126,73 C142,71 151,63 152,52 Z"/>
+  <path class="vb" d="M114,68 L60,92 L88,98 L130,70 Z"/>
+  <path class="po" d="M92,81 L108,74"/><path class="pi" d="M93,80.5 L107,74.5"/><path class="po" d="M73,89 L89,82"/><path class="pi" d="M74,88.5 L88,82.5"/>
+  <path class="vs" d="M133,42 C139,43 143,46 144,50 C140,51 135,50 132,48 Z"/><circle class="vs" cx="118" cy="47" r="2.6"/><circle class="vs" cx="50" cy="44" r="2.6"/>
+  <circle class="vb" cx="84" cy="52" r="20"/>
+</svg><img class="face" src="images/face.jpg" alt=""></span></div></li>
+      <li class="m-st t-study" id="m-puc">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-puc">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">PUC-Rio</span>
+          <span class="m-when" data-i18n="puc.period">Aug 2025 – Jan 2026</span>
+        </button>
+        <div class="m-more" id="md-puc"><div class="m-more-in">
+          <p class="m-title" data-i18n="puc.title">Exchange semester</p>
+          <p class="m-org" data-i18n="puc.org">PUC-Rio, Rio de Janeiro</p>
+          <p class="m-desc" data-i18n="puc.desc">Six months studying in Rio de Janeiro.</p>
+        </div></div>
+      </li>
+      <li class="m-year t-study" aria-hidden="true">2026</li>
+      <li class="m-st t-study" id="m-ais">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-ais">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">AI Scouts</span>
+          <span class="m-when" data-i18n="exp2.period">Feb – May 2026</span>
+        </button>
+        <div class="m-more" id="md-ais"><div class="m-more-in">
+          <p class="m-title" data-i18n="exp2.role">AI Scouts</p>
+          <p class="m-org" data-i18n="exp2.org">Berkeley-led programme, remote</p>
+          <p class="m-desc" data-i18n="exp2.desc">I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.</p>
+        </div></div>
+      </li>
+      <li class="m-st t-work" id="m-exp">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-exp">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">Exprimo</span>
+          <span class="m-when" data-i18n="exp1.period">Jun 2026 – Present</span>
+        </button>
+        <div class="m-more" id="md-exp"><div class="m-more-in">
+          <p class="m-title" data-i18n="exp1.role">Accounting Assistant</p>
+          <p class="m-org" data-i18n="exp1.org">Exprimo Comunicazione, Italy (remote)</p>
+          <p class="m-desc" data-i18n="exp1.desc">I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.</p>
+        </div></div>
+      </li>
+      <li class="m-trip" aria-hidden="true" data-trip="bike"><div class="m-trip-in"><span class="trav t-bike"><svg class="veh" viewBox="0 0 100 100" aria-hidden="true">
+  <circle class="vw" cx="21" cy="79" r="16"/><circle class="vw" cx="83" cy="79" r="16"/><circle class="vs" cx="21" cy="79" r="2.6"/><circle class="vs" cx="83" cy="79" r="2.6"/>
+  <path class="vl" d="M21,79 L45,55 L55,79 Z"/><path class="vl" d="M55,79 L73,55"/><path class="vl" d="M73,55 L83,79"/><path class="vl" d="M45,55 L42,49"/>
+  <path class="vt" d="M35,48 L50,48"/><path class="vt" d="M67,50 L80,50"/><path class="vl" d="M52,79 L58,72"/><path class="vl" d="M44,48 L52,34"/><path class="vl" d="M52,37 L73,50"/>
+</svg><img class="face" src="images/face.jpg" alt=""></span></div></li>
+      <li class="m-st t-study" id="m-rsm">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-rsm">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">RSM</span>
+          <span class="m-when" data-i18n="rsm.period">Sep 2026 – Aug 2027</span>
+        </button>
+        <div class="m-more" id="md-rsm"><div class="m-more-in">
+          <p class="m-title" data-i18n="rsm.title">MSc Finance &amp; Investments</p>
+          <p class="m-org" data-i18n="rsm.org">RSM · Erasmus University Rotterdam</p>
+          <p class="m-desc" data-i18n="rsm.desc">Where I am now. Alongside the master’s I’m on IFSA Rotterdam’s private equity track.</p>
+        </div></div>
+      </li>
+      <li class="m-st t-work" id="m-ifsa">
+        <button class="m-head" type="button" aria-expanded="true" aria-controls="md-ifsa">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name">IFSA</span>
+          <span class="m-when" data-i18n="exp0.period">Sep 2026 – Present</span>
+        </button>
+        <div class="m-more" id="md-ifsa"><div class="m-more-in">
+          <p class="m-title" data-i18n="exp0.role">Analyst, Private Equity &amp; Tech M&amp;A Track</p>
+          <p class="m-org" data-i18n="exp0.org">IFSA Rotterdam</p>
+          <p class="m-desc" data-i18n="exp0.desc">In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.</p>
+        </div></div>
+      </li>
+      <li class="m-year t-next" aria-hidden="true">2027</li>
+      <li class="m-st t-next" id="m-next">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="md-next">
+          <span class="m-dot" aria-hidden="true"></span>
+          <span class="m-name"><span data-i18n="next.org">Your team?</span></span>
+          <span class="m-when" data-i18n="next.period">Summer 2027</span>
+        </button>
+        <div class="m-more" id="md-next"><div class="m-more-in">
+          <p class="m-title" data-i18n="next.title">Internship in PE, VC or M&amp;A</p>
+          <p class="m-org" data-i18n="next.org">Your team?</p>
+          <p class="m-desc" data-i18n="next.desc">The next stop. If your team is hiring for summer 2027, I’d like to hear from you.</p><a class="btn btn-ink" href="#contact" data-i18n="hero.cta2">Get in touch</a>
+        </div></div>
+      </li>
       </ol>
+    </div>
+    <div class="wrap about">
+      <p class="lede" data-i18n="about.p1">I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.</p>
+      <p class="lede" data-i18n="about.p2">This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.</p>
     </div>
   </section>
 
-  <section id="projects">
+  <section class="sec" id="trips">
     <div class="wrap">
-      <div class="sec-head rise">
-        <span class="eyebrow" data-i18n="show.eyebrow">Selected Projects</span>
-        <h2 data-i18n="show.title">Three projects, built out of curiosity.</h2>
-      </div>
-      <div class="proj-grid" tabindex="0" role="group" aria-label="Projects">
-        <figure class="proj rise">
-          <div class="proj-vis"><svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+      <h2 data-i18n="side.title">Side trips</h2>
+      <p class="lede" data-i18n="show.title">Three projects, built out of curiosity.</p>
+      <div class="trips" tabindex="0" role="group" aria-label="Projects">
+        <figure class="trip trip-big">
+          <div class="vis"><svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <filter id="fs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.14)"/></filter>
                   <filter id="fc" x="-10%" y="-50%" width="120%" height="200%"><feDropShadow dx="0" dy="-3" stdDeviation="6" flood-color="rgba(0,0,0,0.08)"/></filter>
@@ -612,207 +638,166 @@
                 <rect x="168" y="362" width="44" height="19" rx="9.5" fill="#F6F0E8"/>
                 <text x="190" y="375" font-size="9" text-anchor="middle" font-family="system-ui,sans-serif" fill="#1B4D4B" data-i18n="noce.dist">1.2 km</text>
               </svg></div>
-          <figcaption>
-            <span class="proj-kicker" data-i18n="sp1.kicker">Map app</span>
-            <h3 data-i18n="sp1.title">Noce</h3>
-            <p data-i18n="sp1.cap">Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.</p>
-            <div class="chips"><span class="chip">Lovable</span><span class="chip">Supabase</span><span class="chip">Antigravity</span><span class="chip">Google Maps API</span></div>
-          </figcaption>
+          <figcaption><span class="kind" data-i18n="sp1.kicker">Map app</span><h3 data-i18n="sp1.title">Noce</h3><p data-i18n="sp1.cap">Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.</p><div class="tools"><span>Lovable</span><span>Supabase</span><span>Antigravity</span><span>Google Maps API</span></div></figcaption>
         </figure>
-        <figure class="proj rise">
-          <div class="proj-vis"><div class="nl" aria-hidden="true">
-            <div><div class="nl-c">UU Honours Community</div><div class="nl-m">Honours</div><div class="nl-e"><span>Spring Edition</span><span>Issue 07</span></div></div>
-            <div class="nl-mid"><div class="nl-k">Cover Story</div><div class="nl-h">The <em>Interview</em> Issue</div><div class="nl-sq"></div></div>
-            <div class="nl-f"><div><i>01</i>The tutor who became a startup</div><div><i>02</i>What your thesis really teaches you</div></div>
-          </div></div>
-          <figcaption>
-            <span class="proj-kicker" data-i18n="sp2.kicker">Editorial</span>
-            <h3 data-i18n="sp2.title">Honours Newsletter</h3>
-            <p data-i18n="sp2.cap">Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.</p>
-            <div class="chips"><span class="chip">Canva</span><span class="chip">LinkedIn</span></div>
-          </figcaption>
+        <figure class="trip trip-small">
+          <div class="vis"><div class="nl" aria-hidden="true"><div><div class="nl-c">UU Honours Community</div><div class="nl-m">Honours</div></div><div class="nl-mid"><div class="nl-h">The <em>Interview</em> Issue</div><div class="nl-sq"></div></div></div></div>
+          <figcaption><span class="kind" data-i18n="sp2.kicker">Editorial</span><h3 data-i18n="sp2.title">Honours Newsletter</h3><p data-i18n="sp2.cap">Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.</p><div class="tools"><span>Canva</span><span>LinkedIn</span></div></figcaption>
         </figure>
-        <figure class="proj rise">
-          <div class="proj-vis">
-            <img class="photo" src="images/volunteers.jpg" alt="Student volunteers at the Jumbo food drive" loading="lazy" decoding="async">
-            <div class="vol-note"><div class="vol-k" data-i18n="vol.kicker">Utrecht · Food Drive</div><div class="vol-m" data-i18n="vol.meta">Volunteers recruited &amp; coordinated</div></div>
-          </div>
-          <figcaption>
-            <span class="proj-kicker" data-i18n="sp3.kicker">Community</span>
-            <h3 data-i18n="sp3.title">Volunteers</h3>
-            <p data-i18n="sp3.cap">I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.</p>
-            <div class="chips"><span class="chip">EN / NL</span><span class="chip">Canva</span></div>
-          </figcaption>
+        <figure class="trip trip-small">
+          <div class="vis"><img class="photo" src="images/volunteers.jpg" alt="Student volunteers at the Jumbo food drive" loading="lazy"></div>
+          <figcaption><span class="kind" data-i18n="sp3.kicker">Community</span><h3 data-i18n="sp3.title">Volunteers</h3><p data-i18n="sp3.cap">I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.</p><div class="tools"><span>EN / NL</span><span>Canva</span></div></figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section id="contact">
-    <div class="wrap rise">
-      <span class="eyebrow" data-i18n="contact.eyebrow">Contact</span>
+  <section class="sec" id="contact">
+    <div class="wrap">
       <h2 data-i18n="contact.title">Looking for me? You can find me here!</h2>
-      <div class="c-links">
-        <a href="mailto:antoniodidomenico.work@gmail.com"><span data-i18n="contact.email">Email</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5 L11.5 4.5"/><path d="M5.5 4.5 H11.5 V10.5"/></svg></a>
-        <a href="https://www.linkedin.com/in/adidomenico0/" target="_blank" rel="noopener noreferrer">LinkedIn<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5 L11.5 4.5"/><path d="M5.5 4.5 H11.5 V10.5"/></svg></a>
+      <p class="sub" data-i18n="last.title">Last stop before 2027</p>
+      <div class="signs">
+        <a class="sign" href="mailto:antoniodidomenico.work@gmail.com"><b aria-hidden="true">@</b><span data-i18n="contact.email">Email</span></a>
+        <a class="sign alt" href="https://www.linkedin.com/in/adidomenico0/" target="_blank" rel="noopener noreferrer"><b aria-hidden="true">in</b>LinkedIn</a>
       </div>
     </div>
   </section>
   </main>
-  <footer data-i18n="footer.text">© 2026 Antonio Di Domenico · Utrecht / Rotterdam</footer>
+  <footer><div class="wrap" data-i18n="footer.text">© 2026 Antonio Di Domenico · Utrecht / Rotterdam</div></footer>
   <script>
 (function () {
   'use strict';
-  var TR = {"en": {"nav.about": "About", "nav.experience": "Experience", "nav.projects": "Projects", "nav.contact": "Contact", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Looking for private equity, venture capital and M&amp;A internships for summer 2027.", "hero.cta1": "See my work", "hero.cta2": "Get in touch", "hero.scroll": "Scroll", "about.eyebrow": "About", "about.p1": "I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.", "about.p2": "This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.", "about.f1k": "Now", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Before", "about.f2v": "BSc Economics (Honours), Utrecht", "about.f3k": "Also", "about.f3v": "Minor in Law · Utrecht", "edu.eyebrow": "Education", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Experience", "exp.title": "Work, study, and everything in between.", "exp0.period": "Sep 2026 – Present", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.", "exp1.period": "Jun 2026 – Present", "exp1.role": "Accounting Assistant", "exp1.org": "Exprimo Comunicazione, Italy (remote)", "exp1.desc": "I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.", "exp2.period": "Feb – May 2026", "exp2.role": "AI Scouts", "exp2.org": "Berkeley-led programme, remote", "exp2.desc": "I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.", "exp3.period": "Feb 2024 – Jul 2025", "exp3.role": "Head of Public Relations", "exp3.org": "Utrecht University Honours Programme", "exp3.desc": "I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.", "exp4.period": "Oct 2024 – Jun 2025", "exp4.role": "Mathematics and Statistics Tutor", "exp4.org": "AthenaStudies", "exp4.desc": "I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.", "exp5.period": "Feb 2024 – Nov 2026", "exp5.role": "Warehouse Operations", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.", "show.eyebrow": "Selected Projects", "show.title": "Three projects, built out of curiosity.", "noce.place": "Sorgente Calda", "noce.tip": "Hot spring · 1.2 km", "noce.sub": "Warm water, no signposts", "noce.chip": "Hot spring · Local", "noce.dist": "1.2 km", "vol.kicker": "Utrecht · Food Drive", "vol.meta": "Volunteers recruited &amp; coordinated", "sp1.kicker": "Map app", "sp1.title": "Noce", "sp1.cap": "Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.", "sp2.kicker": "Editorial", "sp2.title": "Honours Newsletter", "sp2.cap": "Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.", "sp3.kicker": "Community", "sp3.title": "Volunteers", "sp3.cap": "I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.", "contact.eyebrow": "Contact", "contact.title": "Looking for me? You can find me here!", "contact.email": "Email", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Journey", "hero.now": "Now: IFSA private equity track · RSM", "hero.cta1j": "See my journey", "j.eyebrow": "Journey", "j.title": "From Utrecht to Rio to Rotterdam.", "j.hint": "Tap any stop for the details.", "f.all": "All", "f.study": "Study", "f.work": "Work", "tag.study": "Study", "tag.work": "Work", "tag.next": "Next", "uu.title": "BSc Economics (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Honours bachelor in Economics and Business Economics, with a minor in Law.", "puc.title": "Exchange semester", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Aug 2025 – Jan 2026", "puc.desc": "Six months studying in Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Sep 2026 – Aug 2027", "rsm.desc": "Where I am now. Alongside the master’s I’m on IFSA Rotterdam’s private equity track.", "next.period": "Summer 2027", "next.title": "Internship in PE, VC or M&amp;A", "next.org": "Your team?", "next.desc": "The next stop. If your team is hiring for summer 2027, I’d like to hear from you.", "more": "Details", "less": "Close"}, "it": {"nav.about": "Chi sono", "nav.experience": "Esperienza", "nav.projects": "Progetti", "nav.contact": "Contatti", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Cerco internship in private equity, venture capital e M&amp;A per l’estate 2027.", "hero.cta1": "Guarda i progetti", "hero.cta2": "Scrivimi", "hero.scroll": "Scorri", "about.eyebrow": "Chi sono", "about.p1": "Sto facendo l’MSc in Finance &amp; Investments alla RSM di Rotterdam, dopo una laurea triennale Honours in Economia con minor in Diritto a Utrecht.", "about.p2": "Questo autunno faccio parte del percorso di private equity di IFSA Rotterdam, dove il mio team valuta TeamViewer per un take-private. Cerco internship in private equity, venture capital o M&amp;A per l’estate 2027.", "about.f1k": "Ora", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Prima", "about.f2v": "BSc Economia (Honours), Utrecht", "about.f3k": "Inoltre", "about.f3v": "Minor in Diritto · Utrecht", "edu.eyebrow": "Formazione", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Esperienza", "exp.title": "Lavoro, studio e tutto quello che sta in mezzo.", "exp0.period": "Set 2026 – oggi", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In un programma di 12 settimane il mio team lavora come un fondo di private equity che valuta il take-private di TeamViewer, società di software quotata a Francoforte. L’abbiamo valutata con DCF, multipli di società comparabili e transazioni precedenti, abbiamo costruito il modello LBO e verificato se l’offerta può arrivare a un IRR del 20%. Il caso finale va davanti a un investment committee.", "exp1.period": "Giu 2026 – oggi", "exp1.role": "Assistente contabile", "exp1.org": "Exprimo Comunicazione, Italia (da remoto)", "exp1.desc": "Registro le fatture delle piattaforme pubblicitarie, come Meta e TikTok, per un cliente fondo pensione, distinguendo i fornitori UE ed extra UE ai fini IVA. Riporto al Responsabile Amministrativo.", "exp2.period": "Feb – Mag 2026", "exp2.role": "AI Scouts", "exp2.org": "Programma guidato da Berkeley, da remoto", "exp2.desc": "Sono stato uno di circa il 3% dei candidati ammessi al programma. In oltre quaranta ore ho imparato a costruire applicazioni web basate sull’IA con Lovable, Supabase, Bolt, GitHub, Antigravity e Claude, e ho aiutato altri partecipanti a portare a termine i loro progetti.", "exp3.period": "Feb 2024 – Lug 2025", "exp3.role": "Responsabile Relazioni Esterne", "exp3.org": "Honours Programme, Università di Utrecht", "exp3.desc": "Ho guidato una piccola redazione trasversale alle facoltà, pubblicando la newsletter mensile dell’Honours Programme e gestendo la pagina LinkedIn della community. Due anni a far uscire un numero ogni mese, puntuale.", "exp4.period": "Ott 2024 – Giu 2025", "exp4.role": "Tutor di Matematica e Statistica", "exp4.org": "AthenaStudies", "exp4.desc": "Ho insegnato a gruppi di circa dieci studenti di Economia del primo anno e ho scritto tutto il materiale io: slide, esempi svolti e simulazioni d’esame.", "exp5.period": "Feb 2024 – Nov 2026", "exp5.role": "Operazioni di magazzino", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Preparazione ed evasione degli ordini per due dei maggiori operatori della grande distribuzione olandese, part-time insieme agli studi.", "show.eyebrow": "Progetti selezionati", "show.title": "Tre progetti, nati dalla curiosità.", "noce.place": "Sorgente Calda", "noce.tip": "Sorgente termale · 1,2 km", "noce.sub": "Acqua calda, nessun cartello", "noce.chip": "Termale · Locale", "noce.dist": "1,2 km", "vol.kicker": "Utrecht · Raccolta alimentare", "vol.meta": "Volontari reclutati e coordinati", "sp1.kicker": "App di mappe", "sp1.title": "Noce", "sp1.cap": "Noce nasce come mappa di comunità, dove piccole zone o gemme nascoste possono essere valorizzate attraverso gli occhi di chi ci vive. È stata sviluppata per la AI Scouts Academy e usa l’IA per creare punti social, proteggere dalle fake news, censurare immagini inappropriate e creare percorsi personalizzati.", "sp2.kicker": "Editoriale", "sp2.title": "Honours Newsletter", "sp2.cap": "Due anni alla guida della redazione e della pagina LinkedIn dell’Honours Programme di Utrecht. Scrivere, editare e assicurarsi che il numero uscisse davvero ogni mese.", "sp3.kicker": "Comunità", "sp3.title": "Volontariato", "sp3.cap": "Sono tra gli organizzatori della sezione di Utrecht. Abbiamo fatto la prima raccolta alimentare della città per il banco alimentare. Cinque punti vendita Jumbo in un weekend e 10 carrelli di spesa raccolti, con studenti che ho aiutato a reclutare.", "contact.eyebrow": "Contatti", "contact.title": "Mi cerchi? Mi trovi qui!", "contact.email": "Email", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Percorso", "hero.now": "Ora: private equity track di IFSA · RSM", "hero.cta1j": "Guarda il percorso", "j.eyebrow": "Percorso", "j.title": "Da Utrecht a Rio, fino a Rotterdam.", "j.hint": "Tocca una tappa per i dettagli.", "f.all": "Tutto", "f.study": "Studio", "f.work": "Lavoro", "tag.study": "Studio", "tag.work": "Lavoro", "tag.next": "Prossimo", "uu.title": "BSc Economia (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Laurea triennale Honours in Economia, con minor in Diritto.", "puc.title": "Semestre di scambio", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Ago 2025 – Gen 2026", "puc.desc": "Sei mesi di studio a Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Set 2026 – Ago 2027", "rsm.desc": "Dove sono adesso. Insieme al master seguo il private equity track di IFSA Rotterdam.", "next.period": "Estate 2027", "next.title": "Internship in PE, VC o M&amp;A", "next.org": "Il vostro team?", "next.desc": "La prossima tappa. Se il vostro team cerca qualcuno per l’estate 2027, scrivetemi.", "more": "Dettagli", "less": "Chiudi"}, "nl": {"nav.about": "Over mij", "nav.experience": "Ervaring", "nav.projects": "Projecten", "nav.contact": "Contact", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Op zoek naar een stage in private equity, venture capital en M&amp;A voor de zomer van 2027.", "hero.cta1": "Bekijk mijn werk", "hero.cta2": "Neem contact op", "hero.scroll": "Scroll", "about.eyebrow": "Over mij", "about.p1": "Ik volg de MSc Finance &amp; Investments aan RSM in Rotterdam, na een Honours-bachelor Economie met een minor Rechten in Utrecht.", "about.p2": "Dit najaar zit ik in het private-equitytraject van IFSA Rotterdam, waar mijn team TeamViewer waardeert voor een take-private. Ik zoek een stage in private equity, venture capital of M&amp;A voor de zomer van 2027.", "about.f1k": "Nu", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Daarvoor", "about.f2v": "BSc Economie (Honours), Utrecht", "about.f3k": "Ook", "about.f3v": "Minor Rechten · Utrecht", "edu.eyebrow": "Opleiding", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Ervaring", "exp.title": "Werk, studie en alles daartussenin.", "exp0.period": "Sep 2026 – heden", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In een programma van 12 weken werkt mijn team als een private-equityfonds dat een take-private van TeamViewer onderzoekt, het in Frankfurt genoteerde softwarebedrijf. We waardeerden het met een DCF, vergelijkbare beursgenoteerde bedrijven en eerdere transacties, bouwden het LBO-model en toetsten of het bod een IRR van 20% kan halen. De eindcase gaat naar een investment committee.", "exp1.period": "Jun 2026 – heden", "exp1.role": "Assistent boekhouding", "exp1.org": "Exprimo Comunicazione, Italië (op afstand)", "exp1.desc": "Ik boek de facturen van advertentieplatforms zoals Meta en TikTok voor een pensioenfonds als klant, per land van de leverancier, zodat de btw voor EU- en niet-EU-leveranciers klopt. Ik rapporteer aan het Hoofd Administratie.", "exp2.period": "Feb – mei 2026", "exp2.role": "AI Scouts", "exp2.org": "Programma onder leiding van Berkeley, op afstand", "exp2.desc": "Ik was een van de circa 3% van de aanmelders die werd toegelaten. In ruim veertig uur leerde ik AI-gedreven webapplicaties bouwen met Lovable, Supabase, Bolt, GitHub, Antigravity en Claude, en hielp ik andere deelnemers hun eigen project af te maken.", "exp3.period": "Feb 2024 – jul 2025", "exp3.role": "Hoofd Public Relations", "exp3.org": "Honours Programme, Universiteit Utrecht", "exp3.desc": "Ik gaf leiding aan een kleine redactie over faculteiten heen, bracht de maandelijkse Honours-nieuwsbrief uit en beheerde de LinkedIn-pagina van de community. Twee jaar lang elke maand een editie, op tijd.", "exp4.period": "Okt 2024 – jun 2025", "exp4.role": "Docent Wiskunde en Statistiek", "exp4.org": "AthenaStudies", "exp4.desc": "Ik gaf les aan groepen van ongeveer tien eerstejaars economiestudenten en schreef al het materiaal zelf: slides, uitgewerkte voorbeelden en oefententamens.", "exp5.period": "Feb 2024 – nov 2026", "exp5.role": "Magazijnwerkzaamheden", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Orderverzameling en -afhandeling voor twee van de grootste supermarktketens van Nederland, parttime naast mijn studie.", "show.eyebrow": "Geselecteerde projecten", "show.title": "Drie projecten, ontstaan uit nieuwsgierigheid.", "noce.place": "Sorgente Calda", "noce.tip": "Warmwaterbron · 1,2 km", "noce.sub": "Warm water, geen bordjes", "noce.chip": "Bron · Lokaal", "noce.dist": "1,2 km", "vol.kicker": "Utrecht · Voedselinzameling", "vol.meta": "Vrijwilligers geworven en gecoördineerd", "sp1.kicker": "Kaart-app", "sp1.title": "Noce", "sp1.cap": "Noce is gebouwd als een gemeenschapskaart, waar kleine gebieden of verborgen pareltjes gewaardeerd kunnen worden door de ogen van locals. De app is ontwikkeld voor de AI Scouts Academy en gebruikt AI om sociale punten aan te maken, te beschermen tegen nepnieuws, ongepaste beelden te censureren en gepersonaliseerde routes te maken.", "sp2.kicker": "Redactie", "sp2.title": "Honours Newsletter", "sp2.cap": "Twee jaar leiding over de redactie en de LinkedIn-pagina van het Utrecht Honours Programme. Schrijven, redigeren en zorgen dat het elke maand ook echt uitkwam.", "sp3.kicker": "Gemeenschap", "sp3.title": "Vrijwilligers", "sp3.cap": "Ik ben mede-organisator van de Utrechtse afdeling. We hielden de eerste voedselinzameling van de stad voor de voedselbank. Vijf Jumbo-filialen in één weekend en 10 winkelwagens vol eten, met een studententeam dat ik mee heb geworven.", "contact.eyebrow": "Contact", "contact.title": "Op zoek naar mij? Hier vind je me!", "contact.email": "E-mail", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Traject", "hero.now": "Nu: private equity track bij IFSA · RSM", "hero.cta1j": "Bekijk mijn traject", "j.eyebrow": "Traject", "j.title": "Van Utrecht via Rio naar Rotterdam.", "j.hint": "Tik op een stap voor de details.", "f.all": "Alles", "f.study": "Studie", "f.work": "Werk", "tag.study": "Studie", "tag.work": "Werk", "tag.next": "Volgende", "uu.title": "BSc Economie (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Honours-bachelor Economie en Bedrijfseconomie, met een minor Rechten.", "puc.title": "Uitwisselingssemester", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Aug 2025 – jan 2026", "puc.desc": "Zes maanden studeren in Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Sep 2026 – aug 2027", "rsm.desc": "Hier sta ik nu. Naast de master volg ik de private equity track van IFSA Rotterdam.", "next.period": "Zomer 2027", "next.title": "Stage in PE, VC of M&amp;A", "next.org": "Jullie team?", "next.desc": "De volgende stap. Zoekt jullie team iemand voor zomer 2027? Ik hoor graag van je.", "more": "Details", "less": "Sluiten"}};
-  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var $ = function (s, r) { return (r || document).querySelector(s); };
-  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  function mobile() { return innerWidth <= 860; }
+  var TR = {"en": {"nav.about": "About", "nav.experience": "Experience", "nav.projects": "Projects", "nav.contact": "Contact", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Looking for private equity, venture capital and M&amp;A internships for summer 2027.", "hero.cta1": "See my work", "hero.cta2": "Get in touch", "hero.scroll": "Scroll", "about.eyebrow": "About", "about.p1": "I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.", "about.p2": "This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.", "about.f1k": "Now", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Before", "about.f2v": "BSc Economics (Honours), Utrecht", "about.f3k": "Also", "about.f3v": "Minor in Law · Utrecht", "edu.eyebrow": "Education", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Experience", "exp.title": "Work, study, and everything in between.", "exp0.period": "Sep 2026 – Present", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.", "exp1.period": "Jun 2026 – Present", "exp1.role": "Accounting Assistant", "exp1.org": "Exprimo Comunicazione, Italy (remote)", "exp1.desc": "I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.", "exp2.period": "Feb – May 2026", "exp2.role": "AI Scouts", "exp2.org": "Berkeley-led programme, remote", "exp2.desc": "I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.", "exp3.period": "Feb 2024 – Jul 2025", "exp3.role": "Head of Public Relations", "exp3.org": "Utrecht University Honours Programme", "exp3.desc": "I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.", "exp4.period": "Oct 2024 – Jun 2025", "exp4.role": "Mathematics and Statistics Tutor", "exp4.org": "AthenaStudies", "exp4.desc": "I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.", "exp5.period": "Feb 2024 – Nov 2026", "exp5.role": "Warehouse Operations", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.", "show.eyebrow": "Selected Projects", "show.title": "Three projects, built out of curiosity.", "noce.place": "Sorgente Calda", "noce.tip": "Hot spring · 1.2 km", "noce.sub": "Warm water, no signposts", "noce.chip": "Hot spring · Local", "noce.dist": "1.2 km", "vol.kicker": "Utrecht · Food Drive", "vol.meta": "Volunteers recruited &amp; coordinated", "sp1.kicker": "Map app", "sp1.title": "Noce", "sp1.cap": "Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.", "sp2.kicker": "Editorial", "sp2.title": "Honours Newsletter", "sp2.cap": "Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.", "sp3.kicker": "Community", "sp3.title": "Volunteers", "sp3.cap": "I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.", "contact.eyebrow": "Contact", "contact.title": "Looking for me? You can find me here!", "contact.email": "Email", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Journey", "hero.now": "Now: IFSA private equity track · RSM", "hero.cta1j": "See my journey", "j.eyebrow": "Journey", "j.title": "From Utrecht to Rio to Rotterdam.", "j.hint": "Tap any stop for the details.", "f.all": "All", "f.study": "Study", "f.work": "Work", "tag.study": "Study", "tag.work": "Work", "tag.next": "Next", "uu.title": "BSc Economics (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Honours bachelor in Economics and Business Economics, with a minor in Law.", "puc.title": "Exchange semester", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Aug 2025 – Jan 2026", "puc.desc": "Six months studying in Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Sep 2026 – Aug 2027", "rsm.desc": "Where I am now. Alongside the master’s I’m on IFSA Rotterdam’s private equity track.", "next.period": "Summer 2027", "next.title": "Internship in PE, VC or M&amp;A", "next.org": "Your team?", "next.desc": "The next stop. If your team is hiring for summer 2027, I’d like to hear from you.", "more": "Details", "less": "Close", "board.title": "Departures", "b1k": "Now", "b1v": "IFSA private equity track", "b1p": "Rotterdam", "b2k": "Studying", "b2v": "MSc Finance &amp; Investments", "b2p": "RSM", "b3k": "Next", "b3v": "Internship in PE, VC or M&amp;A", "b3p": "Summer 2027", "route.cta": "See the route", "side.title": "Side trips", "last.title": "Last stop before 2027", "legend": "Tap a station to read more.", "legend.d": "Scroll to travel the line, or click a station.", "pr.short": "Honours Programme"}, "it": {"nav.about": "Chi sono", "nav.experience": "Esperienza", "nav.projects": "Progetti", "nav.contact": "Contatti", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Cerco internship in private equity, venture capital e M&amp;A per l’estate 2027.", "hero.cta1": "Guarda i progetti", "hero.cta2": "Scrivimi", "hero.scroll": "Scorri", "about.eyebrow": "Chi sono", "about.p1": "Sto facendo l’MSc in Finance &amp; Investments alla RSM di Rotterdam, dopo una laurea triennale Honours in Economia con minor in Diritto a Utrecht.", "about.p2": "Questo autunno faccio parte del percorso di private equity di IFSA Rotterdam, dove il mio team valuta TeamViewer per un take-private. Cerco internship in private equity, venture capital o M&amp;A per l’estate 2027.", "about.f1k": "Ora", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Prima", "about.f2v": "BSc Economia (Honours), Utrecht", "about.f3k": "Inoltre", "about.f3v": "Minor in Diritto · Utrecht", "edu.eyebrow": "Formazione", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Esperienza", "exp.title": "Lavoro, studio e tutto quello che sta in mezzo.", "exp0.period": "Set 2026 – oggi", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In un programma di 12 settimane il mio team lavora come un fondo di private equity che valuta il take-private di TeamViewer, società di software quotata a Francoforte. L’abbiamo valutata con DCF, multipli di società comparabili e transazioni precedenti, abbiamo costruito il modello LBO e verificato se l’offerta può arrivare a un IRR del 20%. Il caso finale va davanti a un investment committee.", "exp1.period": "Giu 2026 – oggi", "exp1.role": "Assistente contabile", "exp1.org": "Exprimo Comunicazione, Italia (da remoto)", "exp1.desc": "Registro le fatture delle piattaforme pubblicitarie, come Meta e TikTok, per un cliente fondo pensione, distinguendo i fornitori UE ed extra UE ai fini IVA. Riporto al Responsabile Amministrativo.", "exp2.period": "Feb – Mag 2026", "exp2.role": "AI Scouts", "exp2.org": "Programma guidato da Berkeley, da remoto", "exp2.desc": "Sono stato uno di circa il 3% dei candidati ammessi al programma. In oltre quaranta ore ho imparato a costruire applicazioni web basate sull’IA con Lovable, Supabase, Bolt, GitHub, Antigravity e Claude, e ho aiutato altri partecipanti a portare a termine i loro progetti.", "exp3.period": "Feb 2024 – Lug 2025", "exp3.role": "Responsabile Relazioni Esterne", "exp3.org": "Honours Programme, Università di Utrecht", "exp3.desc": "Ho guidato una piccola redazione trasversale alle facoltà, pubblicando la newsletter mensile dell’Honours Programme e gestendo la pagina LinkedIn della community. Due anni a far uscire un numero ogni mese, puntuale.", "exp4.period": "Ott 2024 – Giu 2025", "exp4.role": "Tutor di Matematica e Statistica", "exp4.org": "AthenaStudies", "exp4.desc": "Ho insegnato a gruppi di circa dieci studenti di Economia del primo anno e ho scritto tutto il materiale io: slide, esempi svolti e simulazioni d’esame.", "exp5.period": "Feb 2024 – Nov 2026", "exp5.role": "Operazioni di magazzino", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Preparazione ed evasione degli ordini per due dei maggiori operatori della grande distribuzione olandese, part-time insieme agli studi.", "show.eyebrow": "Progetti selezionati", "show.title": "Tre progetti, nati dalla curiosità.", "noce.place": "Sorgente Calda", "noce.tip": "Sorgente termale · 1,2 km", "noce.sub": "Acqua calda, nessun cartello", "noce.chip": "Termale · Locale", "noce.dist": "1,2 km", "vol.kicker": "Utrecht · Raccolta alimentare", "vol.meta": "Volontari reclutati e coordinati", "sp1.kicker": "App di mappe", "sp1.title": "Noce", "sp1.cap": "Noce nasce come mappa di comunità, dove piccole zone o gemme nascoste possono essere valorizzate attraverso gli occhi di chi ci vive. È stata sviluppata per la AI Scouts Academy e usa l’IA per creare punti social, proteggere dalle fake news, censurare immagini inappropriate e creare percorsi personalizzati.", "sp2.kicker": "Editoriale", "sp2.title": "Honours Newsletter", "sp2.cap": "Due anni alla guida della redazione e della pagina LinkedIn dell’Honours Programme di Utrecht. Scrivere, editare e assicurarsi che il numero uscisse davvero ogni mese.", "sp3.kicker": "Comunità", "sp3.title": "Volontariato", "sp3.cap": "Sono tra gli organizzatori della sezione di Utrecht. Abbiamo fatto la prima raccolta alimentare della città per il banco alimentare. Cinque punti vendita Jumbo in un weekend e 10 carrelli di spesa raccolti, con studenti che ho aiutato a reclutare.", "contact.eyebrow": "Contatti", "contact.title": "Mi cerchi? Mi trovi qui!", "contact.email": "Email", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Percorso", "hero.now": "Ora: private equity track di IFSA · RSM", "hero.cta1j": "Guarda il percorso", "j.eyebrow": "Percorso", "j.title": "Da Utrecht a Rio, fino a Rotterdam.", "j.hint": "Tocca una tappa per i dettagli.", "f.all": "Tutto", "f.study": "Studio", "f.work": "Lavoro", "tag.study": "Studio", "tag.work": "Lavoro", "tag.next": "Prossimo", "uu.title": "BSc Economia (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Laurea triennale Honours in Economia, con minor in Diritto.", "puc.title": "Semestre di scambio", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Ago 2025 – Gen 2026", "puc.desc": "Sei mesi di studio a Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Set 2026 – Ago 2027", "rsm.desc": "Dove sono adesso. Insieme al master seguo il private equity track di IFSA Rotterdam.", "next.period": "Estate 2027", "next.title": "Internship in PE, VC o M&amp;A", "next.org": "Il vostro team?", "next.desc": "La prossima tappa. Se il vostro team cerca qualcuno per l’estate 2027, scrivetemi.", "more": "Dettagli", "less": "Chiudi", "board.title": "Partenze", "b1k": "Ora", "b1v": "IFSA private equity track", "b1p": "Rotterdam", "b2k": "Studio", "b2v": "MSc Finance &amp; Investments", "b2p": "RSM", "b3k": "Prossima", "b3v": "Internship in PE, VC o M&amp;A", "b3p": "Estate 2027", "route.cta": "Guarda il percorso", "side.title": "Deviazioni", "last.title": "Ultima fermata prima del 2027", "legend": "Tocca una stazione per leggere di più.", "legend.d": "Scorri per viaggiare sulla linea, o clicca una stazione.", "pr.short": "Honours Programme"}, "nl": {"nav.about": "Over mij", "nav.experience": "Ervaring", "nav.projects": "Projecten", "nav.contact": "Contact", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Op zoek naar een stage in private equity, venture capital en M&amp;A voor de zomer van 2027.", "hero.cta1": "Bekijk mijn werk", "hero.cta2": "Neem contact op", "hero.scroll": "Scroll", "about.eyebrow": "Over mij", "about.p1": "Ik volg de MSc Finance &amp; Investments aan RSM in Rotterdam, na een Honours-bachelor Economie met een minor Rechten in Utrecht.", "about.p2": "Dit najaar zit ik in het private-equitytraject van IFSA Rotterdam, waar mijn team TeamViewer waardeert voor een take-private. Ik zoek een stage in private equity, venture capital of M&amp;A voor de zomer van 2027.", "about.f1k": "Nu", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Daarvoor", "about.f2v": "BSc Economie (Honours), Utrecht", "about.f3k": "Ook", "about.f3v": "Minor Rechten · Utrecht", "edu.eyebrow": "Opleiding", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Ervaring", "exp.title": "Werk, studie en alles daartussenin.", "exp0.period": "Sep 2026 – heden", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In een programma van 12 weken werkt mijn team als een private-equityfonds dat een take-private van TeamViewer onderzoekt, het in Frankfurt genoteerde softwarebedrijf. We waardeerden het met een DCF, vergelijkbare beursgenoteerde bedrijven en eerdere transacties, bouwden het LBO-model en toetsten of het bod een IRR van 20% kan halen. De eindcase gaat naar een investment committee.", "exp1.period": "Jun 2026 – heden", "exp1.role": "Assistent boekhouding", "exp1.org": "Exprimo Comunicazione, Italië (op afstand)", "exp1.desc": "Ik boek de facturen van advertentieplatforms zoals Meta en TikTok voor een pensioenfonds als klant, per land van de leverancier, zodat de btw voor EU- en niet-EU-leveranciers klopt. Ik rapporteer aan het Hoofd Administratie.", "exp2.period": "Feb – mei 2026", "exp2.role": "AI Scouts", "exp2.org": "Programma onder leiding van Berkeley, op afstand", "exp2.desc": "Ik was een van de circa 3% van de aanmelders die werd toegelaten. In ruim veertig uur leerde ik AI-gedreven webapplicaties bouwen met Lovable, Supabase, Bolt, GitHub, Antigravity en Claude, en hielp ik andere deelnemers hun eigen project af te maken.", "exp3.period": "Feb 2024 – jul 2025", "exp3.role": "Hoofd Public Relations", "exp3.org": "Honours Programme, Universiteit Utrecht", "exp3.desc": "Ik gaf leiding aan een kleine redactie over faculteiten heen, bracht de maandelijkse Honours-nieuwsbrief uit en beheerde de LinkedIn-pagina van de community. Twee jaar lang elke maand een editie, op tijd.", "exp4.period": "Okt 2024 – jun 2025", "exp4.role": "Docent Wiskunde en Statistiek", "exp4.org": "AthenaStudies", "exp4.desc": "Ik gaf les aan groepen van ongeveer tien eerstejaars economiestudenten en schreef al het materiaal zelf: slides, uitgewerkte voorbeelden en oefententamens.", "exp5.period": "Feb 2024 – nov 2026", "exp5.role": "Magazijnwerkzaamheden", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Orderverzameling en -afhandeling voor twee van de grootste supermarktketens van Nederland, parttime naast mijn studie.", "show.eyebrow": "Geselecteerde projecten", "show.title": "Drie projecten, ontstaan uit nieuwsgierigheid.", "noce.place": "Sorgente Calda", "noce.tip": "Warmwaterbron · 1,2 km", "noce.sub": "Warm water, geen bordjes", "noce.chip": "Bron · Lokaal", "noce.dist": "1,2 km", "vol.kicker": "Utrecht · Voedselinzameling", "vol.meta": "Vrijwilligers geworven en gecoördineerd", "sp1.kicker": "Kaart-app", "sp1.title": "Noce", "sp1.cap": "Noce is gebouwd als een gemeenschapskaart, waar kleine gebieden of verborgen pareltjes gewaardeerd kunnen worden door de ogen van locals. De app is ontwikkeld voor de AI Scouts Academy en gebruikt AI om sociale punten aan te maken, te beschermen tegen nepnieuws, ongepaste beelden te censureren en gepersonaliseerde routes te maken.", "sp2.kicker": "Redactie", "sp2.title": "Honours Newsletter", "sp2.cap": "Twee jaar leiding over de redactie en de LinkedIn-pagina van het Utrecht Honours Programme. Schrijven, redigeren en zorgen dat het elke maand ook echt uitkwam.", "sp3.kicker": "Gemeenschap", "sp3.title": "Vrijwilligers", "sp3.cap": "Ik ben mede-organisator van de Utrechtse afdeling. We hielden de eerste voedselinzameling van de stad voor de voedselbank. Vijf Jumbo-filialen in één weekend en 10 winkelwagens vol eten, met een studententeam dat ik mee heb geworven.", "contact.eyebrow": "Contact", "contact.title": "Op zoek naar mij? Hier vind je me!", "contact.email": "E-mail", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Traject", "hero.now": "Nu: private equity track bij IFSA · RSM", "hero.cta1j": "Bekijk mijn traject", "j.eyebrow": "Traject", "j.title": "Van Utrecht via Rio naar Rotterdam.", "j.hint": "Tik op een stap voor de details.", "f.all": "Alles", "f.study": "Studie", "f.work": "Werk", "tag.study": "Studie", "tag.work": "Werk", "tag.next": "Volgende", "uu.title": "BSc Economie (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Honours-bachelor Economie en Bedrijfseconomie, met een minor Rechten.", "puc.title": "Uitwisselingssemester", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Aug 2025 – jan 2026", "puc.desc": "Zes maanden studeren in Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Sep 2026 – aug 2027", "rsm.desc": "Hier sta ik nu. Naast de master volg ik de private equity track van IFSA Rotterdam.", "next.period": "Zomer 2027", "next.title": "Stage in PE, VC of M&amp;A", "next.org": "Jullie team?", "next.desc": "De volgende stap. Zoekt jullie team iemand voor zomer 2027? Ik hoor graag van je.", "more": "Details", "less": "Sluiten", "board.title": "Vertrek", "b1k": "Nu", "b1v": "IFSA private equity track", "b1p": "Rotterdam", "b2k": "Studie", "b2v": "MSc Finance &amp; Investments", "b2p": "RSM", "b3k": "Volgende", "b3v": "Stage in PE, VC of M&amp;A", "b3p": "Zomer 2027", "route.cta": "Bekijk de route", "side.title": "Zijsporen", "last.title": "Laatste halte voor 2027", "legend": "Tik op een station voor meer.", "legend.d": "Scroll om over de lijn te reizen, of klik op een station.", "pr.short": "Honours Programme"}}, DATA = {"uu": {"t": "study", "p": "uu.period", "ti": "uu.title", "o": "uu.org", "d": "uu.desc", "x": "", "logo": "logo-uu.png", "cx": 170, "cy": 130}, "pj": {"t": "work", "p": "exp5.period", "ti": "exp5.role", "o": "exp5.org", "d": "exp5.desc", "x": "<div class=\"logos\"><img src=\"images/logo-picnic.png\" alt=\"Picnic\" loading=\"lazy\"><img src=\"images/logo-jumbo-tile.png\" alt=\"Jumbo\" loading=\"lazy\"></div>", "logo": "", "cx": 420, "cy": 262}, "pr": {"t": "work", "p": "exp3.period", "ti": "exp3.role", "o": "exp3.org", "d": "exp3.desc", "x": "", "logo": "logo-uu.png", "cx": 670, "cy": 262}, "ath": {"t": "work", "p": "exp4.period", "ti": "exp4.role", "o": "exp4.org", "d": "exp4.desc", "x": "", "logo": "logo-athena.png", "cx": 920, "cy": 262}, "puc": {"t": "study", "p": "puc.period", "ti": "puc.title", "o": "puc.org", "d": "puc.desc", "x": "", "logo": "logo-puc.png", "cx": 1170, "cy": 130}, "ais": {"t": "study", "p": "exp2.period", "ti": "exp2.role", "o": "exp2.org", "d": "exp2.desc", "x": "", "logo": "logo-aiscouts.png", "cx": 1420, "cy": 130}, "exp": {"t": "work", "p": "exp1.period", "ti": "exp1.role", "o": "exp1.org", "d": "exp1.desc", "x": "", "logo": "logo-exprimo.png", "cx": 1670, "cy": 262}, "rsm": {"t": "study", "p": "rsm.period", "ti": "rsm.title", "o": "rsm.org", "d": "rsm.desc", "x": "", "logo": "logo-rsm.png", "cx": 1920, "cy": 130}, "ifsa": {"t": "work", "p": "exp0.period", "ti": "exp0.role", "o": "exp0.org", "d": "exp0.desc", "x": "", "logo": "", "cx": 2170, "cy": 262}, "next": {"t": "next", "p": "next.period", "ti": "next.title", "o": "next.org", "d": "next.desc", "x": "<a class=\"btn btn-ink\" href=\"#contact\" data-i18n=\"hero.cta2\">Get in touch</a>", "logo": "", "cx": 2420, "cy": 196}};
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { return [].slice.call(document.querySelectorAll(s)); };
+  var desk = function () { return innerWidth >= 1024; };
+  var lang = 'en', active = 'uu';
+  function t(k) { return (TR[lang] && TR[lang][k]) || TR.en[k] || ''; }
 
-  /* ---------- language ---------- */
-  var lang = 'en';
-  function applyLang(l) {
-    if (!TR[l]) l = 'en';
-    lang = l;
-    document.documentElement.lang = l;
-    $$('[data-i18n]').forEach(function (el) {
-      var v = TR[l][el.getAttribute('data-i18n')];
-      if (v != null) el.innerHTML = v;
-    });
-    $$('.lang button').forEach(function (b) {
-      var on = b.getAttribute('data-lang') === l;
-      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
-    });
-    try { localStorage.setItem('lang', l); } catch (e) {}
-    requestAnimationFrame(build);
+  /* language */
+  function setLang(l, flip) {
+    lang = TR[l] ? l : 'en';
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach(function (el) { var v = TR[lang][el.getAttribute('data-i18n')]; if (v != null) el.innerHTML = v; });
+    $$('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang); });
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+    showDetail(active);
+    if (flip) flipBoard();
   }
-  $$('.lang button').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); }); });
+  $$('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-lang'), true); }); });
 
-  /* ---------- nav ---------- */
-  var nav = $('#nav'), burger = $('#burger'), menu = $('#menu');
-  function onScrollNav() { nav.classList.toggle('solid', scrollY > 40 || menu.classList.contains('open')); }
-  burger.addEventListener('click', function () {
-    var open = !menu.classList.contains('open');
-    menu.classList.toggle('open', open); burger.setAttribute('aria-expanded', open);
-    document.body.style.overflow = open ? 'hidden' : ''; onScrollNav();
+  /* nav border */
+  var nav = $('#nav');
+  /* clock on the board: local Rotterdam time */
+  var clock = $('#clock');
+  function tickClock() {
+    try { clock.textContent = new Intl.DateTimeFormat('nl-NL', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam' }).format(new Date()); } catch (e) {}
+  }
+  tickClock(); setInterval(tickClock, 30000);
+
+  /* split-flap: each character rolls through a few letters then settles. Runs once on load and on language change. */
+  var GLY = 'ABCDEFGHIJKLMNOPRSTUVWZ0123456789';
+  function flipBoard() {
+    if (RM) return;
+    $$('.board .flip').forEach(function (el, r) {
+      var final = el.textContent, start = performance.now(), dur = 520 + r * 90;
+      el.setAttribute('aria-label', final);
+      (function step(now) {
+        var p = Math.min(1, (now - start) / dur), out = '';
+        for (var i = 0; i < final.length; i++) {
+          var c = final[i], settle = i / final.length * 0.75 + 0.25;
+          out += (c === ' ' || p >= settle) ? c : GLY[(Math.random() * GLY.length) | 0];
+        }
+        el.textContent = out;
+        if (p < 1) requestAnimationFrame(step); else { el.textContent = final; el.removeAttribute('aria-label'); }
+      })(start);
+    });
+  }
+
+  /* ---------- desktop map ---------- */
+  var route = $('#dRoute'), track = $('#dTrack'), view = $('#dView'), map = $('#dMap'), detail = $('#dDetail');
+  var plane = $('#dPlane'), bike = $('#dBike'), flight = $('#flight');
+  var ids = Object.keys(DATA), scale = 1, s0 = 0, s1 = 0;
+
+  function showDetail(id) {
+    var d = DATA[id]; if (!d || !detail) return;
+    var logo = d.logo ? '<img src="images/' + d.logo + '" alt="">' : (id === 'ifsa' ? 'IF' : '');
+    detail.innerHTML = '<div class="dl" aria-hidden="true">' + logo + '</div><div><div class="d-when">' + t(d.p) + '</div><h3 class="d-title">' + t(d.ti) + '</h3><div class="d-org">' + t(d.o) + '</div><p class="d-desc">' + t(d.d) + '</p>' + (d.x ? d.x.replace(/data-i18n="hero.cta2">[^<]*</, 'data-i18n="hero.cta2">' + t('hero.cta2') + '<') : '') + '</div>';
+    $$('.d-st').forEach(function (g) { g.classList.toggle('on', g.getAttribute('data-id') === id); });
+    active = id;
+  }
+  function layout() {
+    if (!desk() || !map) return;
+    var vh = view.clientHeight || 400, mh = +map.getAttribute('height'), mw = +map.getAttribute('width');
+    scale = Math.max(.5, Math.min(1.3, vh / mh, innerWidth / 1100));
+    map.style.width = mw * scale + 'px'; map.style.height = mh * scale + 'px';
+    s0 = innerWidth / 2 - DATA[ids[0]].cx * scale; s1 = innerWidth / 2 - DATA[ids[ids.length - 1]].cx * scale;
+    onScroll();
+  }
+  function progress() {
+    var r = route.getBoundingClientRect(), total = route.offsetHeight - innerHeight;
+    return Math.max(0, Math.min(1, -r.top / (total || 1)));
+  }
+  function place(el, x, y, ang, flip) {
+    el.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + ang + 'deg) scaleX(' + flip + ')';
+    var f = el.querySelector('.face'); if (f) f.style.transform = 'scaleX(' + flip + ') rotate(' + (-ang) + 'deg)';
+  }
+  function onScroll() {
+    nav.classList.toggle('solid', scrollY > 30);
+    if (!desk() || !map) return;
+    var p = progress(), shift = s0 - p * (s0 - s1);
+    track.style.transform = 'translateX(' + shift + 'px)';
+    /* map x under the viewport centre */
+    var cx = (innerWidth / 2 - shift) / scale;
+    var best = ids[0], bd = 1e9;
+    ids.forEach(function (id) { var dd = Math.abs(DATA[id].cx - cx); if (dd < bd) { bd = dd; best = id; } });
+    if (best !== active) showDetail(best);
+    /* plane: along the flight arc between Utrecht and Rio */
+    var a = DATA.uu.cx, b = DATA.puc.cx;
+    if (!RM && cx > a + 20 && cx < b - 20) {
+      var len = flight.getTotalLength(), q = (cx - a) / (b - a), pt = flight.getPointAtLength(len * q), pt2 = flight.getPointAtLength(Math.min(len, len * q + 2));
+      var ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
+      plane.classList.add('on'); place(plane, pt.x * scale, pt.y * scale, Math.max(-28, Math.min(28, ang)), 1);
+    } else plane.classList.remove('on');
+    /* bike: on the study line from Rio to Rotterdam */
+    a = DATA.puc.cx; b = DATA.rsm.cx;
+    if (!RM && cx > a + 20 && cx < b - 20) { bike.classList.add('on'); place(bike, cx * scale, DATA.puc.cy * scale, 0, 1); }
+    else bike.classList.remove('on');
+  }
+  function goTo(id) {
+    if (!desk()) return;
+    var shift = innerWidth / 2 - DATA[id].cx * scale, p = Math.max(0, Math.min(1, (s0 - shift) / ((s0 - s1) || 1)));
+    var top = route.getBoundingClientRect().top + scrollY + p * (route.offsetHeight - innerHeight);
+    scrollTo({ top: top, behavior: RM ? 'auto' : 'smooth' });
+    showDetail(id);
+  }
+  $$('.d-st').forEach(function (g) {
+    g.addEventListener('click', function () { goTo(g.getAttribute('data-id')); });
+    g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(g.getAttribute('data-id')); } });
   });
-  $$('#menu a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }); });
 
-  /* ---------- hero name ---------- */
-  var h1 = $('#heroName');
-  if (!REDUCED) {
-    var txt = h1.textContent, i = 0;
-    h1.setAttribute('aria-label', txt);
-    h1.innerHTML = txt.split(' ').map(function (w) {
-      return '<span style="white-space:nowrap" aria-hidden="true">' + w.split('').map(function (c) {
-        return '<span class="ch" style="transition-delay:' + (120 + (i++) * 26) + 'ms">' + c + '</span>';
-      }).join('') + '</span>';
-    }).join(' ');
-    requestAnimationFrame(function () { requestAnimationFrame(function () { h1.classList.add('go'); }); });
-  }
-
-  /* ---------- reveal on scroll ---------- */
-  if ('IntersectionObserver' in window && !REDUCED) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    $$('.rise, .stop').forEach(function (el) { io.observe(el); });
-  } else {
-    $$('.rise, .stop').forEach(function (el) { el.classList.add('in'); });
-  }
-
-  /* ---------- cards: open / close ---------- */
-  $$('.card-head').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var open = b.getAttribute('aria-expanded') !== 'true';
-      b.setAttribute('aria-expanded', open);
-      setTimeout(build, 480);
-    });
+  /* ---------- phone line ---------- */
+  $$('.m-head').forEach(function (b) {
+    b.addEventListener('click', function () { b.setAttribute('aria-expanded', b.getAttribute('aria-expanded') !== 'true'); });
   });
-
-  /* ---------- filters ---------- */
-  var jr = $('#jr');
-  $$('.filters button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      $$('.filters button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-      jr.setAttribute('data-f', b.getAttribute('data-f'));
+  var trips = $$('.m-trip');
+  function mobileTrips() {
+    if (desk() || RM) return;
+    trips.forEach(function (li) {
+      var r = li.getBoundingClientRect(), tr = li.querySelector('.trav');
+      var p = (innerHeight * 0.6 - r.top) / r.height;
+      if (p > 0 && p < 1) { tr.classList.add('on'); tr.style.top = (p * r.height) + 'px'; } else tr.classList.remove('on');
     });
-  });
-
-  /* ---------- the journey line ---------- */
-  var svg = $('#jrSvg'), ghost = $('#jrGhost'), draw = $('#jrDraw');
-  var plane = $('#plane'), bike = $('#bike');
-  var L = 0, table = [], anchors = [];
-  var stops = $$('.jr > li');
-
-  function centre(el) {
-    var n = el.classList.contains('yr') ? el.firstElementChild : el.querySelector('.node');
-    return { x: n.offsetLeft + n.offsetWidth / 2, y: el.offsetTop + n.offsetTop + n.offsetHeight / 2, el: el };
-  }
-  function build() {
-    if (!jr) return;
-    var W = jr.clientWidth, H = jr.clientHeight;
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    anchors = stops.map(centre);
-    var bulge = mobile() ? 13 : 42, d = 'M' + anchors[0].x + ',' + (anchors[0].y - 30) + ' L' + anchors[0].x + ',' + anchors[0].y;
-    for (var k = 0; k < anchors.length - 1; k++) {
-      var a = anchors[k], b = anchors[k + 1], dy = b.y - a.y, bx = a.x + (k % 2 ? -bulge : bulge);
-      d += ' C' + bx + ',' + (a.y + dy * .38) + ' ' + bx + ',' + (a.y + dy * .62) + ' ' + b.x + ',' + b.y;
-    }
-    ghost.setAttribute('d', d); draw.setAttribute('d', d);
-    L = draw.getTotalLength();
-    table = [];
-    for (var s = 0; s <= 400; s++) { var p = draw.getPointAtLength(L * s / 400); table.push([L * s / 400, p.y]); }
-    anchors.forEach(function (an) { an.len = lenAtY(an.y); });
-    draw.style.strokeDasharray = L + ' ' + L;
-    tick();
-  }
-  function lenAtY(y) {
-    if (!table.length) return 0;
-    if (y <= table[0][1]) return 0;
-    for (var i = 1; i < table.length; i++) {
-      if (table[i][1] >= y) { var a = table[i - 1], b = table[i], t = (y - a[1]) / ((b[1] - a[1]) || 1); return a[0] + (b[0] - a[0]) * t; }
-    }
-    return L;
-  }
-  function place(el, len) {
-    var p = draw.getPointAtLength(len), a = draw.getPointAtLength(Math.max(0, len - 2)), b = draw.getPointAtLength(Math.min(L, len + 2));
-    var dx = b.x - a.x, dy = b.y - a.y, flip = dx < 0 ? -1 : 1;
-    var ang = Math.atan2(dy * flip, dx * flip) * 180 / Math.PI;
-    var lim = el.id === "plane" ? 16 : 10; ang = Math.max(-lim, Math.min(lim, ang));
-    el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px)';
-    var r = el.firstElementChild; r.style.setProperty('--ang', ang + 'deg'); r.style.setProperty('--flip', flip);
-  }
-  function ride(el, fromId, toId, y) {
-    var A = anchors.filter(function (a) { return a.el.id === fromId; })[0], B = anchors.filter(function (a) { return a.el.id === toId; })[0];
-    if (!A || !B) return;
-    var t = (y - A.y) / (B.y - A.y);
-    if (t <= 0.02 || t >= 0.98) { el.classList.remove('on'); return; }
-    el.classList.add('on');
-    place(el, A.len + (B.len - A.len) * t);
-  }
-  function tick() {
-    if (!L) return;
-    var r = jr.getBoundingClientRect(), y = innerHeight * 0.55 - r.top;
-    var len = REDUCED ? L : Math.max(0, Math.min(L, lenAtY(y)));
-    draw.style.strokeDashoffset = L - len;
-    anchors.forEach(function (a) { if (a.el.classList.contains('stop')) a.el.classList.toggle('lit', REDUCED || a.y <= y); });
-    if (!REDUCED) { ride(plane, 's-ath', 's-puc', y); ride(bike, 's-exp', 's-rsm', y); }
   }
 
-  var ticking = false;
-  addEventListener('scroll', function () {
-    onScrollNav();
-    if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; tick(); }); }
-  }, { passive: true });
-  var rt; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 120); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
-  addEventListener('load', build);
-
+  var raf = 0;
+  addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; onScroll(); mobileTrips(); }); }, { passive: true });
+  addEventListener('resize', function () { layout(); mobileTrips(); });
   var saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
   var nl = (navigator.language || '').slice(0, 2);
-  applyLang(saved || (TR[nl] ? nl : 'en'));
-  onScrollNav();
+  setLang(saved || (TR[nl] ? nl : 'en'), false);
+  layout();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { layout(); flipBoard(); }); else flipBoard();
 })();
 </script>
 </body>
