@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-Yz6JzqLFN7wejG37UgK2bLvvyWEBG1kb31p9pT6ZsJE='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-xvHjnCC9Mscmnd3vC2bPBTGS01PRi5s6NAusbwtGS9A='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Antonio Di Domenico — Portfolio</title>
   <meta name="description" content="Antonio Di Domenico, MSc Finance & Investments student at RSM Rotterdam, looking for private equity, venture capital and M&A internships for summer 2027.">
   <meta name="author" content="Antonio Di Domenico">
-  <meta name="theme-color" content="#1B4D4B">
+  <meta name="theme-color" content="#FFFFFF">
 
   <!-- Social preview: what a recruiter sees when the link is pasted
        into LinkedIn, Slack or WhatsApp. -->
@@ -25,1614 +25,486 @@
   <meta name="twitter:description" content="MSc Finance & Investments student at RSM Rotterdam.">
   <meta name="twitter:image"       content="https://antodid.github.io/images/antonio.jpg">
 
-  <!-- ============================================================
-       NO EXTERNAL DEPENDENCIES — fonts are self-hosted in /fonts.
-       The Noce map is now hand-drawn SVG, so no WebGL library.
-       ============================================================ -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/fraunces-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Mark the document as JS-capable ASAP. All "hidden until animated"
-       styles are scoped to html.js, so with JS disabled the page renders
-       fully, statically — nothing is ever lost. -->
   <script>document.documentElement.classList.add('js');</script>
 
   <style>
-    /* Self-hosted fonts (no request leaves this site) */
-    @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 100 900; font-display: swap;
-      src: url(fonts/fraunces-latin-normal.woff2) format('woff2'); }
-    @font-face { font-family: 'Fraunces'; font-style: italic; font-weight: 100 900; font-display: swap;
-      src: url(fonts/fraunces-latin-italic.woff2) format('woff2'); }
-    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
-      src: url(fonts/inter-latin-normal.woff2) format('woff2'); }
+    @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/fraunces-latin-normal.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fonts/inter-latin-normal.woff2) format('woff2'); }
 
-    /* ============================================================
-       1. DESIGN TOKENS
-       ============================================================ */
     :root {
-      --bg:     #FAFAF7;   /* warm off-white                         */
-      --ink:    #141414;   /* near-black text / dark sections        */
-      --teal:   #1B4D4B;   /* primary accent                         */
-      --terra:  #C7623F;   /* secondary accent — micro-details only  */
-      --line:   #E4E2DB;   /* soft borders                           */
-      --mut:    #6E6C66;   /* secondary text                         */
-      /* 0.66 rather than 0.55: measured 4.6:1 on the teal ground, so
-         small text on dark sections clears WCAG AA (0.55 gave 3.97). */
-      --mut-d:  rgba(250, 250, 247, 0.66); /* secondary text on dark */
-      /* --terra is the decorative accent (pins, rules, dots). At 13px
-         on cream it only reaches 3.83:1, so TEXT uses --terra-ink,
-         measured 4.6:1. Same hue, legal contrast. */
-      --terra-ink: #B15738;
-      --line-d: rgba(250, 250, 247, 0.14); /* borders on dark        */
-      --ease:   cubic-bezier(0.16, 1, 0.3, 1); /* "expo-out" feel    */
-      --serif:  'Fraunces', Georgia, serif;
-      --sans:   'Inter', -apple-system, sans-serif;
-
-      /* ---- Type scale: five sizes, total ------------------------
-         display / h2 / h3 / body / meta. Every piece of page text
-         maps to one of these; nothing else is allowed a size.    */
-      --fs-display: clamp(3.4rem, 7.5vw, 6.5rem);  /* hero name           */
-      --fs-h2:      clamp(2.4rem, 4.4vw, 3.9rem);  /* section head, stats */
-      --fs-h3:      clamp(1.45rem, 2vw, 2rem);     /* entry / card / link */
-      --fs-h2s:     clamp(1.7rem, 2.6vw, 2.3rem);  /* education node name */
-      --fs-body:    clamp(1.05rem, 1.1vw, 1.18rem);/* all running copy    */
-      --fs-meta:    clamp(0.9rem, 0.95vw, 1rem);   /* labels, dates, ui   */
-      --lh-head:    1.12;                          /* all headings        */
-      --lh-body:    1.65;                          /* all running copy    */
-      --track:      0.16em;                        /* uppercase labels — the
-                                                      ONLY letter-spacing */
-      --measure:    66ch;                          /* reading width       */
-
-      /* ---- Spacing scale: 8px base, no arbitrary values ---------- */
-      --sp-1: 0.5rem;   /*   8 — label to heading, micro gaps  */
-      --sp-2: 1rem;     /*  16 — inside a text group           */
-      --sp-3: 1.5rem;   /*  24 — between grouped items         */
-      --sp-4: 2rem;     /*  32 — heading group to first item   */
-      --sp-5: 2.5rem;   /*  40 — title to section body         */
-      --sp-6: 4rem;     /*  64 — big internal break            */
-      --sp-7: 6rem;     /*  96 — section padding               */
-      --sp-8: 8rem;     /* 128 — hero only                     */
+      --bg: #FFFFFF;
+      --soft: #F5F6F8;
+      --ink: #101215;
+      --mut: #5A5F67;
+      --line: #E5E7EB;
+      --accent: #2446A6;        /* 8.0:1 on white */
+      --accent-soft: #EEF2FB;
+      --accent-on-dark: #9DB2F2;
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --wrap: 1080px;
+      --r: 14px;
     }
-
-    /* ============================================================
-       2. RESET + BASE
-       ============================================================ */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--sans);
-      font-size: var(--fs-body);
-      line-height: var(--lh-body);
-      background: var(--bg);
-      color: var(--ink);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    h1, h2, h3 {
-      font-family: var(--serif);
-      font-weight: 500;
-      line-height: var(--lh-head);
-      text-wrap: balance;         /* no widowed last word on headings */
-      /* Fraunces' automatic optical sizing pushed 56-96px headings into
-         the opsz-144 display cut, whose exaggerated hooks and ball
-         terminals read as broken glyphs (the J of "Janeiro", the f of
-         "for"). Pin a moderate text-to-deck cut instead: same family,
-         same warmth, conventional letterforms. */
-      font-optical-sizing: none;
-      font-variation-settings: 'opsz' 30;
-    }
-    /* serif display text that is not an h-element gets the same cut */
-    .vj-name, .tnum, .contact-links a, .vol-meta, .nav-brand {
-      font-optical-sizing: none;
-      font-variation-settings: 'opsz' 30;
-    }
-    h2 { font-size: var(--fs-h2); }
-    h3 { font-size: var(--fs-h3); }
-
-    /* Body copy: one consistent size, colour and measure everywhere
-       from About onwards. */
-    p { font-size: var(--fs-body); line-height: var(--lh-body); }
-
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
     img { max-width: 100%; display: block; }
-    a   { color: inherit; text-decoration: none; }
-    button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; line-height: 1.08; margin: 0; text-wrap: balance; }
+    p { text-wrap: pretty; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+    .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
+    .skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: #fff; padding: .6rem 1rem; z-index: 100; }
+    .skip:focus { left: 1rem; top: 1rem; }
+    .eyebrow { display: inline-block; font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: .9rem; }
 
-    ::selection { background: var(--teal); color: var(--bg); }
+    /* ---------- nav ---------- */
+    #nav { position: fixed; inset: 0 0 auto 0; z-index: 50; display: flex; align-items: center; gap: 1.5rem; padding: .85rem clamp(1.25rem, 4vw, 2.5rem); transition: background .3s, box-shadow .3s; }
+    #nav.solid { background: rgba(255,255,255,.86); -webkit-backdrop-filter: saturate(180%) blur(14px); backdrop-filter: saturate(180%) blur(14px); box-shadow: 0 1px 0 var(--line); }
+    .brand { font-family: var(--serif); font-size: 1.05rem; white-space: nowrap; text-decoration: none; margin-right: auto; opacity: 0; transition: opacity .3s; }
+    #nav.solid .brand { opacity: 1; }
+    .nav-links { display: flex; gap: 1.6rem; }
+    .nav-links a { text-decoration: none; font-size: .92rem; color: var(--mut); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.on { color: var(--ink); }
+    .lang { display: flex; align-items: center; gap: .1rem; background: var(--soft); border-radius: 999px; padding: 3px; }
+    .lang button { border: 0; background: transparent; font: 600 .75rem var(--sans); color: var(--mut); padding: .35rem .6rem; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+    .lang button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(16,18,21,.12); }
+    #burger { display: none; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; position: relative; }
+    #burger i { position: absolute; left: 12px; right: 12px; height: 1.6px; background: var(--ink); transition: transform .3s var(--ease), opacity .2s; }
+    #burger i:nth-child(1) { top: 16px; } #burger i:nth-child(2) { top: 22px; } #burger i:nth-child(3) { top: 28px; }
+    #burger[aria-expanded="true"] i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    #burger[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
+    #burger[aria-expanded="true"] i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    #menu { position: fixed; inset: 0; z-index: 40; background: #fff; display: flex; flex-direction: column; justify-content: center; gap: .4rem; padding: 0 2rem; opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
+    #menu.open { opacity: 1; visibility: visible; }
+    #menu a { font-family: var(--serif); font-size: 2.2rem; text-decoration: none; padding: .4rem 0; }
 
-    /* Keyboard focus must stay obvious even where the custom cursor
-       hides the native one — :focus-visible keeps it off mouse clicks. */
-    :focus-visible {
-      outline: 2px solid var(--terra);
-      outline-offset: 3px;
-      border-radius: 3px;
-    }
-    .teal :focus-visible { outline-color: var(--bg); }
+    /* ---------- hero ---------- */
+    .hero { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 6rem 0 4rem; position: relative; }
+    .hero-photo { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.6rem; filter: grayscale(1); box-shadow: 0 0 0 6px #fff, 0 0 0 7px var(--line), 0 18px 40px -18px rgba(16,18,21,.35); }
+    .now { display: inline-flex; align-items: center; gap: .55rem; font-size: .82rem; color: var(--mut); background: var(--soft); border-radius: 999px; padding: .4rem .9rem; margin-bottom: 1.4rem; }
+    .now i { width: 8px; height: 8px; border-radius: 50%; background: #1F9D55; box-shadow: 0 0 0 0 rgba(31,157,85,.5); animation: pulse 2.4s infinite; }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(31,157,85,0); } 100% { box-shadow: 0 0 0 0 rgba(31,157,85,0); } }
+    .hero h1 { font-size: clamp(2.9rem, 9vw, 6.2rem); margin-bottom: 1.1rem; }
+    .hero h1 .ch { display: inline-block; }
+    html.js .hero h1 .ch { opacity: 0; transform: translateY(.35em); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+    html.js .hero h1.go .ch { opacity: 1; transform: none; }
+    .hero-sub { color: var(--mut); font-size: clamp(1rem, 2.2vw, 1.15rem); max-width: 36ch; margin: 0 auto 2rem; }
+    .cta { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-height: 46px; padding: 0 1.4rem; border-radius: 999px; font: 500 .95rem var(--sans); text-decoration: none; transition: transform .2s var(--ease), background .2s, color .2s, box-shadow .2s; }
+    .btn:active { transform: scale(.97); }
+    .btn-fill { background: var(--ink); color: #fff; }
+    .btn-fill:hover { background: var(--accent); }
+    .btn-line { box-shadow: inset 0 0 0 1px var(--line); }
+    .btn-line:hover { box-shadow: inset 0 0 0 1px var(--ink); }
+    .btn-sm { min-height: 40px; font-size: .88rem; margin-top: .9rem; }
+    .scroll-cue { position: absolute; bottom: 1.6rem; left: 50%; width: 22px; height: 36px; margin-left: -11px; border: 1.5px solid var(--line); border-radius: 12px; }
+    .scroll-cue::after { content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--mut); animation: cue 1.8s var(--ease) infinite; }
+    @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
 
-    /* Skip link — first tab stop, visually hidden until focused */
-    .skip {
-      position: absolute; left: 1rem; top: -4rem;
-      z-index: 200;
-      background: var(--teal); color: var(--bg);
-      padding: 0.7rem 1.2rem; border-radius: 0 0 8px 8px;
-      font-size: var(--fs-meta); font-weight: 500;
-      transition: top 0.25s var(--ease);
-    }
-    .skip:focus { top: 0; }
+    /* ---------- sections ---------- */
+    section { padding: clamp(4.5rem, 10vw, 8rem) 0; }
+    .sec-head { max-width: 640px; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+    .sec-head h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
+    .sec-head p { color: var(--mut); margin: 1rem 0 0; }
+    .intro { margin-top: 1.1rem; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--ink); max-width: 60ch; }
+    .intro p { margin: 0 0 .9rem; }
+    .intro p + p { color: var(--mut); font-size: .95em; }
 
-    /* When the custom cursor is active (desktop, fine pointer, motion OK)
-       the native cursor is hidden everywhere. */
-    html.cur, html.cur * { cursor: none !important; }
+    /* ---------- journey ---------- */
+    #journey { background: var(--soft); }
+    .filters { display: inline-flex; gap: .3rem; background: #fff; border-radius: 999px; padding: 4px; box-shadow: 0 1px 2px rgba(16,18,21,.06); margin: 1.4rem 0 0; }
+    .filters button { border: 0; background: transparent; font: 500 .86rem var(--sans); color: var(--mut); min-height: 38px; padding: 0 1rem; border-radius: 999px; cursor: pointer; transition: background .25s var(--ease), color .25s; }
+    .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .jr { position: relative; list-style: none; margin: 0; padding: 0; }
+    .jr-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .jr-ghost { fill: none; stroke: #D5D9E0; stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; }
+    .jr-draw { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+    .jr > li { position: relative; display: grid; grid-template-columns: 1fr 96px 1fr; align-items: center; }
+    .yr { padding: 1.4rem 0; }
+    .yr span { grid-column: 2; justify-self: center; position: relative; z-index: 2; font: 600 .78rem var(--sans); letter-spacing: .08em; color: var(--mut); background: var(--soft); padding: .3rem .6rem; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); }
+    .stop { padding: .7rem 0; }
+    .node { grid-column: 2; grid-row: 1; justify-self: center; position: relative; z-index: 2; width: 54px; height: 54px; border-radius: 50%; background: #fff; display: grid; place-items: center; overflow: hidden; box-shadow: 0 0 0 1.5px var(--line), 0 6px 16px -8px rgba(16,18,21,.25); transition: box-shadow .4s var(--ease), transform .4s var(--ease); color: var(--ink); }
+    .stop.lit .node { box-shadow: 0 0 0 2px var(--accent), 0 8px 20px -8px rgba(36,70,166,.45); }
+    .node-logo { width: 72%; height: 72%; object-fit: contain; }
+    .node-logo.fill { width: 100%; height: 100%; object-fit: cover; }
+    .node-icon { width: 54%; height: 54%; }
+    .node-txt { font: 700 .95rem var(--sans); color: var(--accent); letter-spacing: .02em; }
+    .card { grid-row: 1; background: #fff; border-radius: var(--r); box-shadow: 0 1px 2px rgba(16,18,21,.05), 0 0 0 1px rgba(16,18,21,.05); transition: box-shadow .3s var(--ease), transform .3s var(--ease), opacity .35s; }
+    .side-l .card { grid-column: 1; }
+    .side-r .card { grid-column: 3; }
+    .card:hover { box-shadow: 0 14px 34px -16px rgba(16,18,21,.25), 0 0 0 1px rgba(16,18,21,.06); transform: translateY(-2px); }
+    .card-head { all: unset; box-sizing: border-box; display: grid; gap: .2rem; width: 100%; padding: 1.05rem 3rem 1.05rem 1.25rem; cursor: pointer; position: relative; border-radius: var(--r); }
+    .card-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .card-meta { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-size: .8rem; color: var(--mut); font-variant-numeric: tabular-nums; }
+    .tag { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: .14rem .5rem; border-radius: 999px; background: var(--soft); color: var(--mut); }
+    .tag-study { background: var(--accent-soft); color: var(--accent); }
+    .tag-next { background: #E9F7EF; color: #17703F; }
+    .card-title { font-family: var(--serif); font-size: 1.22rem; line-height: 1.25; color: var(--ink); }
+    .card-org { font-size: .9rem; color: var(--mut); }
+    .card-toggle { position: absolute; right: 1rem; top: 1.15rem; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); transition: background .25s, transform .35s var(--ease); }
+    .card-toggle::before, .card-toggle::after { content: ''; position: absolute; left: 8px; right: 8px; top: 12.25px; height: 1.5px; background: var(--ink); transition: transform .35s var(--ease); }
+    .card-toggle::after { transform: rotate(90deg); }
+    .card-head[aria-expanded="true"] .card-toggle { transform: rotate(180deg); background: var(--accent-soft); }
+    .card-head[aria-expanded="true"] .card-toggle::after { transform: rotate(0deg); }
+    .card-more { display: grid; grid-template-rows: 1fr; }
+    html.js .card-more { grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
+    html.js .card-head[aria-expanded="true"] + .card-more { grid-template-rows: 1fr; }
+    .card-more-in { overflow: hidden; min-height: 0; padding: 0 1.25rem; }
+    .card-more-in p { margin: 0; padding: .1rem 0 1.15rem; color: #2F343B; font-size: .95rem; border-top: 1px solid var(--line); padding-top: .85rem; }
+    .card-more-in .btn { margin: 0 0 1.15rem; }
+    .more-logos { display: flex; gap: .5rem; padding-bottom: 1.1rem; margin-top: -.3rem; }
+    .more-logos img { width: 40px; height: 40px; border-radius: 9px; object-fit: cover; box-shadow: 0 0 0 1px var(--line); }
+    .stop.lead .card { box-shadow: 0 0 0 1.5px var(--accent), 0 18px 40px -22px rgba(36,70,166,.55); }
+    .stop.next .card { background: transparent; box-shadow: inset 0 0 0 1.5px #C9CED6; box-shadow: 0 0 0 1.5px #C9CED6; border: 0; }
+    .stop.next .card { outline: 1.5px dashed #B9BFC9; outline-offset: -1.5px; box-shadow: none; background: rgba(255,255,255,.55); }
+    .stop.next .node { color: #17703F; }
+    .jr[data-f="study"] .stop:not([data-t="study"]) .card,
+    .jr[data-f="work"]  .stop:not([data-t="work"])  .card { opacity: .28; }
+    .jr[data-f="study"] .stop:not([data-t="study"]) .node,
+    .jr[data-f="work"]  .stop:not([data-t="work"])  .node { opacity: .4; }
+    html.js .stop .card { opacity: 0; transform: translateY(18px); }
+    html.js .stop.in .card { opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease), box-shadow .3s; }
+    html.js .jr[data-f="study"] .stop.in:not([data-t="study"]) .card,
+    html.js .jr[data-f="work"]  .stop.in:not([data-t="work"])  .card { opacity: .28; }
 
-    /* Layout helpers */
-    .wrap   { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-    section { padding: var(--sp-7) 0; position: relative; }
-    /* full-colour "chapter" sections: deep teal with off-white text */
-    .teal   { background: var(--teal); color: var(--bg); }
+    /* travellers */
+    .trav { position: absolute; left: 0; top: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .3s; color: var(--accent); }
+    .trav.on { opacity: 1; }
+    .trav-rot { position: absolute; transform: rotate(var(--ang,0deg)) scaleX(var(--flip,1)); }
+    #plane .trav-rot { width: 118px; height: 74px; margin: -37px 0 0 -59px; }
+    #bike  .trav-rot { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
+    .trav-veh { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 4px 8px rgba(16,18,21,.15)); }
+    .veh-body  { fill: #fff; stroke: currentColor; stroke-width: 3.4; stroke-linejoin: round; stroke-linecap: round; }
+    .veh-solid { fill: currentColor; }
+    .veh-line  { fill: none; stroke: currentColor; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+    .veh-thin  { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+    .veh-wheel { fill: #fff; stroke: currentColor; stroke-width: 3.6; }
+    .veh-pod-o { fill: none; stroke: currentColor; stroke-width: 13; stroke-linecap: round; }
+    .veh-pod-i { fill: none; stroke: #fff; stroke-width: 6.6; stroke-linecap: round; }
+    .trav-face { position: absolute; border-radius: 50%; object-fit: cover; object-position: 50% 42%; border: 2.5px solid currentColor; background: #fff; transform: scaleX(var(--flip,1)) rotate(calc(-1 * var(--ang,0deg))); filter: grayscale(1); }
+    #plane .trav-face { left: 47.5px; top: 23.5px; width: 28px; height: 28px; }
+    #bike  .trav-face { left: 23px; top: 2px; width: 38px; height: 38px; }
 
-    .eyebrow {
-      display: block;
-      /* set explicitly: some eyebrows are real headings (h2/h3) for
-         document structure and must not inherit the serif heading face */
-      font-family: var(--sans);
-      line-height: 1.4;
-      font-size: var(--fs-meta);
-      font-weight: 600;
-      letter-spacing: var(--track);
-      text-transform: uppercase;
-      color: var(--terra-ink);
-      margin-bottom: var(--sp-2);
-    }
-    /* on the dark sections the cream-side accent is already legible */
-    .teal .eyebrow { color: #EBA88A; }   /* light terracotta: 4.7:1 on teal (was 2.4:1) */
+    /* ---------- projects ---------- */
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 1.75rem); }
+    .proj { margin: 0; }
+    .proj-vis { position: relative; aspect-ratio: 4 / 5; border-radius: var(--r); overflow: hidden; background: var(--soft); box-shadow: 0 0 0 1px rgba(16,18,21,.05); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+    .proj:hover .proj-vis { transform: translateY(-4px); box-shadow: 0 24px 48px -24px rgba(16,18,21,.35); }
+    .proj-vis > * { position: absolute; inset: 0; }
+    .proj-vis svg { width: 100%; height: 100%; display: block; }
+    .proj-vis .photo { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+    .proj:hover .photo { transform: scale(1.04); }
+    .proj figcaption { padding: 1.1rem .2rem 0; }
+    .proj-kicker { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+    .proj h3 { font-size: 1.45rem; margin: .35rem 0 .5rem; }
+    .proj p { margin: 0 0 .8rem; color: var(--mut); font-size: .95rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .chip { font-size: .76rem; color: var(--mut); padding: .22rem .6rem; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); }
+    /* newsletter cover (its own navy/yellow palette) */
+    .nl { background: #17375B; color: #fff; display: flex; flex-direction: column; padding: 1.5rem 1.4rem 1.25rem; overflow: hidden; }
+    .nl::after { content: ''; position: absolute; right: -30%; bottom: -22%; width: 78%; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; }
+    .nl-c { font-size: .58rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: #FFCE00; margin-bottom: .7rem; }
+    .nl-m { font-size: 2.1rem; font-weight: 600; line-height: .95; letter-spacing: -.015em; }
+    .nl-e { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.85); margin-top: .75rem; padding-top: .65rem; border-top: 1px solid rgba(255,255,255,.22); display: flex; justify-content: space-between; }
+    .nl-mid { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .nl-k { font-size: .58rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #FFCE00; margin-bottom: .6rem; }
+    .nl-h { font-size: 1.95rem; font-weight: 600; line-height: 1.08; }
+    .nl-h em { font-style: normal; color: #FFCE00; }
+    .nl-sq { width: 34px; height: 34px; background: #FFCE00; margin-top: .9rem; }
+    .nl-f { border-top: 1px solid rgba(255,255,255,.22); padding-top: .8rem; font-size: .72rem; color: rgba(255,255,255,.85); }
+    .nl-f div + div { margin-top: .25rem; }
+    .nl-f i { font-style: normal; color: #FFCE00; font-weight: 600; margin-right: .45rem; font-size: .6rem; }
+    .vol-note { position: absolute; left: 0; right: 0; bottom: 0; top: auto !important; padding: 2.6rem 1.2rem 1.1rem; color: #fff; background: linear-gradient(to top, rgba(10,12,14,.85) 30%, rgba(10,12,14,0)); }
+    .vol-k { font-size: .6rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #C9D5F7; margin-bottom: .25rem; }
+    .vol-m { font-family: var(--serif); font-size: 1.15rem; line-height: 1.25; }
 
-    /* ONE headline treatment for every section: the eyebrow names the
-       section, the serif title carries it. Same size, same colour, same
-       measure everywhere, so the page has a single masthead rhythm. */
-    .section-title {
-      font-size: var(--fs-h2);
-      color: var(--teal);
-      margin-bottom: var(--sp-5);
-      max-width: 20ch;          /* one shared measure for every title */
-    }
-    .teal .section-title { color: var(--bg); }
+    /* ---------- contact ---------- */
+    #contact { background: var(--ink); color: #fff; }
+    #contact .eyebrow { color: var(--accent-on-dark); }
+    #contact h2 { font-size: clamp(2.3rem, 7vw, 4.6rem); max-width: 14ch; margin-bottom: 2.4rem; }
+    .c-links { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .c-links a { display: inline-flex; align-items: center; gap: .6rem; min-height: 54px; padding: 0 1.5rem; border-radius: 999px; text-decoration: none; font-size: 1.05rem; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); transition: background .25s, color .25s, box-shadow .25s; }
+    .c-links a:first-child { background: #fff; color: var(--ink); box-shadow: none; }
+    .c-links a:hover { background: var(--accent); color: #fff; box-shadow: none; }
+    .c-links svg { width: 16px; height: 16px; transition: transform .3s var(--ease); }
+    .c-links a:hover svg { transform: translate(2px, -2px); }
+    footer { background: var(--ink); color: rgba(255,255,255,.6); font-size: .85rem; text-align: center; padding: 1.6rem 1rem 2rem; border-top: 1px solid rgba(255,255,255,.08); }
 
-    /* A sub-section inside another (Education lives inside About):
-       one step down the ladder, but still a real heading. */
-    .subsection-title {
-      font-family: var(--serif);
-      font-weight: 500;
-      line-height: var(--lh-head);
-      text-wrap: balance;
-      font-size: var(--fs-h2);
-      color: var(--teal);
-      max-width: 24ch;
-      margin-bottom: var(--sp-5);
-    }
+    html.js .rise { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    html.js .rise.in { opacity: 1; transform: none; }
 
-    /* ============================================================
-       3. SCROLL PROGRESS INDICATOR — ultra-thin terracotta line
-       ============================================================ */
-    #progress {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: var(--terra);
-      transform: scaleX(0);
-      transform-origin: 0 50%;
-      z-index: 1200;
-      pointer-events: none;
-    }
-
-    /* ============================================================
-       4. CUSTOM CURSOR — teal dot, lags behind pointer, becomes a
-          soft ring over interactive elements. Desktop only (JS gates).
-       ============================================================ */
-    /* The dot was 10px of solid teal: parked over 17px type it swallowed
-       letter parts, and screenshots kept catching it as a phantom glyph
-       (an "are" reading as "arc", a ring under a heading reading as a J).
-       Smaller, translucent and multiply-blended, the text stays legible
-       straight through it. */
-    #cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--teal);
-      opacity: 0.55;
-      mix-blend-mode: multiply;
-      border: 1.5px solid transparent;
-      pointer-events: none;
-      z-index: 1100;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s var(--ease), height 0.25s var(--ease),
-                  background 0.25s var(--ease), border-color 0.25s var(--ease);
-      display: none; /* JS enables it */
-    }
-    html.cur #cursor { display: block; }
-    #cursor.ring {
-      width: 38px; height: 38px;
-      background: rgba(27, 77, 75, 0.08);
-      border-color: var(--teal);
-    }
-
-    /* ============================================================
-       5. NAV — transparent over the hero, frosted after 60px scroll
-       ============================================================ */
-    #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: var(--sp-4);
-      padding: var(--sp-2) var(--sp-4);
-      background: transparent;
-      border-bottom: 1px solid transparent;
-      transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
-    }
-    #nav.scrolled {
-      background: rgba(250, 250, 247, 0.82);
-      -webkit-backdrop-filter: blur(14px);
-      backdrop-filter: blur(14px);
-      border-bottom-color: var(--line);
-    }
-
-    .nav-brand {
-      font-family: var(--serif);
-      font-size: var(--fs-body);
-      color: var(--teal);
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-      white-space: nowrap;
-    }
-    .nav-brand.show { opacity: 1; transform: none; }
-
-    .nav-links {
-      display: flex;
-      gap: var(--sp-3);
-      margin-left: auto;
-      font-size: var(--fs-meta);
-      font-weight: 500;
-      color: var(--mut);
-    }
-    .nav-links a { transition: color 0.25s; }
-    .nav-links a:hover { color: var(--teal); }
-
-    /* Language switcher — EN · IT · NL */
-    .lang {
-      display: flex;
-      align-items: center;
-      gap: 0.15rem;
-      font-size: var(--fs-meta);
-      font-weight: 600;
-      color: var(--mut);
-    }
-    .lang button {
-      padding: 0.2rem 0.45rem;
-      border-radius: 4px;
-      transition: color 0.25s, background 0.25s;
-    }
-    .lang button.on { color: var(--teal); text-decoration: underline; text-underline-offset: 4px; }
-    .lang button:hover { color: var(--teal); }
-    .lang span { opacity: 0.4; }
-
-    /* Hamburger (mobile only) */
-    #burger {
-      display: none;
-      width: 40px; height: 40px;
-      margin-left: auto;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      align-items: center;
-    }
-    #burger i {
-      display: block;
-      width: 20px; height: 2px;
-      background: var(--ink);
-      transition: transform 0.3s var(--ease), opacity 0.3s;
-    }
-    #burger.open i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    #burger.open i:nth-child(2) { opacity: 0; }
-    #burger.open i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* Mobile dropdown menu */
-    #mobileMenu {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 990;
-      padding: 5.5rem 1.5rem 2rem;
-      background: rgba(250, 250, 247, 0.96);
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
-      display: none;
-      flex-direction: column;
-      gap: var(--sp-3);
-      font-size: var(--fs-body);
-      font-weight: 500;
-      transform: translateY(-8px);
-      opacity: 0;
-      transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
-    }
-    #mobileMenu.open { opacity: 1; transform: none; }
-    @media (prefers-reduced-transparency: reduce) {
-      #mobileMenu, #nav { background: var(--bg) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-    }
-
-    /* ============================================================
-       6. HERO
-       ============================================================ */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      padding: var(--sp-8) 0 var(--sp-6);
-      overflow: hidden;
-    }
-
-    /* Full-bleed background photo. The image is 30% taller than the
-       section and offset upward so the JS parallax drift (slower than
-       scroll) plus the 1.00 → 1.08 scale never expose an edge. A soft
-       off-white gradient keeps the hero text fully readable. */
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(120% 78% at 50% 6%,  rgba(27,77,75,0.10)  0%, rgba(27,77,75,0) 60%),
-        radial-gradient(80%  55% at 82% 88%, rgba(199,98,63,0.09) 0%, rgba(199,98,63,0) 65%),
-        var(--bg);
-    }
-    /* hero content is centred — photo, eyebrow, name, line, buttons */
-    .hero .wrap { position: relative; z-index: 1; text-align: center; }
-    .scroll-hint { z-index: 1; }   /* stays above the hero background */
-
-    /* Large centred portrait — the visual anchor of the page. A white
-       inner border + thin terracotta ring lifts it off the cream and
-       reads as considered/editorial for a finance portfolio. */
-    .hero-photo {
-      width: clamp(150px, 21vw, 200px);
-      height: clamp(150px, 21vw, 200px);
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--terra), 0 22px 48px -16px rgba(20, 20, 20, 0.4);
-      margin: 0 auto var(--sp-4);
-      animation: heroPhotoIn 0.9s var(--ease) both;
-    }
-    @keyframes heroPhotoIn {
-      from { opacity: 0; transform: scale(0.86); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    /* The big name. JS splits it into .ch spans; each character fades
-       up from blur. Without JS the plain text simply shows. */
-    .hero-name {
-      font-size: var(--fs-display);
-      color: var(--teal);
-      margin-bottom: var(--sp-4);
-      line-height: 1.05;
-    }
-    .hero-name .word { display: inline-block; white-space: nowrap; }
-    .hero-name .ch {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(20px);
-      filter: blur(4px);
-      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 0.6s var(--ease);
-      /* per-character transition-delay is set inline by JS */
-    }
-    .hero-name.go .ch { opacity: 1; transform: none; filter: blur(0); }
-
-    .hero-sub { color: var(--mut, #6E6C66); font-size: 1.05rem; margin: 0 auto var(--sp-3); max-width: 34ch; }
-    .hero-cta { display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: center; }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
-      font-size: var(--fs-meta);
-      font-weight: 500;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
-      will-change: transform; /* magnetic effect */
-    }
-    .btn-fill  { background: var(--teal); color: var(--bg); }
-    .btn-fill:hover  { background: #163f3d; }
-    .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
-    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
-
-    /* "Scroll" indicator, bottom-left */
-    .scroll-hint {
-      position: absolute;
-      bottom: var(--sp-4);
-      left: var(--sp-4);
-      display: flex;
-      align-items: center;
-      gap: var(--sp-1);
-      font-size: var(--fs-meta);
-      letter-spacing: var(--track);
-      text-transform: uppercase;
-      color: var(--mut);
-    }
-    .scroll-hint i {
-      display: block;
-      width: 1px; height: 34px;
-      background: var(--mut);
-      animation: hintPulse 2.2s var(--ease) infinite;
-      transform-origin: top;
-    }
-    @keyframes hintPulse {
-      0%   { transform: scaleY(0); opacity: 0; }
-      40%  { transform: scaleY(1); opacity: 1; }
-      100% { transform: scaleY(1) translateY(10px); opacity: 0; }
-    }
-
-    /* ============================================================
-       8. SECTION ENTRANCE — the "unfold"
-          scale 0.96 + fade + rise + clip-path reveal from the bottom.
-          Children marked .stg stagger in 100ms apart.
-       ============================================================ */
-    html.js .unfold {
-      opacity: 0;
-      transform: translateY(30px) scale(0.97);
-      clip-path: inset(12% 0 0 0);
-      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease), clip-path 0.8s var(--ease);
-    }
-    html.js .unfold.in {
-      opacity: 1;
-      transform: none;
-      clip-path: inset(0 0 0 0);
-    }
-    html.js .unfold .stg {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-    }
-    html.js .unfold.in .stg { opacity: 1; transform: none; }
-    /* stagger: each successive child waits 100ms longer */
-    html.js .unfold.in .stg:nth-child(1) { transition-delay: 0.00s; }
-    html.js .unfold.in .stg:nth-child(2) { transition-delay: 0.10s; }
-    html.js .unfold.in .stg:nth-child(3) { transition-delay: 0.20s; }
-    html.js .unfold.in .stg:nth-child(4) { transition-delay: 0.30s; }
-    html.js .unfold.in .stg:nth-child(5) { transition-delay: 0.40s; }
-    html.js .unfold.in .stg:nth-child(6) { transition-delay: 0.50s; }
-    html.js .unfold.in .stg:nth-child(7) { transition-delay: 0.60s; }
-    html.js .unfold.in .stg:nth-child(8) { transition-delay: 0.70s; }
-
-    /* ============================================================
-       9. ABOUT — label rail + prose. The narrow left column holds
-       only the section label and rule (sticky, so it stays in view
-       while the copy scrolls); the paragraphs live on the right.
-       ============================================================ */
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(200px, 260px) 1fr;
-      gap: clamp(var(--sp-4), 5vw, var(--sp-6));
-      align-items: start;
-      margin-bottom: var(--sp-6);
-    }
-    .about-label { align-self: start; }
-    .about-label .eyebrow { margin-bottom: var(--sp-1); }
-    .about-rule {
-      width: 44px; height: 3px;
-      background: var(--terra);
-      border-radius: 2px;
-      border: 0;
-      margin: 0 0 var(--sp-3);
-    }
-    /* Key facts as a definition list: quiet label, firm value, hairline
-       between rows. Carries the CV essentials without a sentence. */
-    .about-facts { margin: 0; }
-    .about-facts > div {
-      padding: var(--sp-2) 0;
-      border-top: 1px solid var(--line);
-    }
-    .about-facts > div:last-child { border-bottom: 1px solid var(--line); }
-    .about-facts dt {
-      font-size: var(--fs-meta);
-      color: var(--mut);
-      line-height: 1.4;
-      margin-bottom: 0.15rem;
-    }
-    .about-facts dd {
-      margin: 0;
-      font-size: var(--fs-meta);
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.4;
-    }
-    /* Values are single strings again, so the 200-260px rail is what
-       keeps them off a second line — that is the whole of fix 6 now. */
-    /* the accent marks the one fact that actually matters: where next */
-    .about-facts .is-next dd { color: var(--terra-ink); }
-    /* One size, one leading, one measure for all three paragraphs.
-       The opening one used to run at --fs-lead, which in a column this
-       width dropped it to ~51 characters a line while the others sat at
-       61-67 — three different rhythms stacked on top of each other. It
-       now carries emphasis through colour and weight alone, so the
-       measure stays even down the whole block. */
-    .about-body p {
-      font-size: var(--fs-body);
-      line-height: var(--lh-body);
-      color: var(--mut);
-      margin-bottom: 1.5em;
-      max-width: var(--measure);
-      text-wrap: pretty;          /* no single-word last lines */
-      hyphens: none;
-    }
-    .about-body p:last-child { margin-bottom: 0; }
-    /* Standfirst: one step off body, written as a ratio rather than a
-       new token so it cannot drift into a tier of its own. 26px read as
-       a cliff against 17px body; 1.2em is a step. */
-    .about-body p.about-lead {
-      font-size: 1.2em;
-      line-height: 1.45;
-      font-weight: 400;
-      color: var(--ink);
-      margin-bottom: var(--sp-3);
-    }
-
-    /* The direct word to the professor. The rule sits ABOVE it, so the
-       paragraph keeps the column's single left edge — a left border
-       pushed it 26px in and gave the column two alignment lines. */
-    .about-note {
-      margin-top: var(--sp-4);
-      padding-top: var(--sp-3);
-      border-top: 2px solid var(--terra);
-    }
-    .about-note p { margin: 0; color: var(--ink); }
-    @media (max-width: 720px) {
-      .about-grid { grid-template-columns: 1fr; gap: var(--sp-3); }
-      .about-label { position: static; }
-    }
-
-    /* ============================================================
-       10. IMAGES — parallax + clip-wipe reveal.
-           .plx-wrap  : clips the image, gets the wipe-in
-           .plx       : the <img>, translated/scaled every frame by JS
-       ============================================================ */
-    .plx-wrap {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-    html.js .plx-wrap {
-      clip-path: inset(0 100% 0 0); /* hidden — revealed left→right */
-      transition: clip-path 0.7s var(--ease);
-    }
-    html.js .plx-wrap.seen { clip-path: inset(0 0 0 0); }
-    /* The image is 12% taller than its clipping wrap and starts offset
-       upward, so the JS parallax shift (±6%) never exposes an edge. */
-    .plx {
-      position: absolute;
-      top: -6%; left: 0;
-      width: 100%;
-      height: 112%;
-      object-fit: cover;
-      will-change: transform;
-    }
-
-    /* ============================================================
-       11. CHIPS + IMAGE FALLBACKS
-       ============================================================ */
-    .chips { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
-    .chip {
-      font-size: var(--fs-meta);
-      font-weight: 500;
-      padding: 0.2rem 0.7rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--mut);
-      white-space: nowrap;
-    }
-    .teal .chip { border-color: var(--line-d); color: var(--mut-d); }
-
-    /* A missing image file degrades to a clean neutral fill in the
-       site palette (JS adds .ph to the image's container when a file
-       fails to load) instead of the browser's broken-image icon. */
-    .ph { background: linear-gradient(135deg, #EFEEE8 0%, #E4E2DB 100%) !important; }
-    .ph img { visibility: hidden; }
-    .hero-photo-ph {
-      width: clamp(150px, 21vw, 200px);
-      height: clamp(150px, 21vw, 200px);
-      border-radius: 50%;
-      border: 5px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--terra), 0 22px 48px -16px rgba(20, 20, 20, 0.4);
-      background: linear-gradient(135deg, #EFEEE8, #E4E2DB);
-      display: grid; place-items: center;
-      font-family: var(--serif);
-      font-size: 2.6rem;
-      color: var(--teal);
-      margin: 0 auto 2.2rem;
-    }
-
-
-    /* ============================================================
-       14. UNIVERSITY JOURNEY (inside About) — a gently WINDING
-       vertical path (the wavy line, back by popular demand) that
-       draws itself downward, scroll-linked. The three universities
-       hang on the curve, alternating sides; RSM is the final node
-       with a terracotta glow.
-       ============================================================ */
-    /* the gap above Education is owned solely by .about-grid's
-       margin-bottom, so it can't drift out of the scale */
-    .vjourney { margin-top: 0; }
-    .vjourney .eyebrow { margin-bottom: var(--sp-2); }
-    /* Desktop: a WIDE horizontal S so the plane/bike get a long, clearly
-       visible journey across the page. Tall rail + curves that leave each
-       node vertically (control points stacked above/below the anchor), so
-       the sweep happens in the middle band where no text lives. */
-    .vj-rail { position: relative; height: clamp(820px, 105vh, 1000px); }
-    .vj-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      overflow: visible;
-      pointer-events: none;
-    }
-    .vj-svg path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; }
-    .vj-ghost { stroke: var(--line); }
-    /* JS rebuilds the path in real pixel coordinates and drives the dash
-       from its measured length */
-    .vj-draw  { stroke: var(--teal); }
-
-    /* universities hang off the curve, alternating sides */
-    .vj-item {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      gap: 2.2rem;                 /* keeps text well clear of the curve */
-      width: min(400px, 44%);
-      opacity: 0;
-      transform: translateY(calc(-50% + 18px));
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-    }
-    .vj-item.on { opacity: 1; transform: translateY(-50%); }
-    .vj-i1 { left: 15%;  top: 11%; margin-left: -32px; }
-    .vj-i2 { right: 15%; top: 50%; margin-right: -32px; flex-direction: row-reverse; text-align: right; }
-    .vj-i3 { left: 15%;  top: 89%; margin-left: -32px; }
-
-    .vj-badge {
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      background: #fff;
-      border: 1px solid var(--line);
-      display: grid; place-items: center;
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: var(--fs-meta);
-      color: var(--teal);
-      transition: border-color 0.5s, color 0.5s, box-shadow 0.5s;
-    }
-    /* Logo images are cut to fit in the circle */
-    .vj-logo {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      background: transparent;
-      border-radius: 50%;
-      z-index: 1;
-    }
-    /* logos that carry their own solid brand background (RSM navy,
-       Athena purple, Ex Primo, Picnic red) fill the whole disc instead
-       of floating in it */
-    .vj-logo.logo-fill { padding: 0; object-fit: cover; }
-    .vj-badge-txt { position: relative; z-index: 0; }
-    /* Drawn badge — used where the entry has no single brand mark
-       (the warehouse role covers two employers, both already shown
-       as logo tiles under the description). */
-    .vj-icon {
-      position: relative; z-index: 1;
-      width: 30px; height: 30px;
-      color: var(--teal);
-      transition: color 0.5s;
-    }
-    .xtl-item.on .vj-icon { color: var(--terra); }
-    .vj-name { font-family: var(--serif); font-size: var(--fs-h2s); line-height: var(--lh-head); color: var(--teal); }
-    .vj-name a { border-bottom: 1px solid var(--line); padding-bottom: 1px; transition: color 0.25s, border-color 0.25s; }
-    .vj-name a:hover { color: var(--teal); border-color: var(--teal); }
-    .vj-years { font-size: var(--fs-meta); color: var(--mut); font-family: var(--sans); font-weight: 500; white-space: nowrap; letter-spacing: 0; }
-    .vj-thesis-link {
-      display: inline-block;
-      margin-top: var(--sp-2);
-      font-size: var(--fs-meta);
-      font-weight: 600;
-      color: var(--terra-ink);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.25s;
-    }
-    .vj-thesis-link:hover { border-color: var(--terra); }
-    .vj-final.on .vj-badge {
-      border-color: var(--terra);
-      color: var(--terra);
-      box-shadow: 0 0 18px rgba(199, 98, 63, 0.45);
-    }
-    .vj-final .vj-name a:hover { color: var(--terra); border-color: var(--terra); }
-
-    /* Travellers: a point positioned on the curve (transform:translate
-       set by JS). Children are offset by half their size so they centre
-       on that point; the vehicle rotates to the path tangent while the
-       face stays upright. Hidden until JS places them (so reduced-motion
-       and no-JS never show them). */
-    .traveler {
-      position: absolute;
-      left: 0; top: 0;
-      width: 0; height: 0;
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-    }
-    .traveler.on { opacity: 1; }
-
-    /* The whole vehicle — body AND face slot — rotates to the tangent,
-       so the face is always anchored to the right spot (cockpit window /
-       saddle) and no connecting line is ever left dangling. --flip
-       mirrors it on the right-to-left leg so it never travels upside-down. */
-    /* The two vehicles no longer share proportions — the aeroplane is
-       drawn in a wide 160x100 box so the fuselage can be long enough to
-       read as an aircraft, the bike stays square. Each is offset by half
-       its own size so it still centres on its point of the path. */
-    .trav-rot {
-      position: absolute;
-      left: 0; top: 0;
-      color: var(--terra);
-      transform: rotate(var(--ang, 0deg)) scaleX(var(--flip, 1));
-    }
-    #planeTrav .trav-rot { width: 160px; height: 100px; margin: -50px 0 0 -80px; }
-    #bikeTrav  .trav-rot { width: 118px; height: 118px; margin: -59px 0 0 -59px; }
-    .trav-veh {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      display: block;
-      overflow: visible;          /* strokes must not be clipped */
-      filter: drop-shadow(0 3px 6px rgba(20,20,20,0.13));
-    }
-    .trav-veh .veh-body  { fill: var(--bg); stroke: currentColor; stroke-width: 3.4; stroke-linejoin: round; stroke-linecap: round; }
-    .trav-veh .veh-solid { fill: currentColor; }
-    .trav-veh .veh-line  { fill: none; stroke: currentColor; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
-    .trav-veh .veh-thin  { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
-    .trav-veh .veh-wheel { fill: var(--bg); stroke: currentColor; stroke-width: 3.6; }
-    /* Engine nacelles: a thick round-capped stroke with a thinner cream
-       stroke laid over it gives an outlined capsule from two lines. */
-    .trav-veh .veh-pod-o { fill: none; stroke: currentColor; stroke-width: 13; stroke-linecap: round; }
-    .trav-veh .veh-pod-i { fill: none; stroke: var(--bg);    stroke-width: 6.6; stroke-linecap: round; }
-
-    /* the seat sits in VEHICLE coordinates; the photo inside counter-
-       rotates by the same angle so my face always reads upright */
-    .trav-seat { position: absolute; }
-    .trav-face {
-      display: block;
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: 50% 42%;   /* keep the eyes on the optical centre */
-      border: 3px solid var(--terra);
-      background: var(--bg);
-      box-shadow: 0 2px 8px rgba(20,20,20,0.18);
-      transform: scaleX(var(--flip, 1)) rotate(calc(-1 * var(--ang, 0deg)));
-    }
-    /* plane: cabin window is circle r20 at (84,52) of a 160-wide box,
-       rendered 1:1 at 160px — centre (84, 52), radius 20 */
-    #planeTrav .trav-seat { left: 65px; top: 33px; width: 38px; height: 38px; }
-    /* bike: face is the rider's head, above the shoulders */
-    #bikeTrav  .trav-seat { left: 33px; top: 6px;  width: 50px; height: 50px; }
-
-    /* ============================================================
-       14b. EXPERIENCE TIMELINE — the same visual language as the
-       journey: a straight rail on the left that draws downward,
-       monogram badges, entries revealing one by one. This is what
-       ties Experience to the rest of the site.
-       ============================================================ */
-    .xtl { position: relative; margin-top: var(--sp-3); }
-    .xtl-svg {
-      position: absolute;
-      left: 31px; top: 16px;
-      width: 2px; height: calc(100% - 32px);
-      overflow: visible;
-    }
-    .xtl-svg path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; }
-    .xtl-item {
-      position: relative;
-      display: grid;
-      grid-template-columns: 64px 1fr;
-      gap: var(--sp-3);
-      align-items: start;
-      padding: var(--sp-3) 0;
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-    }
-    .xtl-item.on { opacity: 1; transform: none; }
-    .xtl-item .xp-period { padding-top: 0; margin-bottom: var(--sp-1); }
-    /* Ex Primo — the lead entry: same scale, terracotta-ringed badge */
-    .xtl-lead { padding: var(--sp-3) 0; }
-    .xtl-lead.on .vj-badge {
-      border-color: var(--terra);
-      color: var(--terra-ink);
-      box-shadow: 0 0 14px rgba(199, 98, 63, 0.35);
-    }
-
-    /* ============================================================
-       14c. THESIS — deep-teal interlude chapter right after the
-       education journey. The stylised chart draws itself while the
-       three stats count up in sync (JS, IntersectionObserver).
-       ============================================================ */
-    .thesis-title { font-size: var(--fs-h2); color: var(--bg); margin-bottom: var(--sp-2); max-width: 20ch; }
-    .thesis-sub   { color: var(--mut-d); font-size: var(--fs-meta); margin-bottom: var(--sp-4); }
-    .thesis p.body { color: var(--mut-d); max-width: var(--measure); margin-bottom: var(--sp-5); }
-    .thesis-viz { padding: var(--sp-2) 0 0; }
-    .tstats {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--sp-4);
-      text-align: center;
-    }
-    .tnum {
-      display: block;
-      font-family: var(--serif);
-      font-size: var(--fs-h2);
-      line-height: 1;
-      color: var(--bg);
-      margin-bottom: var(--sp-1);
-      font-variant-numeric: tabular-nums;
-    }
-    .tlabel { font-size: var(--fs-meta); color: var(--mut-d); line-height: 1.4; display: block; }
-
-    /* ============================================================
-       15. PROJECTS — 3D CIRCULAR CAROUSEL (coverflow)
-       All three panels are absolutely centred on top of each other;
-       JS gives each a signed circular offset in [-1.5, 1.5] and writes
-       a translateX + rotateY + translateZ + scale from it. The active
-       panel sits flat and sharp dead centre, the neighbours turn away
-       on the Y axis, sink back in Z, blur and dim — so they only ever
-       PEEK past the centre card rather than showing in full.
-       Because the offset is computed modulo 3, the ring is genuinely
-       circular: it keeps turning in either direction forever, with no
-       DOM clones and no seam.
-       ============================================================ */
-    /* same vertical rhythm as every other section (was 5/6rem) */
-    .showcase { padding: var(--sp-7) 0; }
-    .show-sticky {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--sp-5);
-    }
-    .show-head { text-align: center; }
-    .show-head .eyebrow { margin-bottom: var(--sp-2); }
-    .show-head .section-title { margin: 0 auto; max-width: 20ch; }
-
-    :root {
-      /* capped by width AND viewport height so the caption always fits */
-      --slide-w: min(400px, 78vw, calc((100vh - 330px) * 0.8));
-    }
-
-    /* the stage: perspective makes the Y-rotation read as a real ring */
-    .show-viewport {
-      width: 100%;
-      overflow: hidden;
-      perspective: 1500px;
-      perspective-origin: 50% 50%;
-    }
-    .show-track {
-      position: relative;
-      height: calc(var(--slide-w) * 1.25);   /* 4:5 panels */
-      transform-style: preserve-3d;
-      margin: 0 auto;
-      /* the whole ring is draggable: grab it and push it sideways */
-      cursor: grab;
-      touch-action: pan-y;          /* vertical scroll stays with the page */
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .show-track.dragging { cursor: grabbing; }
-    .show-track img { -webkit-user-drag: none; user-drag: none; }
-
-    .panel {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: var(--slide-w);
-      aspect-ratio: 4 / 5;
-      margin: 0;
-      border-radius: 16px;
-      background: #fff;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      pointer-events: none;          /* JS grants it to the active slide */
-      box-shadow: 0 18px 44px -28px rgba(20,20,20,0.30);
-      transition: box-shadow 0.5s var(--ease);
-      will-change: transform, opacity, filter;
-      backface-visibility: hidden;
-      /* JS writes the full transform; this is the no-JS resting state */
-      transform: translate(-50%, -50%);
-    }
-    .panel.front { pointer-events: auto; box-shadow: 0 32px 70px -32px rgba(20,20,20,0.42); }
-    .panel-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-
-    /* Volunteers: the photograph, but authored like the other two —
-       a field-note strip anchors it to the same card language instead
-       of leaving a bare image in the set. */
-    @keyframes volPop {
-      0%   { transform: scale(1); }
-      55%  { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-    .panel-vol .panel-img.pop { animation: volPop 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
-    .vol-card { position: absolute; inset: 0; overflow: hidden; }
-    .vol-card .panel-img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .vol-note {
-      position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 2.6rem 1.3rem 1.15rem;
-      color: var(--bg);
-      background: linear-gradient(to top, rgba(12,14,13,0.88) 30%, rgba(12,14,13,0) 100%);
-    }
-    .vol-kicker {
-      font-size: 0.56rem; font-weight: 600;
-      letter-spacing: 0.24em; text-transform: uppercase;
-      color: #E9A488;                      /* terracotta lifted for dark ground */
-      margin-bottom: 0.3rem;
-    }
-    .vol-meta  { font-family: var(--serif); font-size: 1.15rem; line-height: 1.25; color: var(--bg); }
-
-    /* ---- Newsletter: deep-green academic cover ----
-       Set on the site's primary green so the middle card reads as a
-       printed journal between the cream map and the photograph. The
-       only ornament is a large cropped ring, like a debossed seal. */
-    .nl-cover {
-      /* the real newsletter's own palette, not the site's */
-      --nl-navy:   #17375B;
-      --nl-accent: #FFCE00;
-      --nl-paper:  #FFFFFF;
-      position: absolute; inset: 0;
-      background: var(--nl-navy);
-      display: flex; flex-direction: column;
-      padding: 1.5rem 1.4rem 1.25rem;
-      overflow: hidden;
-    }
-    .nl-cover::after {                 /* the seal */
-      content: '';
-      position: absolute;
-      right: -30%; bottom: -22%;
-      width: 78%; aspect-ratio: 1;
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .nl-top { position: relative; z-index: 1; flex-shrink: 0; }
-    .nl-community {
-      font-size: 0.56rem; font-weight: 600;
-      letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--nl-accent);
-      margin-bottom: 0.7rem;
-    }
-    .nl-mast {
-      font-family: var(--sans);
-      font-size: 2rem; font-weight: 600;
-      color: var(--nl-paper); line-height: 0.95;
-      letter-spacing: -0.015em;
-    }
-    .nl-edition {
-      font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      margin-top: 0.75rem; padding-top: 0.65rem;
-      border-top: 1px solid rgba(255,255,255,0.22);
-      display: flex; justify-content: space-between; gap: 0.5rem;
-    }
-
-    .nl-mid {
-      position: relative; z-index: 1;
-      flex: 1; min-height: 0;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .nl-kicker {
-      font-size: 0.56rem; font-weight: 600;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--nl-accent); margin-bottom: 0.6rem;
-    }
-    .nl-headline {
-      font-family: var(--sans);
-      font-size: 1.9rem; font-weight: 600; line-height: 1.08;
-      color: var(--nl-paper); letter-spacing: -0.01em;
-    }
-    .nl-headline em { font-style: normal; color: var(--nl-accent); }
-    /* the yellow block the real newsletter uses as its accent */
-    .nl-rule {
-      width: 34px; height: 34px;
-      background: var(--nl-accent);
-      margin-top: 0.9rem;
-    }
-
-    .nl-foot {
-      position: relative; z-index: 1;
-      flex-shrink: 0;
-      border-top: 1px solid rgba(255,255,255,0.22);
-      padding-top: 0.8rem;
-    }
-    .nl-teaser {
-      font-size: 0.7rem; line-height: 1.45;
-      color: rgba(255,255,255,0.8);
-      display: flex; gap: 0.5rem; align-items: baseline;
-    }
-    .nl-teaser + .nl-teaser { margin-top: 0.28rem; }
-    .nl-teaser i { font-style: normal; font-size: 0.55rem; color: var(--nl-accent); font-weight: 600; }
-    .nl-byline {
-      margin-top: 0.8rem;
-      font-size: 0.55rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-    }
-
-    /* ---- Noce: mobile app mockup ---- */
-    .noce-app { position: absolute; inset: 0; background: #F6F0E8; }
-    .noce-app svg { width: 100%; height: 100%; display: block; }
-
-    /* ---- caption under the carousel ---- */
-    /* All three captions share one grid cell, so the box is exactly as
-       tall as the longest of them. The old min-height was a fixed 168px
-       and the longer Noce copy overflowed it into the arrows below. */
-    .show-meta { position: relative; width: min(560px, 86vw); text-align: center; display: grid; }
-    .show-meta .chips { justify-content: center; }
-    .meta-item {
-      grid-area: 1 / 1;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-      pointer-events: none;
-    }
-    .meta-item.on { opacity: 1; transform: none; pointer-events: auto; }
-    .meta-index { display: block; font-size: var(--fs-meta); font-weight: 600; letter-spacing: var(--track); text-transform: uppercase; color: var(--terra-ink); margin-bottom: var(--sp-1); }
-    .meta-item h3 { font-size: var(--fs-h3); color: var(--teal); margin-bottom: var(--sp-1); }
-    .meta-item p { font-size: var(--fs-body); color: var(--mut); margin: 0 auto var(--sp-2); max-width: 52ch; }
-
-    /* arrows + dots */
-    .show-nav { display: flex; align-items: center; justify-content: center; gap: var(--sp-3); }
-    .show-arrow {
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      border: 1px solid var(--line);
-      display: grid; place-items: center;
-      color: var(--teal);
-      transition: background 0.3s, border-color 0.3s, color 0.3s, opacity 0.3s;
-    }
-    .show-arrow:hover { background: var(--teal); border-color: var(--teal); color: var(--bg); }
-    .show-arrow[disabled] { opacity: 0.3; pointer-events: none; }
-    .show-arrow svg { width: 17px; height: 17px; }
-    .show-dots { display: flex; gap: 0.15rem; }
-    /* the hit area is a comfortable 22px square; only the inner 7px
-       dot is painted, so the control stays visually minimal */
-    .show-dots button {
-      width: 22px; height: 22px;
-      display: grid; place-items: center;
-      cursor: pointer; background: none; border: 0; padding: 0;
-    }
-    .show-dots button::before {
-      content: '';
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--line);
-      transition: background 0.35s, transform 0.35s;
-    }
-    .show-dots button.on::before { background: var(--terra); transform: scale(1.35); }
-    .show-dots button:hover::before { background: var(--mut); }
-
-    /* Stacked fallback (mobile / reduced motion): plain vertical cards,
-       each meta re-parented beneath its own card. */
-    .showcase.stacked { height: auto; padding: 6rem 0; }
-    .showcase.stacked .show-sticky { position: static; height: auto; overflow: visible; display: block; }
-    .showcase.stacked .show-head { margin-bottom: 3rem; }
-    .showcase.stacked .show-viewport { overflow: visible; perspective: none; }
-    .showcase.stacked .show-track {
-      position: static;
-      height: auto;
-      transform-style: flat;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--sp-3);
-      transform: none !important;
-      padding: 0 1.5rem;
-    }
-    .showcase.stacked .panel {
-      position: static;
-      width: min(420px, 100%);
-      transform: none !important;
-      opacity: 1 !important;
-      filter: none !important;
-      pointer-events: auto;
-    }
-    .showcase.stacked .show-meta,
-    .showcase.stacked .show-nav { display: none; }
-    .showcase.stacked .meta-item {
-      grid-area: auto;
-      position: static;
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
-      width: min(420px, 100%);
-      margin-bottom: var(--sp-5);
-      text-align: left;
-    }
-    .showcase.stacked .meta-item p { margin-left: 0; }
-    .showcase.stacked .show-meta .chips { justify-content: flex-start; }
-
-    /* ============================================================
-       16. EXPERIENCE — field styles used inside the timeline items
-       ============================================================ */
-    .xp-period {
-      font-size: var(--fs-meta);
-      color: var(--mut);
-      letter-spacing: var(--track);
-      text-transform: uppercase;
-      font-weight: 500;
-      margin-bottom: var(--sp-1);
-    }
-    .xp-role   { font-family: var(--serif); font-size: var(--fs-h3); color: var(--teal); margin-bottom: var(--sp-1); }
-    .xp-org    { font-size: var(--fs-meta); font-weight: 600; color: var(--terra-ink); margin-bottom: var(--sp-2); }
-    .xp-desc   { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--mut); max-width: var(--measure); }
-    .xp-photo  { margin-top: 1.4rem; width: 240px; aspect-ratio: 3 / 2; }
-
-    /* company lockup — used where one entry covers two employers
-       (Picnic & Jumbo), so both marks are shown properly */
-    /* Both marks are rendered as equal square tiles so neither brand
-       dominates — Picnic ships as a red square, Jumbo as a white one. */
-    .xp-logos { display: flex; align-items: center; gap: var(--sp-1); margin-top: var(--sp-2); }
-    .xp-logos img {
-      width: 44px; height: 44px;
-      object-fit: contain;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      background: #fff;
-    }
-
-    /* ============================================================
-       18. CONTACT + FOOTER
-       ============================================================ */
-    .contact-title {
-      font-size: var(--fs-h2);
-      color: var(--bg);
-      max-width: 20ch;
-      margin-bottom: var(--sp-5);
-    }
-    .contact-links { display: flex; gap: var(--sp-4); flex-wrap: wrap; }
-    .contact-links a {
-      font-family: var(--serif);
-      font-size: var(--fs-h3);
-      color: var(--bg);
-      border-bottom: 1px solid var(--line-d);
-      padding-bottom: 0.3rem;
-      transition: color 0.3s, border-color 0.3s;
-      will-change: transform;
-    }
-    .contact-links a:hover { color: var(--terra); border-color: var(--terra); }
-    .contact-links .arrow { color: var(--terra); }
-
-    footer {
-      background: var(--teal);
-      color: var(--mut-d);
-      font-size: var(--fs-meta);
-      padding: var(--sp-4) var(--sp-4);
-      text-align: center;
-      border-top: 1px solid var(--line-d);
-    }
-
-    /* ============================================================
-       19. LANGUAGE FADE — main content fades while texts swap
-       ============================================================ */
-    #page { transition: opacity 0.22s ease; }
-    #page.langfade { opacity: 0; }
-
-    /* Narrow desktops / tablets: the nav row gets tight (the brand
-       reserves its space even while invisible), so compress it a bit
-       before the hamburger takes over at 768px. */
-    @media (max-width: 980px) {
-      #nav { gap: 1rem; padding: 1rem 1.25rem; }
-      .nav-links { gap: var(--sp-2); font-size: var(--fs-meta); }
-      .nav-brand { font-size: 0.95rem; }
-    }
-
-    /* ============================================================
-       20. MOBILE (max-width 768px)
-       ============================================================ */
-    @media (max-width: 768px) {
-      section { padding: var(--sp-6) 0; }
-      .wrap { padding: 0 var(--sp-3); }
-
+    /* ---------- mobile ---------- */
+    @media (max-width: 860px) {
       .nav-links { display: none; }
-      #burger { display: flex; }
-      #mobileMenu { display: flex; visibility: hidden; }
-      #mobileMenu.open { visibility: visible; }
-      .lang { margin-left: 0; }
-      .lang button { min-width: 40px; min-height: 44px; }   /* finger-sized */
-      #mobileMenu a { display: block; padding: 0.6rem 0; }
-      #nav { gap: 1rem; padding: 0.9rem 1.25rem; }
-
-      .hero { padding: var(--sp-8) 0 var(--sp-6); }
-      .scroll-hint { left: var(--sp-3); }
-
-      /* mobile: the wide S has no room — collapse to a left rail with
-         the badges in a column and the text beside them */
-      .vj-rail { height: auto; }
-      .vj-svg { inset: auto; left: 0; top: 0; width: 90px; height: 100%; }
-      .vj-item {
-        position: relative;
-        display: grid;
-        grid-template-columns: 52px 1fr;
-        gap: 1.1rem;
-        width: auto;
-        padding: 1.6rem 0;
-        margin: 0;
-        left: auto; right: auto; top: auto;
-        text-align: left;
-        transform: translateY(18px);
-      }
-      .vj-item.on { transform: none; }
-      .vj-badge { width: 52px; height: 52px; font-size: 0.85rem; }
-      .vj-name { font-size: var(--fs-h3); }
-      /* Vehicles scale down; seats recomputed from the same geometry.
-         Plane at 104px wide (k=0.65): window centre (54.6, 33.8) r13.
-         Bike at 64px (k=0.64): head centre (31.4, 16.6) r13.4. */
-      #planeTrav .trav-rot { width: 104px; height: 65px; margin: -32.5px 0 0 -52px; }
-      #bikeTrav  .trav-rot { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
-      #planeTrav .trav-seat { left: 42.6px; top: 21.8px; width: 24px; height: 24px; }
-      #bikeTrav  .trav-seat { left: 18px;   top: 4px;  width: 26px; height: 26px; }
-
-      /* experience timeline tightens */
-      .xtl-item { grid-template-columns: 52px 1fr; gap: var(--sp-2); padding: var(--sp-3) 0; }
-      .xtl-svg { left: 25px; }
-      .xp-photo { width: 180px; }
-
-      .tstats { gap: var(--sp-2); }
+      #burger { display: block; }
+      .brand { opacity: 1; font-size: .98rem; }
+      .lang button { padding: .3rem .45rem; }
+      #nav { gap: .5rem; padding: .6rem 1rem; }
+      .lang button { min-height: 36px; min-width: 38px; }
+      .jr > li { grid-template-columns: 52px 1fr; column-gap: .9rem; }
+      .yr span, .node { grid-column: 1; }
+      .side-l .card, .side-r .card { grid-column: 2; }
+      .node { width: 44px; height: 44px; }
+      .card-title { font-size: 1.12rem; }
+      .card-head { padding: .95rem 2.9rem .95rem 1.05rem; }
+      .card-more-in { padding: 0 1.05rem; }
+      .card:hover { transform: none; }
+      #plane .trav-rot { width: 70px; height: 44px; margin: -22px 0 0 -35px; }
+      #bike  .trav-rot { width: 52px; height: 52px; margin: -26px 0 0 -26px; }
+      #plane .trav-face { left: 28px; top: 14px; width: 17px; height: 17px; border-width: 1.5px; }
+      #bike  .trav-face { left: 14px; top: 1px; width: 24px; height: 24px; border-width: 1.5px; }
+      .proj-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 1.25rem 1rem; margin: 0 -1.25rem; scrollbar-width: none; }
+      .proj-grid::-webkit-scrollbar { display: none; }
+      .proj { scroll-snap-align: center; }
+      .filters { display: flex; width: 100%; }
+      .filters button { flex: 1; }
     }
-
-    /* Under 420px: the stat row and the timeline tighten further */
-    @media (max-width: 420px) {
-      .tstats { grid-template-columns: 1fr; gap: var(--sp-3); text-align: left; }
-      .xtl-item { grid-template-columns: 44px 1fr; }
-      .vj-badge { width: 44px; height: 44px; }
-      .xtl-svg { left: 21px; }
-      .contact-links { gap: var(--sp-3); }
-    }
-
-    /* ============================================================
-       21. REDUCED MOTION — all motion off, final states shown.
-           JS also checks this and skips its animation work entirely.
-       ============================================================ */
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-      }
-      html.js .hero-name .ch { opacity: 1; transform: none; filter: none; }
-      html.js .hero-line .hl { opacity: 1; }
-      html.js .unfold { opacity: 1; transform: none; clip-path: none; }
-      html.js .unfold .stg { opacity: 1; transform: none; }
-      html.js .plx-wrap { clip-path: none; }
-      .scroll-hint i { display: none; }
-      /* journeys and timeline: fully drawn, all nodes visible */
-      .vj-item, .xtl-item { opacity: 1 !important; transform: none !important; }
-      #vjDraw, #xtlDraw { stroke-dashoffset: 0 !important; }
-      .traveler { display: none !important; }
-      /* showcase: JS applies .stacked, so panels are static cards;
-         metas are forced visible here as well */
-      .meta-item { opacity: 1; transform: none; pointer-events: auto; }
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+      html.js .rise, html.js .stop .card, html.js .hero h1 .ch { opacity: 1 !important; transform: none !important; }
+      .trav { display: none; }
     }
+    @media (prefers-reduced-transparency: reduce) { #nav.solid { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; } }
   </style>
 </head>
 <body>
-  <a href="#about" class="skip">Skip to content</a>
+  <a href="#main" class="skip">Skip to content</a>
 
-  <!-- Scroll progress line + custom cursor (both driven by JS) -->
-  <div id="progress" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
-
-  <!-- ============================================================
-       NAV
-       ============================================================ -->
-  <nav id="nav" aria-label="Main navigation">
-    <a href="#top" class="nav-brand" id="navBrand">Antonio Di Domenico</a>
+  <nav id="nav" aria-label="Main">
+    <a href="#top" class="brand">Antonio Di Domenico</a>
     <div class="nav-links">
-      <a href="#about"      data-i18n="nav.about">About</a>
-      <a href="#experience" data-i18n="nav.experience">Experience</a>
-      <a href="#projects"   data-i18n="nav.projects">Projects</a>
-      <a href="#contact"    data-i18n="nav.contact">Contact</a>
+      <a href="#journey" data-i18n="nav.journey">Journey</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
     </div>
     <div class="lang" role="group" aria-label="Language">
-      <button data-lang="en" class="on">EN</button><span>·</span><button data-lang="it">IT</button><span>·</span><button data-lang="nl">NL</button>
+      <button type="button" data-lang="en" class="on" aria-pressed="true">EN</button><button type="button" data-lang="it" aria-pressed="false">IT</button><button type="button" data-lang="nl" aria-pressed="false">NL</button>
     </div>
-    <button id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    <button id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
   </nav>
-
-  <!-- Mobile dropdown (mirrors the nav links) -->
-  <div id="mobileMenu">
-    <a href="#about"      data-i18n="nav.about">About</a>
-    <a href="#experience" data-i18n="nav.experience">Experience</a>
-    <a href="#projects"   data-i18n="nav.projects">Projects</a>
-    <a href="#contact"    data-i18n="nav.contact">Contact</a>
+  <div id="menu">
+    <a href="#journey" data-i18n="nav.journey">Journey</a>
+    <a href="#projects" data-i18n="nav.projects">Projects</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
   </div>
 
-  <div id="page">
-
-  <!-- ============================================================
-       1. HERO
-       ============================================================ -->
   <header id="top" class="hero">
-    <!-- Soft radial wash behind the hero. A photograph used to sit here
-         but the file was never supplied, so it 404'd on every load; the
-         wash is the intended look and costs no request. -->
-    <div class="hero-bg" aria-hidden="true"></div>
     <div class="wrap">
       <img class="hero-photo" src="images/antonio.jpg" alt="Portrait of Antonio Di Domenico" width="200" height="200">
-      <span class="eyebrow" data-i18n="hero.eyebrow">MSc Finance &amp; Investments · RSM Rotterdam</span>
-      <!-- JS splits this into per-character spans for the filmic reveal -->
-      <h1 class="hero-name" id="heroName">Antonio Di Domenico</h1>
+      <div class="now"><i aria-hidden="true"></i><span data-i18n="hero.now">Now: IFSA private equity track · RSM</span></div>
+      <h1 id="heroName">Antonio Di Domenico</h1>
       <p class="hero-sub" data-i18n="hero.sub">Looking for private equity, venture capital and M&amp;A internships for summer 2027.</p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-fill magnetic"  data-i18n="hero.cta1">See my work</a>
-        <a href="#contact"  class="btn btn-ghost magnetic" data-i18n="hero.cta2">Get in touch</a>
+      <div class="cta">
+        <a href="#journey" class="btn btn-fill" data-i18n="hero.cta1j">See my journey</a>
+        <a href="#contact" class="btn btn-line" data-i18n="hero.cta2">Get in touch</a>
       </div>
     </div>
-    <div class="scroll-hint" aria-hidden="true"><span data-i18n="hero.scroll">Scroll</span><i></i></div>
+    <span class="scroll-cue" aria-hidden="true"></span>
   </header>
 
-  <!-- ============================================================
-       2. ABOUT — story, then the vertical university journey:
-       a line draws itself downward as the user scrolls, revealing
-       Utrecht → PUC-Rio → RSM one by one.
-       ============================================================ -->
   <main id="main">
-  <section id="about" class="about">
-    <div class="wrap unfold">
-      <div class="about-grid">
-        <aside class="about-label stg">
-          <h2 class="eyebrow" data-i18n="about.eyebrow">About</h2>
-          <hr class="about-rule" aria-hidden="true">
-          <dl class="about-facts">
-            <div>
-              <dt data-i18n="about.f1k">Now</dt>
-              <dd data-i18n="about.f1v">MSc Finance &amp; Investments, RSM</dd>
-            </div>
-            <div class="is-next">
-              <dt data-i18n="about.f2k">Before</dt>
-              <dd data-i18n="about.f2v">BSc Economics (Honours), Utrecht</dd>
-            </div>
-            <div>
-              <dt data-i18n="about.f3k">Also</dt>
-              <dd data-i18n="about.f3v">Minor in Law · Utrecht</dd>
-            </div>
-          </dl>
-        </aside>
-        <div class="about-body">
-          <p class="about-lead stg" data-i18n="about.p1">I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.</p>
-          <p class="stg" data-i18n="about.p2">This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.</p>
+  <section id="journey">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <span class="eyebrow" data-i18n="j.eyebrow">Journey</span>
+        <h2 data-i18n="j.title">From Utrecht to Rio to Rotterdam.</h2>
+        <div class="intro"><p data-i18n="about.p1">I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.</p><p data-i18n="about.p2">This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.</p></div>
+        <div class="filters" role="group" aria-label="Filter">
+          <button type="button" data-f="all" aria-pressed="true" data-i18n="f.all">All</button>
+          <button type="button" data-f="study" aria-pressed="false" data-i18n="f.study">Study</button>
+          <button type="button" data-f="work" aria-pressed="false" data-i18n="f.work">Work</button>
         </div>
+        <p class="hint" data-i18n="j.hint">Tap any stop for the details.</p>
       </div>
 
-      <!-- Education: badges in a left column, wide text to the right.
-           A serpentine line draws itself down through the three badge
-           centres (scroll-linked), bulging left/right between them but
-           staying clear of the text. Two travellers ride that exact
-           line: my face in a plane over UU→PUC (flew to Brazil), then
-           on a bike over PUC→RSM (moved to Rotterdam). -->
-      <div class="vjourney stg" id="vjourney">
-        <span class="eyebrow" data-i18n="edu.eyebrow">Education</span>
-        <h3 class="subsection-title" data-i18n="edu.title">Utrecht, Rio de Janeiro, Rotterdam.</h3>
-        <div class="vj-rail" id="vjRail">
-          <!-- JS rewrites both paths in pixel coordinates on measure;
-               the markup d is only the no-JS static fallback -->
-          <svg class="vj-svg" id="vjSvg" viewBox="0 0 120 100" preserveAspectRatio="none" aria-hidden="true">
-            <path class="vj-ghost" id="vjGhost" d="M32,2 C66,20 66,30 32,50 C-2,70 -2,80 32,98"/>
-            <path class="vj-draw"  id="vjDraw"  d="M32,2 C66,20 66,30 32,50 C-2,70 -2,80 32,98"/>
-          </svg>
-
-          <!-- flat, hollow vehicles (cream body + terracotta outline) so
-               my face shows through as the window / the rider's head -->
-          <div class="traveler" id="planeTrav" aria-hidden="true">
-            <span class="trav-rot">
-              <!-- Three-quarter airliner, nose right. Far wing, fin and
-                   tailplane go down first so the fuselage covers their
-                   roots; the near wing and its two nacelles sit on top.
-                   The cabin window is last and the photo lands on it. -->
-              <svg class="trav-veh" viewBox="0 0 160 100">
-                <path class="veh-body" d="M106,32 L84,4 L66,7 L92,34 Z"/>
-                <path class="veh-body" d="M36,28 L24,2 L38,2 L54,27 Z"/>
-                <path class="veh-body" d="M26,24 L5,20 L8,29 Z"/>
-                <path class="veh-body" d="M152,52 C151,41 142,33 126,31 L52,31 C36,31 24,27 10,18 C17,33 25,51 35,63 C41,70 47,73 57,73 L126,73 C142,71 151,63 152,52 Z"/>
-                <path class="veh-body" d="M114,68 L60,92 L88,98 L130,70 Z"/>
-                <path class="veh-pod-o" d="M92,81 L108,74"/>
-                <path class="veh-pod-i" d="M93,80.5 L107,74.5"/>
-                <path class="veh-pod-o" d="M73,89 L89,82"/>
-                <path class="veh-pod-i" d="M74,88.5 L88,82.5"/>
-                <path class="veh-solid" d="M133,42 C139,43 143,46 144,50 C140,51 135,50 132,48 Z"/>
-                <circle class="veh-solid" cx="118" cy="47" r="2.6"/>
-                <circle class="veh-solid" cx="50" cy="44" r="2.6"/>
-                <circle class="veh-body" cx="84" cy="52" r="20"/>
-              </svg>
-              <span class="trav-seat"><img class="trav-face" src="images/face.jpg" alt=""></span>
-            </span>
-          </div>
-          <div class="traveler" id="bikeTrav" aria-hidden="true">
-            <span class="trav-rot">
-              <!-- Bike drawn bottom-up: wheels, frame, saddle and bars,
-                   then the rider's torso and arm. The head is the photo,
-                   sized deliberately large so it reads at a glance. -->
-              <svg class="trav-veh" viewBox="0 0 100 100">
-                <circle class="veh-wheel" cx="21" cy="79" r="16"/>
-                <circle class="veh-wheel" cx="83" cy="79" r="16"/>
-                <circle class="veh-solid" cx="21" cy="79" r="2.6"/>
-                <circle class="veh-solid" cx="83" cy="79" r="2.6"/>
-                <path class="veh-line" d="M21,79 L45,55 L55,79 Z"/>
-                <path class="veh-line" d="M55,79 L73,55"/>
-                <path class="veh-line" d="M73,55 L83,79"/>
-                <path class="veh-line" d="M45,55 L42,49"/>
-                <path class="veh-thin" d="M35,48 L50,48"/>
-                <path class="veh-thin" d="M67,50 L80,50"/>
-                <path class="veh-line" d="M52,79 L58,72"/>
-                <path class="veh-line" d="M44,48 L52,34"/>
-                <path class="veh-line" d="M52,37 L73,50"/>
-              </svg>
-              <span class="trav-seat"><img class="trav-face" src="images/face.jpg" alt=""></span>
-            </span>
-          </div>
-
-          <div class="vj-item vj-i1">
-            <div class="vj-badge" aria-hidden="true"><img class="vj-logo" src="images/logo-uu.png" alt="" loading="lazy" decoding="async" width="231" height="231"><span class="vj-badge-txt">UU</span></div>
-            <div>
-              <div class="vj-name"><a href="https://www.uu.nl" target="_blank" rel="noopener noreferrer">Utrecht University</a> <span class="vj-years">· 2023–2026</span></div>
+      <ol class="jr" id="jr" data-f="all">
+        <svg class="jr-svg" id="jrSvg" aria-hidden="true"><path class="jr-ghost" id="jrGhost" d=""/><path class="jr-draw" id="jrDraw" d=""/></svg>
+        <div class="trav" id="plane" aria-hidden="true"><span class="trav-rot"><svg class="trav-veh" viewBox="0 0 160 100">
+  <path class="veh-body" d="M106,32 L84,4 L66,7 L92,34 Z"/>
+  <path class="veh-body" d="M36,28 L24,2 L38,2 L54,27 Z"/>
+  <path class="veh-body" d="M26,24 L5,20 L8,29 Z"/>
+  <path class="veh-body" d="M152,52 C151,41 142,33 126,31 L52,31 C36,31 24,27 10,18 C17,33 25,51 35,63 C41,70 47,73 57,73 L126,73 C142,71 151,63 152,52 Z"/>
+  <path class="veh-body" d="M114,68 L60,92 L88,98 L130,70 Z"/>
+  <path class="veh-pod-o" d="M92,81 L108,74"/><path class="veh-pod-i" d="M93,80.5 L107,74.5"/>
+  <path class="veh-pod-o" d="M73,89 L89,82"/><path class="veh-pod-i" d="M74,88.5 L88,82.5"/>
+  <path class="veh-solid" d="M133,42 C139,43 143,46 144,50 C140,51 135,50 132,48 Z"/>
+  <circle class="veh-solid" cx="118" cy="47" r="2.6"/><circle class="veh-solid" cx="50" cy="44" r="2.6"/>
+  <circle class="veh-body" cx="84" cy="52" r="20"/>
+</svg><img class="trav-face" src="images/face.jpg" alt=""></span></div>
+        <div class="trav" id="bike" aria-hidden="true"><span class="trav-rot"><svg class="trav-veh" viewBox="0 0 100 100">
+  <circle class="veh-wheel" cx="21" cy="79" r="16"/><circle class="veh-wheel" cx="83" cy="79" r="16"/>
+  <circle class="veh-solid" cx="21" cy="79" r="2.6"/><circle class="veh-solid" cx="83" cy="79" r="2.6"/>
+  <path class="veh-line" d="M21,79 L45,55 L55,79 Z"/><path class="veh-line" d="M55,79 L73,55"/>
+  <path class="veh-line" d="M73,55 L83,79"/><path class="veh-line" d="M45,55 L42,49"/>
+  <path class="veh-thin" d="M35,48 L50,48"/><path class="veh-thin" d="M67,50 L80,50"/>
+  <path class="veh-line" d="M52,79 L58,72"/><path class="veh-line" d="M44,48 L52,34"/>
+  <path class="veh-line" d="M52,37 L73,50"/>
+</svg><img class="trav-face" src="images/face.jpg" alt=""></span></div>
+        <li class="yr" aria-hidden="true"><span>2023</span></li>
+        <li class="stop side-l" data-t="study" id="s-uu">
+          <div class="node" aria-hidden="true"><img class="node-logo" src="images/logo-uu.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-uu">
+              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="uu.period">2023 – 2026</span></span>
+              <span class="card-title" data-i18n="uu.title">BSc Economics (Honours)</span>
+              <span class="card-org" data-i18n="uu.org">Utrecht University</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-uu">
+              <div class="card-more-in"><p data-i18n="uu.desc">Honours bachelor in Economics and Business Economics, with a minor in Law.</p></div>
             </div>
           </div>
-          <div class="vj-item vj-i2">
-            <div class="vj-badge" aria-hidden="true"><img class="vj-logo" src="images/logo-puc.png" alt="" loading="lazy" decoding="async" width="377" height="377"><span class="vj-badge-txt">PUC</span></div>
-            <div>
-              <div class="vj-name"><a href="https://www.puc-rio.br" target="_blank" rel="noopener noreferrer">PUC-Rio</a> <span class="vj-years">· 2025–2026</span></div>
+        </li>
+        <li class="yr" aria-hidden="true"><span>2024</span></li>
+        <li class="stop side-r" data-t="work" id="s-pj">
+          <div class="node" aria-hidden="true"><svg class="node-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18 L24 11 L40 18 L40 37 L24 44 L8 37 Z"/><path d="M8 18 L24 25 L40 18"/><path d="M24 25 L24 44"/></svg></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-pj">
+              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp5.period">Feb 2024 – Nov 2026</span></span>
+              <span class="card-title" data-i18n="exp5.role">Warehouse Operations</span>
+              <span class="card-org" data-i18n="exp5.org">Picnic &amp; Jumbo</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-pj">
+              <div class="card-more-in"><p data-i18n="exp5.desc">Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.</p><div class="more-logos"><img src="images/logo-picnic.png" alt="Picnic" loading="lazy"><img src="images/logo-jumbo-tile.png" alt="Jumbo" loading="lazy"></div></div>
             </div>
           </div>
-          <div class="vj-item vj-i3 vj-final">
-            <div class="vj-badge" aria-hidden="true"><img class="vj-logo logo-fill" src="images/logo-rsm.png" alt="" loading="lazy" decoding="async" width="402" height="402"><span class="vj-badge-txt">RSM</span></div>
-            <div>
-              <div class="vj-name"><a href="https://www.rsm.nl" target="_blank" rel="noopener noreferrer">RSM · Erasmus University Rotterdam</a> <span class="vj-years">· 2026–2027</span></div>
+        </li>
+        <li class="stop side-l" data-t="work" id="s-pr">
+          <div class="node" aria-hidden="true"><img class="node-logo" src="images/logo-uu.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-pr">
+              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp3.period">Feb 2024 – Jul 2025</span></span>
+              <span class="card-title" data-i18n="exp3.role">Head of Public Relations</span>
+              <span class="card-org" data-i18n="exp3.org">Utrecht University Honours Programme</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-pr">
+              <div class="card-more-in"><p data-i18n="exp3.desc">I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.</p></div>
             </div>
           </div>
-        </div>
-      </div>
+        </li>
+        <li class="stop side-r" data-t="work" id="s-ath">
+          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-athena.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-ath">
+              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp4.period">Oct 2024 – Jun 2025</span></span>
+              <span class="card-title" data-i18n="exp4.role">Mathematics and Statistics Tutor</span>
+              <span class="card-org" data-i18n="exp4.org">AthenaStudies</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-ath">
+              <div class="card-more-in"><p data-i18n="exp4.desc">I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.</p></div>
+            </div>
+          </div>
+        </li>
+        <li class="yr" aria-hidden="true"><span>2025</span></li>
+        <li class="stop side-l" data-t="study" id="s-puc">
+          <div class="node" aria-hidden="true"><img class="node-logo" src="images/logo-puc.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-puc">
+              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="puc.period">Aug 2025 – Jan 2026</span></span>
+              <span class="card-title" data-i18n="puc.title">Exchange semester</span>
+              <span class="card-org" data-i18n="puc.org">PUC-Rio, Rio de Janeiro</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-puc">
+              <div class="card-more-in"><p data-i18n="puc.desc">Six months studying in Rio de Janeiro.</p></div>
+            </div>
+          </div>
+        </li>
+        <li class="yr" aria-hidden="true"><span>2026</span></li>
+        <li class="stop side-r" data-t="study" id="s-ais">
+          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-aiscouts.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-ais">
+              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="exp2.period">Feb – May 2026</span></span>
+              <span class="card-title" data-i18n="exp2.role">AI Scouts</span>
+              <span class="card-org" data-i18n="exp2.org">Berkeley-led programme, remote</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-ais">
+              <div class="card-more-in"><p data-i18n="exp2.desc">I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.</p></div>
+            </div>
+          </div>
+        </li>
+        <li class="stop side-l" data-t="work" id="s-exp">
+          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-exprimo.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-exp">
+              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp1.period">Jun 2026 – Present</span></span>
+              <span class="card-title" data-i18n="exp1.role">Accounting Assistant</span>
+              <span class="card-org" data-i18n="exp1.org">Exprimo Comunicazione, Italy (remote)</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-exp">
+              <div class="card-more-in"><p data-i18n="exp1.desc">I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.</p></div>
+            </div>
+          </div>
+        </li>
+        <li class="stop side-r" data-t="study" id="s-rsm">
+          <div class="node" aria-hidden="true"><img class="node-logo fill" src="images/logo-rsm.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-rsm">
+              <span class="card-meta"><span class="tag tag-study" data-i18n="tag.study">Study</span><span class="period" data-i18n="rsm.period">Sep 2026 – Aug 2027</span></span>
+              <span class="card-title" data-i18n="rsm.title">MSc Finance &amp; Investments</span>
+              <span class="card-org" data-i18n="rsm.org">RSM · Erasmus University Rotterdam</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-rsm">
+              <div class="card-more-in"><p data-i18n="rsm.desc">Where I am now. Alongside the master’s I’m on IFSA Rotterdam’s private equity track.</p></div>
+            </div>
+          </div>
+        </li>
+        <li class="stop side-l lead open" data-t="work" id="s-ifsa">
+          <div class="node" aria-hidden="true"><span class="node-txt">IF</span></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="true" aria-controls="m-ifsa">
+              <span class="card-meta"><span class="tag tag-work" data-i18n="tag.work">Work</span><span class="period" data-i18n="exp0.period">Sep 2026 – Present</span></span>
+              <span class="card-title" data-i18n="exp0.role">Analyst, Private Equity &amp; Tech M&amp;A Track</span>
+              <span class="card-org" data-i18n="exp0.org">IFSA Rotterdam</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-ifsa">
+              <div class="card-more-in"><p data-i18n="exp0.desc">In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.</p></div>
+            </div>
+          </div>
+        </li>
+        <li class="yr" aria-hidden="true"><span>2027</span></li>
+        <li class="stop side-r next" data-t="next" id="s-next">
+          <div class="node" aria-hidden="true"><svg class="node-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 42 L14 7"/><path d="M14 9 C22 4 28 14 36 9 L36 25 C28 30 22 20 14 25"/></svg></div>
+          <div class="card">
+            <button class="card-head" type="button" aria-expanded="false" aria-controls="m-next">
+              <span class="card-meta"><span class="tag tag-next" data-i18n="tag.next">Next</span><span class="period" data-i18n="next.period">Summer 2027</span></span>
+              <span class="card-title" data-i18n="next.title">Internship in PE, VC or M&amp;A</span>
+              <span class="card-org" data-i18n="next.org">Your team?</span>
+              <span class="card-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="card-more" id="m-next">
+              <div class="card-more-in"><p data-i18n="next.desc">The next stop. If your team is hiring for summer 2027, I’d like to hear from you.</p><a class="btn btn-fill btn-sm" href="#contact" data-i18n="hero.cta2">Get in touch</a></div>
+            </div>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
-
-  <!-- ============================================================
-       3. EXPERIENCE — ordered by importance, IFSA lead
-       ============================================================ -->
-  <section id="experience">
-    <div class="wrap unfold">
-      <span class="eyebrow stg" data-i18n="exp.eyebrow">Experience</span>
-      <h2 class="section-title stg" data-i18n="exp.title">Work, study, and everything in between.</h2>
-
-      <!-- timeline: same rail language as the education journey —
-           the line draws downward and each entry lights up in turn -->
-      <div class="xtl stg" id="xtl">
-        <svg class="xtl-svg" id="xtlSvg" viewBox="0 0 2 100" preserveAspectRatio="none" aria-hidden="true">
-          <path class="vj-ghost" d="M1,0 L1,100"/>
-          <path class="vj-draw" id="xtlDraw" d="M1,0 L1,100"/>
-        </svg>
-
-        <!-- 0. IFSA Rotterdam — lead -->
-        <div class="xtl-item xtl-lead">
-          <div class="vj-badge" aria-hidden="true"><span class="vj-badge-txt">IF</span></div>
-          <div>
-            <div class="xp-period" data-i18n="exp0.period">Sep 2026 – Present</div>
-            <h3 class="xp-role" data-i18n="exp0.role">Analyst, Private Equity &amp; Tech M&amp;A Track</h3>
-            <div class="xp-org" data-i18n="exp0.org">IFSA Rotterdam</div>
-            <p class="xp-desc" data-i18n="exp0.desc">In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.</p>
-          </div>
-        </div>
-
-        <!-- 1. Exprimo -->
-        <div class="xtl-item">
-          <div class="vj-badge" aria-hidden="true"><img class="vj-logo logo-fill" src="images/logo-exprimo.png" alt="Exprimo Comunicazione" loading="lazy" decoding="async" width="204" height="204"><span class="vj-badge-txt">EP</span></div>
-          <div>
-            <div class="xp-period" data-i18n="exp1.period">Jun 2026 – Present</div>
-            <h3 class="xp-role" data-i18n="exp1.role">Accounting Assistant</h3>
-            <div class="xp-org" data-i18n="exp1.org">Exprimo Comunicazione, Italy (remote)</div>
-            <p class="xp-desc" data-i18n="exp1.desc">I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.</p>
-          </div>
-        </div>
-
-        <!-- 2. AI Scouts — no brand mark, so the badge carries initials -->
-        <div class="xtl-item">
-          <div class="vj-badge" aria-hidden="true"><img class="vj-logo logo-fill" src="images/logo-aiscouts.png" alt="AI Squads" loading="lazy" decoding="async" width="440" height="440"><span class="vj-badge-txt">AI</span></div>
-          <div>
-            <div class="xp-period" data-i18n="exp2.period">Feb – May 2026</div>
-            <h3 class="xp-role" data-i18n="exp2.role">AI Scouts</h3>
-            <div class="xp-org" data-i18n="exp2.org">Berkeley-led programme, remote</div>
-            <p class="xp-desc" data-i18n="exp2.desc">I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.</p>
-          </div>
-        </div>
-
-        <!-- 3. Honours Programme — public relations -->
-        <div class="xtl-item">
-          <div class="vj-badge" aria-hidden="true"><img class="vj-logo" src="images/logo-uu.png" alt="Utrecht University" loading="lazy" decoding="async" width="231" height="231"><span class="vj-badge-txt">UU</span></div>
-          <div>
-            <div class="xp-period" data-i18n="exp3.period">Feb 2024 – Jul 2025</div>
-            <h3 class="xp-role" data-i18n="exp3.role">Head of Public Relations</h3>
-            <div class="xp-org" data-i18n="exp3.org">Utrecht University Honours Programme</div>
-            <p class="xp-desc" data-i18n="exp3.desc">I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.</p>
-          </div>
-        </div>
-
-        <!-- 4. AthenaStudies -->
-        <div class="xtl-item">
-          <div class="vj-badge" aria-hidden="true"><img class="vj-logo logo-fill" src="images/logo-athena.png" alt="AthenaStudies" loading="lazy" decoding="async" width="196" height="196"><span class="vj-badge-txt">AS</span></div>
-          <div>
-            <div class="xp-period" data-i18n="exp4.period">Oct 2024 – Jun 2025</div>
-            <h3 class="xp-role" data-i18n="exp4.role">Mathematics and Statistics Tutor</h3>
-            <div class="xp-org" data-i18n="exp4.org">AthenaStudies</div>
-            <p class="xp-desc" data-i18n="exp4.desc">I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.</p>
-          </div>
-        </div>
-
-        <!-- 5. Picnic & Jumbo -->
-        <div class="xtl-item">
-          <!-- drawn crate icon: both employer logos already appear as
-               tiles under the description, so no single brand here -->
-          <div class="vj-badge" aria-hidden="true">
-            <svg class="vj-icon" viewBox="0 0 48 48" fill="none"
-                 stroke="currentColor" stroke-width="2.1"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8 18 L24 11 L40 18 L40 37 L24 44 L8 37 Z"/>
-              <path d="M8 18 L24 25 L40 18"/>
-              <path d="M24 25 L24 44"/>
-              <path d="M16 14.5 L32 21.5"/>
-            </svg>
-          </div>
-          <div>
-            <div class="xp-period" data-i18n="exp5.period">Feb 2024 – Nov 2026</div>
-            <h3 class="xp-role" data-i18n="exp5.role">Warehouse Operations</h3>
-            <div class="xp-org" data-i18n="exp5.org">Picnic &amp; Jumbo</div>
-            <p class="xp-desc" data-i18n="exp5.desc">Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.</p>
-            <!-- both employers shown, since this entry covers two -->
-            <div class="xp-logos" aria-hidden="true">
-              <img src="images/logo-picnic.png" alt="Picnic" loading="lazy" decoding="async" width="447" height="447">
-              <img src="images/logo-jumbo-tile.png" alt="Jumbo" loading="lazy" decoding="async" width="447" height="447">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       4. PROJECTS — HORIZONTAL CAROUSEL (pinned).
-       Three identical 4:5 slides ride a rail that slides sideways;
-       the active one sits dead centre with its caption underneath.
-       Scroll drives it (expo-out settling into each slide) and the
-       arrows jump to a slide. JS adds .stacked on mobile / reduced
-       motion, which degrades everything to plain vertical cards.
-       ============================================================ -->
-  <section id="projects" class="showcase" aria-label="Selected projects">
-    <div class="show-sticky" id="showSticky">
-      <div class="show-head">
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head rise">
         <span class="eyebrow" data-i18n="show.eyebrow">Selected Projects</span>
-        <h2 class="section-title" data-i18n="show.title">Three projects, built out of curiosity.</h2>
+        <h2 data-i18n="show.title">Three projects, built out of curiosity.</h2>
       </div>
-
-      <div class="show-viewport">
-        <div class="show-track" id="showTrack">
-          <!-- 1 · Noce — mobile app mockup -->
-          <div class="panel panel-noce">
-            <div class="noce-app">
-              <svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+      <div class="proj-grid" tabindex="0" role="group" aria-label="Projects">
+        <figure class="proj rise">
+          <div class="proj-vis"><svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <filter id="fs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.14)"/></filter>
                   <filter id="fc" x="-10%" y="-50%" width="120%" height="200%"><feDropShadow dx="0" dy="-3" stdDeviation="6" flood-color="rgba(0,0,0,0.08)"/></filter>
@@ -1739,1022 +611,209 @@
                 <text x="123" y="375" font-size="9" text-anchor="middle" font-family="system-ui,sans-serif" fill="#1B4D4B" data-i18n="noce.chip">Hot spring · Local</text>
                 <rect x="168" y="362" width="44" height="19" rx="9.5" fill="#F6F0E8"/>
                 <text x="190" y="375" font-size="9" text-anchor="middle" font-family="system-ui,sans-serif" fill="#1B4D4B" data-i18n="noce.dist">1.2 km</text>
-              </svg>
-            </div>
+              </svg></div>
+          <figcaption>
+            <span class="proj-kicker" data-i18n="sp1.kicker">Map app</span>
+            <h3 data-i18n="sp1.title">Noce</h3>
+            <p data-i18n="sp1.cap">Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.</p>
+            <div class="chips"><span class="chip">Lovable</span><span class="chip">Supabase</span><span class="chip">Antigravity</span><span class="chip">Google Maps API</span></div>
+          </figcaption>
+        </figure>
+        <figure class="proj rise">
+          <div class="proj-vis"><div class="nl" aria-hidden="true">
+            <div><div class="nl-c">UU Honours Community</div><div class="nl-m">Honours</div><div class="nl-e"><span>Spring Edition</span><span>Issue 07</span></div></div>
+            <div class="nl-mid"><div class="nl-k">Cover Story</div><div class="nl-h">The <em>Interview</em> Issue</div><div class="nl-sq"></div></div>
+            <div class="nl-f"><div><i>01</i>The tutor who became a startup</div><div><i>02</i>What your thesis really teaches you</div></div>
+          </div></div>
+          <figcaption>
+            <span class="proj-kicker" data-i18n="sp2.kicker">Editorial</span>
+            <h3 data-i18n="sp2.title">Honours Newsletter</h3>
+            <p data-i18n="sp2.cap">Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.</p>
+            <div class="chips"><span class="chip">Canva</span><span class="chip">LinkedIn</span></div>
+          </figcaption>
+        </figure>
+        <figure class="proj rise">
+          <div class="proj-vis">
+            <img class="photo" src="images/volunteers.jpg" alt="Student volunteers at the Jumbo food drive" loading="lazy" decoding="async">
+            <div class="vol-note"><div class="vol-k" data-i18n="vol.kicker">Utrecht · Food Drive</div><div class="vol-m" data-i18n="vol.meta">Volunteers recruited &amp; coordinated</div></div>
           </div>
-
-          <!-- 2 · Honours Newsletter — minimal editorial cover -->
-          <div class="panel panel-news">
-            <div class="nl-cover">
-              <div class="nl-top">
-                <div class="nl-community">UU Honours Community</div>
-                <div class="nl-mast">Honours</div>
-                <div class="nl-edition"><span>Spring Edition</span><span>Issue 07</span></div>
-              </div>
-              <div class="nl-mid">
-                <div class="nl-kicker">Cover Story</div>
-                <div class="nl-headline">The <em>Interview</em> Issue</div>
-                <div class="nl-rule" aria-hidden="true"></div>
-              </div>
-              <div class="nl-foot">
-                <div class="nl-teaser"><i>01</i><span>The tutor who became a startup</span></div>
-                <div class="nl-teaser"><i>02</i><span>What your thesis really teaches you</span></div>
-                <div class="nl-byline">Editorial Lead · Antonio Di Domenico</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3 · Volunteers — photo with a field-note strip, so the
-               card is authored like the other two -->
-          <div class="panel panel-vol">
-            <div class="vol-card">
-              <img class="panel-img" id="volImg" src="images/volunteers.jpg" alt="Student volunteers at the Jumbo food drive" loading="lazy" decoding="async" width="1178" height="884">
-              <div class="vol-note">
-                <div class="vol-kicker" data-i18n="vol.kicker">Utrecht · Food Drive</div>
-                <div class="vol-meta" data-i18n="vol.meta">Volunteers recruited &amp; coordinated</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="show-meta" id="showMeta" aria-live="polite">
-        <div class="meta-item">
-          <span class="meta-index"><span data-i18n="sp1.kicker">Map app</span></span>
-          <h3 data-i18n="sp1.title">Noce</h3>
-          <p data-i18n="sp1.cap">Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.</p>
-          <div class="chips"><span class="chip">Lovable</span><span class="chip">Supabase</span><span class="chip">Antigravity</span><span class="chip">Google Maps API</span></div>
-        </div>
-        <div class="meta-item">
-          <span class="meta-index"><span data-i18n="sp2.kicker">Editorial</span></span>
-          <h3 data-i18n="sp2.title">Honours Newsletter</h3>
-          <p data-i18n="sp2.cap">Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.</p>
-          <div class="chips"><span class="chip">Canva</span><span class="chip">LinkedIn</span></div>
-        </div>
-        <div class="meta-item">
-          <span class="meta-index"><span data-i18n="sp3.kicker">Community</span></span>
-          <h3 data-i18n="sp3.title">Volunteers</h3>
-          <p data-i18n="sp3.cap">I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.</p>
-          <div class="chips"><span class="chip">EN / NL</span><span class="chip">Canva</span></div>
-        </div>
-      </div>
-
-      <div class="show-nav">
-        <button class="show-arrow" id="showPrev" aria-label="Previous project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 12 L15 19"/></svg>
-        </button>
-        <div class="show-dots" id="showDots" role="tablist" aria-label="Choose project">
-          <button class="on" role="tab" aria-selected="true"  aria-label="Noce"></button>
-          <button          role="tab" aria-selected="false" aria-label="Honours Newsletter"></button>
-          <button          role="tab" aria-selected="false" aria-label="Volunteers"></button>
-        </div>
-        <button class="show-arrow" id="showNext" aria-label="Next project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 L16 12 L9 19"/></svg>
-        </button>
+          <figcaption>
+            <span class="proj-kicker" data-i18n="sp3.kicker">Community</span>
+            <h3 data-i18n="sp3.title">Volunteers</h3>
+            <p data-i18n="sp3.cap">I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.</p>
+            <div class="chips"><span class="chip">EN / NL</span><span class="chip">Canva</span></div>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       5. CONTACT
-       ============================================================ -->
-  <section id="contact" class="teal">
-    <div class="wrap unfold">
-      <span class="eyebrow stg" data-i18n="contact.eyebrow">Contact</span>
-      <h2 class="contact-title stg" data-i18n="contact.title">Looking for me? You can find me here!</h2>
-      <div class="contact-links stg">
-        <a class="magnetic" href="mailto:antoniodidomenico.work@gmail.com"><span data-i18n="contact.email">Email</span> <span class="arrow">↗</span></a>
-        <a class="magnetic" href="https://www.linkedin.com/in/adidomenico0/" target="_blank" rel="noopener noreferrer">LinkedIn <span class="arrow">↗</span></a>
+  <section id="contact">
+    <div class="wrap rise">
+      <span class="eyebrow" data-i18n="contact.eyebrow">Contact</span>
+      <h2 data-i18n="contact.title">Looking for me? You can find me here!</h2>
+      <div class="c-links">
+        <a href="mailto:antoniodidomenico.work@gmail.com"><span data-i18n="contact.email">Email</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5 L11.5 4.5"/><path d="M5.5 4.5 H11.5 V10.5"/></svg></a>
+        <a href="https://www.linkedin.com/in/adidomenico0/" target="_blank" rel="noopener noreferrer">LinkedIn<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5 L11.5 4.5"/><path d="M5.5 4.5 H11.5 V10.5"/></svg></a>
       </div>
     </div>
   </section>
-
   </main>
   <footer data-i18n="footer.text">© 2026 Antonio Di Domenico · Utrecht / Rotterdam</footer>
-
-  </div><!-- /#page -->
   <script>
-  (function () {
-    'use strict';
+(function () {
+  'use strict';
+  var TR = {"en": {"nav.about": "About", "nav.experience": "Experience", "nav.projects": "Projects", "nav.contact": "Contact", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Looking for private equity, venture capital and M&amp;A internships for summer 2027.", "hero.cta1": "See my work", "hero.cta2": "Get in touch", "hero.scroll": "Scroll", "about.eyebrow": "About", "about.p1": "I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.", "about.p2": "This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.", "about.f1k": "Now", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Before", "about.f2v": "BSc Economics (Honours), Utrecht", "about.f3k": "Also", "about.f3v": "Minor in Law · Utrecht", "edu.eyebrow": "Education", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Experience", "exp.title": "Work, study, and everything in between.", "exp0.period": "Sep 2026 – Present", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.", "exp1.period": "Jun 2026 – Present", "exp1.role": "Accounting Assistant", "exp1.org": "Exprimo Comunicazione, Italy (remote)", "exp1.desc": "I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.", "exp2.period": "Feb – May 2026", "exp2.role": "AI Scouts", "exp2.org": "Berkeley-led programme, remote", "exp2.desc": "I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.", "exp3.period": "Feb 2024 – Jul 2025", "exp3.role": "Head of Public Relations", "exp3.org": "Utrecht University Honours Programme", "exp3.desc": "I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.", "exp4.period": "Oct 2024 – Jun 2025", "exp4.role": "Mathematics and Statistics Tutor", "exp4.org": "AthenaStudies", "exp4.desc": "I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.", "exp5.period": "Feb 2024 – Nov 2026", "exp5.role": "Warehouse Operations", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.", "show.eyebrow": "Selected Projects", "show.title": "Three projects, built out of curiosity.", "noce.place": "Sorgente Calda", "noce.tip": "Hot spring · 1.2 km", "noce.sub": "Warm water, no signposts", "noce.chip": "Hot spring · Local", "noce.dist": "1.2 km", "vol.kicker": "Utrecht · Food Drive", "vol.meta": "Volunteers recruited &amp; coordinated", "sp1.kicker": "Map app", "sp1.title": "Noce", "sp1.cap": "Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.", "sp2.kicker": "Editorial", "sp2.title": "Honours Newsletter", "sp2.cap": "Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.", "sp3.kicker": "Community", "sp3.title": "Volunteers", "sp3.cap": "I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.", "contact.eyebrow": "Contact", "contact.title": "Looking for me? You can find me here!", "contact.email": "Email", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Journey", "hero.now": "Now: IFSA private equity track · RSM", "hero.cta1j": "See my journey", "j.eyebrow": "Journey", "j.title": "From Utrecht to Rio to Rotterdam.", "j.hint": "Tap any stop for the details.", "f.all": "All", "f.study": "Study", "f.work": "Work", "tag.study": "Study", "tag.work": "Work", "tag.next": "Next", "uu.title": "BSc Economics (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Honours bachelor in Economics and Business Economics, with a minor in Law.", "puc.title": "Exchange semester", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Aug 2025 – Jan 2026", "puc.desc": "Six months studying in Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Sep 2026 – Aug 2027", "rsm.desc": "Where I am now. Alongside the master’s I’m on IFSA Rotterdam’s private equity track.", "next.period": "Summer 2027", "next.title": "Internship in PE, VC or M&amp;A", "next.org": "Your team?", "next.desc": "The next stop. If your team is hiring for summer 2027, I’d like to hear from you.", "more": "Details", "less": "Close"}, "it": {"nav.about": "Chi sono", "nav.experience": "Esperienza", "nav.projects": "Progetti", "nav.contact": "Contatti", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Cerco internship in private equity, venture capital e M&amp;A per l’estate 2027.", "hero.cta1": "Guarda i progetti", "hero.cta2": "Scrivimi", "hero.scroll": "Scorri", "about.eyebrow": "Chi sono", "about.p1": "Sto facendo l’MSc in Finance &amp; Investments alla RSM di Rotterdam, dopo una laurea triennale Honours in Economia con minor in Diritto a Utrecht.", "about.p2": "Questo autunno faccio parte del percorso di private equity di IFSA Rotterdam, dove il mio team valuta TeamViewer per un take-private. Cerco internship in private equity, venture capital o M&amp;A per l’estate 2027.", "about.f1k": "Ora", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Prima", "about.f2v": "BSc Economia (Honours), Utrecht", "about.f3k": "Inoltre", "about.f3v": "Minor in Diritto · Utrecht", "edu.eyebrow": "Formazione", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Esperienza", "exp.title": "Lavoro, studio e tutto quello che sta in mezzo.", "exp0.period": "Set 2026 – oggi", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In un programma di 12 settimane il mio team lavora come un fondo di private equity che valuta il take-private di TeamViewer, società di software quotata a Francoforte. L’abbiamo valutata con DCF, multipli di società comparabili e transazioni precedenti, abbiamo costruito il modello LBO e verificato se l’offerta può arrivare a un IRR del 20%. Il caso finale va davanti a un investment committee.", "exp1.period": "Giu 2026 – oggi", "exp1.role": "Assistente contabile", "exp1.org": "Exprimo Comunicazione, Italia (da remoto)", "exp1.desc": "Registro le fatture delle piattaforme pubblicitarie, come Meta e TikTok, per un cliente fondo pensione, distinguendo i fornitori UE ed extra UE ai fini IVA. Riporto al Responsabile Amministrativo.", "exp2.period": "Feb – Mag 2026", "exp2.role": "AI Scouts", "exp2.org": "Programma guidato da Berkeley, da remoto", "exp2.desc": "Sono stato uno di circa il 3% dei candidati ammessi al programma. In oltre quaranta ore ho imparato a costruire applicazioni web basate sull’IA con Lovable, Supabase, Bolt, GitHub, Antigravity e Claude, e ho aiutato altri partecipanti a portare a termine i loro progetti.", "exp3.period": "Feb 2024 – Lug 2025", "exp3.role": "Responsabile Relazioni Esterne", "exp3.org": "Honours Programme, Università di Utrecht", "exp3.desc": "Ho guidato una piccola redazione trasversale alle facoltà, pubblicando la newsletter mensile dell’Honours Programme e gestendo la pagina LinkedIn della community. Due anni a far uscire un numero ogni mese, puntuale.", "exp4.period": "Ott 2024 – Giu 2025", "exp4.role": "Tutor di Matematica e Statistica", "exp4.org": "AthenaStudies", "exp4.desc": "Ho insegnato a gruppi di circa dieci studenti di Economia del primo anno e ho scritto tutto il materiale io: slide, esempi svolti e simulazioni d’esame.", "exp5.period": "Feb 2024 – Nov 2026", "exp5.role": "Operazioni di magazzino", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Preparazione ed evasione degli ordini per due dei maggiori operatori della grande distribuzione olandese, part-time insieme agli studi.", "show.eyebrow": "Progetti selezionati", "show.title": "Tre progetti, nati dalla curiosità.", "noce.place": "Sorgente Calda", "noce.tip": "Sorgente termale · 1,2 km", "noce.sub": "Acqua calda, nessun cartello", "noce.chip": "Termale · Locale", "noce.dist": "1,2 km", "vol.kicker": "Utrecht · Raccolta alimentare", "vol.meta": "Volontari reclutati e coordinati", "sp1.kicker": "App di mappe", "sp1.title": "Noce", "sp1.cap": "Noce nasce come mappa di comunità, dove piccole zone o gemme nascoste possono essere valorizzate attraverso gli occhi di chi ci vive. È stata sviluppata per la AI Scouts Academy e usa l’IA per creare punti social, proteggere dalle fake news, censurare immagini inappropriate e creare percorsi personalizzati.", "sp2.kicker": "Editoriale", "sp2.title": "Honours Newsletter", "sp2.cap": "Due anni alla guida della redazione e della pagina LinkedIn dell’Honours Programme di Utrecht. Scrivere, editare e assicurarsi che il numero uscisse davvero ogni mese.", "sp3.kicker": "Comunità", "sp3.title": "Volontariato", "sp3.cap": "Sono tra gli organizzatori della sezione di Utrecht. Abbiamo fatto la prima raccolta alimentare della città per il banco alimentare. Cinque punti vendita Jumbo in un weekend e 10 carrelli di spesa raccolti, con studenti che ho aiutato a reclutare.", "contact.eyebrow": "Contatti", "contact.title": "Mi cerchi? Mi trovi qui!", "contact.email": "Email", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Percorso", "hero.now": "Ora: private equity track di IFSA · RSM", "hero.cta1j": "Guarda il percorso", "j.eyebrow": "Percorso", "j.title": "Da Utrecht a Rio, fino a Rotterdam.", "j.hint": "Tocca una tappa per i dettagli.", "f.all": "Tutto", "f.study": "Studio", "f.work": "Lavoro", "tag.study": "Studio", "tag.work": "Lavoro", "tag.next": "Prossimo", "uu.title": "BSc Economia (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Laurea triennale Honours in Economia, con minor in Diritto.", "puc.title": "Semestre di scambio", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Ago 2025 – Gen 2026", "puc.desc": "Sei mesi di studio a Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Set 2026 – Ago 2027", "rsm.desc": "Dove sono adesso. Insieme al master seguo il private equity track di IFSA Rotterdam.", "next.period": "Estate 2027", "next.title": "Internship in PE, VC o M&amp;A", "next.org": "Il vostro team?", "next.desc": "La prossima tappa. Se il vostro team cerca qualcuno per l’estate 2027, scrivetemi.", "more": "Dettagli", "less": "Chiudi"}, "nl": {"nav.about": "Over mij", "nav.experience": "Ervaring", "nav.projects": "Projecten", "nav.contact": "Contact", "hero.eyebrow": "MSc Finance &amp; Investments · RSM Rotterdam", "hero.sub": "Op zoek naar een stage in private equity, venture capital en M&amp;A voor de zomer van 2027.", "hero.cta1": "Bekijk mijn werk", "hero.cta2": "Neem contact op", "hero.scroll": "Scroll", "about.eyebrow": "Over mij", "about.p1": "Ik volg de MSc Finance &amp; Investments aan RSM in Rotterdam, na een Honours-bachelor Economie met een minor Rechten in Utrecht.", "about.p2": "Dit najaar zit ik in het private-equitytraject van IFSA Rotterdam, waar mijn team TeamViewer waardeert voor een take-private. Ik zoek een stage in private equity, venture capital of M&amp;A voor de zomer van 2027.", "about.f1k": "Nu", "about.f1v": "MSc Finance &amp; Investments, RSM", "about.f2k": "Daarvoor", "about.f2v": "BSc Economie (Honours), Utrecht", "about.f3k": "Ook", "about.f3v": "Minor Rechten · Utrecht", "edu.eyebrow": "Opleiding", "edu.title": "Utrecht, Rio de Janeiro, Rotterdam.", "exp.eyebrow": "Ervaring", "exp.title": "Werk, studie en alles daartussenin.", "exp0.period": "Sep 2026 – heden", "exp0.role": "Analyst, Private Equity &amp; Tech M&amp;A Track", "exp0.org": "IFSA Rotterdam", "exp0.desc": "In een programma van 12 weken werkt mijn team als een private-equityfonds dat een take-private van TeamViewer onderzoekt, het in Frankfurt genoteerde softwarebedrijf. We waardeerden het met een DCF, vergelijkbare beursgenoteerde bedrijven en eerdere transacties, bouwden het LBO-model en toetsten of het bod een IRR van 20% kan halen. De eindcase gaat naar een investment committee.", "exp1.period": "Jun 2026 – heden", "exp1.role": "Assistent boekhouding", "exp1.org": "Exprimo Comunicazione, Italië (op afstand)", "exp1.desc": "Ik boek de facturen van advertentieplatforms zoals Meta en TikTok voor een pensioenfonds als klant, per land van de leverancier, zodat de btw voor EU- en niet-EU-leveranciers klopt. Ik rapporteer aan het Hoofd Administratie.", "exp2.period": "Feb – mei 2026", "exp2.role": "AI Scouts", "exp2.org": "Programma onder leiding van Berkeley, op afstand", "exp2.desc": "Ik was een van de circa 3% van de aanmelders die werd toegelaten. In ruim veertig uur leerde ik AI-gedreven webapplicaties bouwen met Lovable, Supabase, Bolt, GitHub, Antigravity en Claude, en hielp ik andere deelnemers hun eigen project af te maken.", "exp3.period": "Feb 2024 – jul 2025", "exp3.role": "Hoofd Public Relations", "exp3.org": "Honours Programme, Universiteit Utrecht", "exp3.desc": "Ik gaf leiding aan een kleine redactie over faculteiten heen, bracht de maandelijkse Honours-nieuwsbrief uit en beheerde de LinkedIn-pagina van de community. Twee jaar lang elke maand een editie, op tijd.", "exp4.period": "Okt 2024 – jun 2025", "exp4.role": "Docent Wiskunde en Statistiek", "exp4.org": "AthenaStudies", "exp4.desc": "Ik gaf les aan groepen van ongeveer tien eerstejaars economiestudenten en schreef al het materiaal zelf: slides, uitgewerkte voorbeelden en oefententamens.", "exp5.period": "Feb 2024 – nov 2026", "exp5.role": "Magazijnwerkzaamheden", "exp5.org": "Picnic &amp; Jumbo", "exp5.desc": "Orderverzameling en -afhandeling voor twee van de grootste supermarktketens van Nederland, parttime naast mijn studie.", "show.eyebrow": "Geselecteerde projecten", "show.title": "Drie projecten, ontstaan uit nieuwsgierigheid.", "noce.place": "Sorgente Calda", "noce.tip": "Warmwaterbron · 1,2 km", "noce.sub": "Warm water, geen bordjes", "noce.chip": "Bron · Lokaal", "noce.dist": "1,2 km", "vol.kicker": "Utrecht · Voedselinzameling", "vol.meta": "Vrijwilligers geworven en gecoördineerd", "sp1.kicker": "Kaart-app", "sp1.title": "Noce", "sp1.cap": "Noce is gebouwd als een gemeenschapskaart, waar kleine gebieden of verborgen pareltjes gewaardeerd kunnen worden door de ogen van locals. De app is ontwikkeld voor de AI Scouts Academy en gebruikt AI om sociale punten aan te maken, te beschermen tegen nepnieuws, ongepaste beelden te censureren en gepersonaliseerde routes te maken.", "sp2.kicker": "Redactie", "sp2.title": "Honours Newsletter", "sp2.cap": "Twee jaar leiding over de redactie en de LinkedIn-pagina van het Utrecht Honours Programme. Schrijven, redigeren en zorgen dat het elke maand ook echt uitkwam.", "sp3.kicker": "Gemeenschap", "sp3.title": "Vrijwilligers", "sp3.cap": "Ik ben mede-organisator van de Utrechtse afdeling. We hielden de eerste voedselinzameling van de stad voor de voedselbank. Vijf Jumbo-filialen in één weekend en 10 winkelwagens vol eten, met een studententeam dat ik mee heb geworven.", "contact.eyebrow": "Contact", "contact.title": "Op zoek naar mij? Hier vind je me!", "contact.email": "E-mail", "footer.text": "© 2026 Antonio Di Domenico · Utrecht / Rotterdam", "nav.journey": "Traject", "hero.now": "Nu: private equity track bij IFSA · RSM", "hero.cta1j": "Bekijk mijn traject", "j.eyebrow": "Traject", "j.title": "Van Utrecht via Rio naar Rotterdam.", "j.hint": "Tik op een stap voor de details.", "f.all": "Alles", "f.study": "Studie", "f.work": "Werk", "tag.study": "Studie", "tag.work": "Werk", "tag.next": "Volgende", "uu.title": "BSc Economie (Honours)", "uu.org": "Utrecht University", "uu.period": "2023 – 2026", "uu.desc": "Honours-bachelor Economie en Bedrijfseconomie, met een minor Rechten.", "puc.title": "Uitwisselingssemester", "puc.org": "PUC-Rio, Rio de Janeiro", "puc.period": "Aug 2025 – jan 2026", "puc.desc": "Zes maanden studeren in Rio de Janeiro.", "rsm.title": "MSc Finance &amp; Investments", "rsm.org": "RSM · Erasmus University Rotterdam", "rsm.period": "Sep 2026 – aug 2027", "rsm.desc": "Hier sta ik nu. Naast de master volg ik de private equity track van IFSA Rotterdam.", "next.period": "Zomer 2027", "next.title": "Stage in PE, VC of M&amp;A", "next.org": "Jullie team?", "next.desc": "De volgende stap. Zoekt jullie team iemand voor zomer 2027? Ik hoor graag van je.", "more": "Details", "less": "Sluiten"}};
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function mobile() { return innerWidth <= 860; }
 
-    /* ==========================================================
-       0. ENVIRONMENT FLAGS
-       All motion features check these. REDUCED short-circuits every
-       animation and lets the CSS "final state" rules take over.
-       ========================================================== */
-    var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var FINE    = window.matchMedia('(pointer: fine)').matches;
-    function isMobile() { return window.innerWidth <= 768; }
-    /* cursor + magnetic effects are desktop-only */
-    function desktopFx() { return FINE && !REDUCED && !isMobile(); }
-
-    /* ==========================================================
-       1. TRANSLATIONS — full EN / IT / NL.
-       Values are injected with innerHTML (all values are authored
-       in this file, never user input), so simple inline markup like
-       <strong> is allowed.
-       Degree names, tool names and proper nouns stay English in all
-       three languages, the way they are actually written on a CV.
-       ========================================================== */
-    var translations = {
-      en: {
-        'nav.about': 'About', 'nav.experience': 'Experience', 'nav.projects': 'Projects', 'nav.contact': 'Contact',
-
-        'hero.eyebrow': 'MSc Finance &amp; Investments · RSM Rotterdam',
-        'hero.sub': 'Looking for private equity, venture capital and M&amp;A internships for summer 2027.',
-        'hero.cta1': 'See my work', 'hero.cta2': 'Get in touch', 'hero.scroll': 'Scroll',
-
-        'about.eyebrow': 'About',
-        'about.p1': 'I’m doing an MSc in Finance &amp; Investments at RSM in Rotterdam, after an Honours bachelor in Economics with a minor in Law at Utrecht.',
-        'about.p2': 'This autumn I’m on IFSA Rotterdam’s private equity track, where my team is valuing TeamViewer for a take-private. I’m looking for private equity, venture capital or M&amp;A internships for summer 2027.',
-        'about.f1k': 'Now', 'about.f1v': 'MSc Finance &amp; Investments, RSM',
-        'about.f2k': 'Before', 'about.f2v': 'BSc Economics (Honours), Utrecht',
-        'about.f3k': 'Also', 'about.f3v': 'Minor in Law · Utrecht',
-
-        'edu.eyebrow': 'Education',
-        'edu.title': 'Utrecht, Rio de Janeiro, Rotterdam.',
-
-        'exp.eyebrow': 'Experience',
-        'exp.title': 'Work, study, and everything in between.',
-        'exp0.period': 'Sep 2026 – Present', 'exp0.role': 'Analyst, Private Equity &amp; Tech M&amp;A Track', 'exp0.org': 'IFSA Rotterdam',
-        'exp0.desc': 'In a 12-week programme my team works as a private equity fund weighing a take-private of TeamViewer, the Frankfurt-listed software company. We valued it with a DCF, trading comps and precedent deals, built the LBO model and tested whether the offer could reach a 20% IRR. The final case goes to an investment committee.',
-        'exp1.period': 'Jun 2026 – Present', 'exp1.role': 'Accounting Assistant', 'exp1.org': 'Exprimo Comunicazione, Italy (remote)',
-        'exp1.desc': 'I record the invoices from advertising platforms such as Meta and TikTok for a pension-fund client, booking each by the supplier’s country so EU and non-EU VAT is reported correctly. I report to the Head of Administration.',
-        'exp2.period': 'Feb – May 2026', 'exp2.role': 'AI Scouts', 'exp2.org': 'Berkeley-led programme, remote',
-        'exp2.desc': 'I was one of roughly 3% of applicants accepted onto this programme. Over forty hours I learned to build AI-powered web applications with Lovable, Supabase, Bolt, GitHub, Antigravity and Claude, and I helped other participants finish their own projects.',
-        'exp3.period': 'Feb 2024 – Jul 2025', 'exp3.role': 'Head of Public Relations', 'exp3.org': 'Utrecht University Honours Programme',
-        'exp3.desc': 'I led a small editorial team across faculties, publishing the monthly Honours newsletter and running the community’s LinkedIn page. Two years of getting an issue out every month, on time.',
-        'exp4.period': 'Oct 2024 – Jun 2025', 'exp4.role': 'Mathematics and Statistics Tutor', 'exp4.org': 'AthenaStudies',
-        'exp4.desc': 'I taught groups of about ten first-year Economics students and wrote all the material myself: slides, worked examples and practice exams.',
-        'exp5.period': 'Feb 2024 – Nov 2026', 'exp5.role': 'Warehouse Operations', 'exp5.org': 'Picnic &amp; Jumbo',
-        'exp5.desc': 'Order preparation and fulfilment for two of the largest grocery operators in the Netherlands, part-time alongside my studies.',
-
-        'show.eyebrow': 'Selected Projects',
-        'show.title': 'Three projects, built out of curiosity.',
-        'noce.place': 'Sorgente Calda',
-        'noce.tip': 'Hot spring · 1.2 km',
-        'noce.sub': 'Warm water, no signposts',
-        'noce.chip': 'Hot spring · Local',
-        'noce.dist': '1.2 km',
-        'vol.kicker': 'Utrecht · Food Drive',
-        'vol.meta': 'Volunteers recruited &amp; coordinated',
-        'sp1.kicker': 'Map app', 'sp1.title': 'Noce',
-        'sp1.cap': 'Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.',
-        'sp2.kicker': 'Editorial', 'sp2.title': 'Honours Newsletter',
-        'sp2.cap': 'Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.',
-        'sp3.kicker': 'Community', 'sp3.title': 'Volunteers',
-        'sp3.cap': 'I help organise the Utrecht chapter. We ran the city’s first food drive for the local food bank: five Jumbo stores in one weekend and 10 shopping carts of food, with a student team I helped recruit.',
-
-        'contact.eyebrow': 'Contact',
-        'contact.title': 'Looking for me? You can find me here!',
-        'contact.email': 'Email',
-        'footer.text': '© 2026 Antonio Di Domenico · Utrecht / Rotterdam'
-      },
-
-      /* ------- ITALIAN ------- */
-      it: {
-        'nav.about': 'Chi sono', 'nav.experience': 'Esperienza', 'nav.projects': 'Progetti', 'nav.contact': 'Contatti',
-
-        'hero.eyebrow': 'MSc Finance &amp; Investments · RSM Rotterdam',
-        'hero.sub': 'Cerco internship in private equity, venture capital e M&amp;A per l’estate 2027.',
-        'hero.cta1': 'Guarda i progetti', 'hero.cta2': 'Scrivimi', 'hero.scroll': 'Scorri',
-
-        'about.eyebrow': 'Chi sono',
-        'about.p1': 'Sto facendo l’MSc in Finance &amp; Investments alla RSM di Rotterdam, dopo una laurea triennale Honours in Economia con minor in Diritto a Utrecht.',
-        'about.p2': 'Questo autunno faccio parte del percorso di private equity di IFSA Rotterdam, dove il mio team valuta TeamViewer per un take-private. Cerco internship in private equity, venture capital o M&amp;A per l’estate 2027.',
-        'about.f1k': 'Ora', 'about.f1v': 'MSc Finance &amp; Investments, RSM',
-        'about.f2k': 'Prima', 'about.f2v': 'BSc Economia (Honours), Utrecht',
-        'about.f3k': 'Inoltre', 'about.f3v': 'Minor in Diritto · Utrecht',
-
-        'edu.eyebrow': 'Formazione',
-        'edu.title': 'Utrecht, Rio de Janeiro, Rotterdam.',
-
-        'exp.eyebrow': 'Esperienza',
-        'exp.title': 'Lavoro, studio e tutto quello che sta in mezzo.',
-        'exp0.period': 'Set 2026 – oggi', 'exp0.role': 'Analyst, Private Equity &amp; Tech M&amp;A Track', 'exp0.org': 'IFSA Rotterdam',
-        'exp0.desc': 'In un programma di 12 settimane il mio team lavora come un fondo di private equity che valuta il take-private di TeamViewer, società di software quotata a Francoforte. L’abbiamo valutata con DCF, multipli di società comparabili e transazioni precedenti, abbiamo costruito il modello LBO e verificato se l’offerta può arrivare a un IRR del 20%. Il caso finale va davanti a un investment committee.',
-        'exp1.period': 'Giu 2026 – oggi', 'exp1.role': 'Assistente contabile', 'exp1.org': 'Exprimo Comunicazione, Italia (da remoto)',
-        'exp1.desc': 'Registro le fatture delle piattaforme pubblicitarie, come Meta e TikTok, per un cliente fondo pensione, distinguendo i fornitori UE ed extra UE ai fini IVA. Riporto al Responsabile Amministrativo.',
-        'exp2.period': 'Feb – Mag 2026', 'exp2.role': 'AI Scouts', 'exp2.org': 'Programma guidato da Berkeley, da remoto',
-        'exp2.desc': 'Sono stato uno di circa il 3% dei candidati ammessi al programma. In oltre quaranta ore ho imparato a costruire applicazioni web basate sull’IA con Lovable, Supabase, Bolt, GitHub, Antigravity e Claude, e ho aiutato altri partecipanti a portare a termine i loro progetti.',
-        'exp3.period': 'Feb 2024 – Lug 2025', 'exp3.role': 'Responsabile Relazioni Esterne', 'exp3.org': 'Honours Programme, Università di Utrecht',
-        'exp3.desc': 'Ho guidato una piccola redazione trasversale alle facoltà, pubblicando la newsletter mensile dell’Honours Programme e gestendo la pagina LinkedIn della community. Due anni a far uscire un numero ogni mese, puntuale.',
-        'exp4.period': 'Ott 2024 – Giu 2025', 'exp4.role': 'Tutor di Matematica e Statistica', 'exp4.org': 'AthenaStudies',
-        'exp4.desc': 'Ho insegnato a gruppi di circa dieci studenti di Economia del primo anno e ho scritto tutto il materiale io: slide, esempi svolti e simulazioni d’esame.',
-        'exp5.period': 'Feb 2024 – Nov 2026', 'exp5.role': 'Operazioni di magazzino', 'exp5.org': 'Picnic &amp; Jumbo',
-        'exp5.desc': 'Preparazione ed evasione degli ordini per due dei maggiori operatori della grande distribuzione olandese, part-time insieme agli studi.',
-
-        'show.eyebrow': 'Progetti selezionati',
-        'show.title': 'Tre progetti, nati dalla curiosità.',
-        'noce.place': 'Sorgente Calda',
-        'noce.tip': 'Sorgente termale · 1,2 km',
-        'noce.sub': 'Acqua calda, nessun cartello',
-        'noce.chip': 'Termale · Locale',
-        'noce.dist': '1,2 km',
-        'vol.kicker': 'Utrecht · Raccolta alimentare',
-        'vol.meta': 'Volontari reclutati e coordinati',
-        'sp1.kicker': 'App di mappe', 'sp1.title': 'Noce',
-        'sp1.cap': 'Noce nasce come mappa di comunità, dove piccole zone o gemme nascoste possono essere valorizzate attraverso gli occhi di chi ci vive. È stata sviluppata per la AI Scouts Academy e usa l’IA per creare punti social, proteggere dalle fake news, censurare immagini inappropriate e creare percorsi personalizzati.',
-        'sp2.kicker': 'Editoriale', 'sp2.title': 'Honours Newsletter',
-        'sp2.cap': 'Due anni alla guida della redazione e della pagina LinkedIn dell’Honours Programme di Utrecht. Scrivere, editare e assicurarsi che il numero uscisse davvero ogni mese.',
-        'sp3.kicker': 'Comunità', 'sp3.title': 'Volontariato',
-        'sp3.cap': 'Sono tra gli organizzatori della sezione di Utrecht. Abbiamo fatto la prima raccolta alimentare della città per il banco alimentare. Cinque punti vendita Jumbo in un weekend e 10 carrelli di spesa raccolti, con studenti che ho aiutato a reclutare.',
-
-        'contact.eyebrow': 'Contatti',
-        'contact.title': 'Mi cerchi? Mi trovi qui!',
-        'contact.email': 'Email',
-        'footer.text': '© 2026 Antonio Di Domenico · Utrecht / Rotterdam'
-      },
-
-      /* ------- DUTCH ------- */
-      nl: {
-        'nav.about': 'Over mij', 'nav.experience': 'Ervaring', 'nav.projects': 'Projecten', 'nav.contact': 'Contact',
-
-        'hero.eyebrow': 'MSc Finance &amp; Investments · RSM Rotterdam',
-        'hero.sub': 'Op zoek naar een stage in private equity, venture capital en M&amp;A voor de zomer van 2027.',
-        'hero.cta1': 'Bekijk mijn werk', 'hero.cta2': 'Neem contact op', 'hero.scroll': 'Scroll',
-
-        'about.eyebrow': 'Over mij',
-        'about.p1': 'Ik volg de MSc Finance &amp; Investments aan RSM in Rotterdam, na een Honours-bachelor Economie met een minor Rechten in Utrecht.',
-        'about.p2': 'Dit najaar zit ik in het private-equitytraject van IFSA Rotterdam, waar mijn team TeamViewer waardeert voor een take-private. Ik zoek een stage in private equity, venture capital of M&amp;A voor de zomer van 2027.',
-        'about.f1k': 'Nu', 'about.f1v': 'MSc Finance &amp; Investments, RSM',
-        'about.f2k': 'Daarvoor', 'about.f2v': 'BSc Economie (Honours), Utrecht',
-        'about.f3k': 'Ook', 'about.f3v': 'Minor Rechten · Utrecht',
-
-        'edu.eyebrow': 'Opleiding',
-        'edu.title': 'Utrecht, Rio de Janeiro, Rotterdam.',
-
-        'exp.eyebrow': 'Ervaring',
-        'exp.title': 'Werk, studie en alles daartussenin.',
-        'exp0.period': 'Sep 2026 – heden', 'exp0.role': 'Analyst, Private Equity &amp; Tech M&amp;A Track', 'exp0.org': 'IFSA Rotterdam',
-        'exp0.desc': 'In een programma van 12 weken werkt mijn team als een private-equityfonds dat een take-private van TeamViewer onderzoekt, het in Frankfurt genoteerde softwarebedrijf. We waardeerden het met een DCF, vergelijkbare beursgenoteerde bedrijven en eerdere transacties, bouwden het LBO-model en toetsten of het bod een IRR van 20% kan halen. De eindcase gaat naar een investment committee.',
-        'exp1.period': 'Jun 2026 – heden', 'exp1.role': 'Assistent boekhouding', 'exp1.org': 'Exprimo Comunicazione, Italië (op afstand)',
-        'exp1.desc': 'Ik boek de facturen van advertentieplatforms zoals Meta en TikTok voor een pensioenfonds als klant, per land van de leverancier, zodat de btw voor EU- en niet-EU-leveranciers klopt. Ik rapporteer aan het Hoofd Administratie.',
-        'exp2.period': 'Feb – mei 2026', 'exp2.role': 'AI Scouts', 'exp2.org': 'Programma onder leiding van Berkeley, op afstand',
-        'exp2.desc': 'Ik was een van de circa 3% van de aanmelders die werd toegelaten. In ruim veertig uur leerde ik AI-gedreven webapplicaties bouwen met Lovable, Supabase, Bolt, GitHub, Antigravity en Claude, en hielp ik andere deelnemers hun eigen project af te maken.',
-        'exp3.period': 'Feb 2024 – jul 2025', 'exp3.role': 'Hoofd Public Relations', 'exp3.org': 'Honours Programme, Universiteit Utrecht',
-        'exp3.desc': 'Ik gaf leiding aan een kleine redactie over faculteiten heen, bracht de maandelijkse Honours-nieuwsbrief uit en beheerde de LinkedIn-pagina van de community. Twee jaar lang elke maand een editie, op tijd.',
-        'exp4.period': 'Okt 2024 – jun 2025', 'exp4.role': 'Docent Wiskunde en Statistiek', 'exp4.org': 'AthenaStudies',
-        'exp4.desc': 'Ik gaf les aan groepen van ongeveer tien eerstejaars economiestudenten en schreef al het materiaal zelf: slides, uitgewerkte voorbeelden en oefententamens.',
-        'exp5.period': 'Feb 2024 – nov 2026', 'exp5.role': 'Magazijnwerkzaamheden', 'exp5.org': 'Picnic &amp; Jumbo',
-        'exp5.desc': 'Orderverzameling en -afhandeling voor twee van de grootste supermarktketens van Nederland, parttime naast mijn studie.',
-
-        'show.eyebrow': 'Geselecteerde projecten',
-        'show.title': 'Drie projecten, ontstaan uit nieuwsgierigheid.',
-        'noce.place': 'Sorgente Calda',
-        'noce.tip': 'Warmwaterbron · 1,2 km',
-        'noce.sub': 'Warm water, geen bordjes',
-        'noce.chip': 'Bron · Lokaal',
-        'noce.dist': '1,2 km',
-        'vol.kicker': 'Utrecht · Voedselinzameling',
-        'vol.meta': 'Vrijwilligers geworven en gecoördineerd',
-        'sp1.kicker': 'Kaart-app', 'sp1.title': 'Noce',
-        'sp1.cap': 'Noce is gebouwd als een gemeenschapskaart, waar kleine gebieden of verborgen pareltjes gewaardeerd kunnen worden door de ogen van locals. De app is ontwikkeld voor de AI Scouts Academy en gebruikt AI om sociale punten aan te maken, te beschermen tegen nepnieuws, ongepaste beelden te censureren en gepersonaliseerde routes te maken.',
-        'sp2.kicker': 'Redactie', 'sp2.title': 'Honours Newsletter',
-        'sp2.cap': 'Twee jaar leiding over de redactie en de LinkedIn-pagina van het Utrecht Honours Programme. Schrijven, redigeren en zorgen dat het elke maand ook echt uitkwam.',
-        'sp3.kicker': 'Gemeenschap', 'sp3.title': 'Vrijwilligers',
-        'sp3.cap': 'Ik ben mede-organisator van de Utrechtse afdeling. We hielden de eerste voedselinzameling van de stad voor de voedselbank. Vijf Jumbo-filialen in één weekend en 10 winkelwagens vol eten, met een studententeam dat ik mee heb geworven.',
-
-        'contact.eyebrow': 'Contact',
-        'contact.title': 'Op zoek naar mij? Hier vind je me!',
-        'contact.email': 'E-mail',
-        'footer.text': '© 2026 Antonio Di Domenico · Utrecht / Rotterdam'
-      }
-    };
-
-    var currentLang = 'en';
-    try { currentLang = localStorage.getItem('lang') || 'en'; } catch (e) {}
-    if (!translations[currentLang]) currentLang = 'en';
-
-    /* Read a JS-side string (used by the Noce cards) in the active language */
-    function t(key) {
-      var d = translations[currentLang];
-      return (d && d[key] != null) ? d[key] : translations.en[key];
-    }
-
-    function renderLang(lang) {
-      var dict = translations[lang] || translations.en;
-      var nodes = document.querySelectorAll('[data-i18n]');
-      for (var i = 0; i < nodes.length; i++) {
-        var key = nodes[i].getAttribute('data-i18n');
-        var val = (dict[key] != null) ? dict[key] : translations.en[key];
-        if (val != null) nodes[i].innerHTML = val;
-      }
-      document.documentElement.lang = lang;
-      var btns = document.querySelectorAll('.lang button');
-      for (var j = 0; j < btns.length; j++) {
-        btns[j].classList.toggle('on', btns[j].getAttribute('data-lang') === lang);
-      }
-    }
-
-    /* Switch with a short fade-out → swap → fade-in */
-    var page = document.getElementById('page');
-    function setLang(lang) {
-      if (lang === currentLang) return;
-      currentLang = lang;
-      try { localStorage.setItem('lang', lang); } catch (e) {}
-      if (REDUCED) { renderLang(lang); return; }
-      page.classList.add('langfade');
-      setTimeout(function () {
-        renderLang(lang);
-        page.classList.remove('langfade');
-      }, 230);
-    }
-    document.querySelectorAll('.lang button').forEach(function (b) {
-      b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+  /* ---------- language ---------- */
+  var lang = 'en';
+  function applyLang(l) {
+    if (!TR[l]) l = 'en';
+    lang = l;
+    document.documentElement.lang = l;
+    $$('[data-i18n]').forEach(function (el) {
+      var v = TR[l][el.getAttribute('data-i18n')];
+      if (v != null) el.innerHTML = v;
     });
-    if (currentLang !== 'en') renderLang(currentLang); else renderLang('en');
-
-    /* ==========================================================
-       2. HERO NAME REVEAL — per-character fade/rise/deblur.
-       First char at 400ms, then 50ms apart. Words are wrapped so
-       lines never break mid-word.
-       ========================================================== */
-    var heroName = document.getElementById('heroName');
-    var heroDone = REDUCED;      /* reduced motion: treat as finished */
-    var onHeroDone = null;       /* hero-line writer hook */
-
-    if (!REDUCED && heroName) {
-      var words = heroName.textContent.trim().split(/\s+/);
-      heroName.textContent = '';
-      var charIndex = 0;
-      words.forEach(function (word, w) {
-        var wSpan = document.createElement('span');
-        wSpan.className = 'word';
-        for (var c = 0; c < word.length; c++) {
-          var ch = document.createElement('span');
-          ch.className = 'ch';
-          ch.textContent = word[c];
-          ch.style.transitionDelay = (150 + charIndex * 28) + 'ms';
-          wSpan.appendChild(ch);
-          charIndex++;
-        }
-        heroName.appendChild(wSpan);
-        if (w < words.length - 1) heroName.appendChild(document.createTextNode(' '));
-      });
-      /* double rAF: ensure initial styles are committed before animating */
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { heroName.classList.add('go'); });
-      });
-      /* name is done when the last char's delay + transition elapse */
-      setTimeout(function () {
-        heroDone = true;
-        if (onHeroDone) onHeroDone();
-      }, 150 + (charIndex - 1) * 28 + 650);
-    }
-
-    /* ==========================================================
-       3. HERO LINE — a single human sentence that writes itself out
-       after the name finishes: ~28ms per character, each with a soft
-       fade. Plain Inter, no cursor, no terminal styling; once written
-       it simply rests. Under reduced motion the finished line shows
-       instantly (the characters are never wrapped).
-       ========================================================== */
-    var heroLine = document.getElementById('heroLine');
-    if (!REDUCED && heroLine) {
-      /* wrap after the initial language render so the line starts
-         invisible and reveals character by character */
-      var lineText = heroLine.textContent;
-      heroLine.textContent = '';
-      var lineChars = [];
-      for (var li = 0; li < lineText.length; li++) {
-        var hl = document.createElement('span');
-        hl.className = 'hl';
-        hl.textContent = lineText[li];
-        heroLine.appendChild(hl);
-        lineChars.push(hl);
-      }
-      var lineIdx = 0;
-      var writeHeroLine = function () {
-        if (lineIdx >= lineChars.length) return;
-        lineChars[lineIdx++].classList.add('on');
-        setTimeout(writeHeroLine, 28);
-      };
-      onHeroDone = writeHeroLine;
-      if (heroDone) writeHeroLine();
-    }
-
-    /* ==========================================================
-       4. SECTION "UNFOLD" ENTRANCES + IMAGE WIPE-INS
-       IntersectionObserver only — no scroll math needed here.
-       ========================================================== */
-    if (!REDUCED) {
-      var unfoldIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) { en.target.classList.add('in'); unfoldIO.unobserve(en.target); }
-        });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.unfold').forEach(function (el) { unfoldIO.observe(el); });
-
-      /* clip-path wipe for images on first reveal */
-      var wipeIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) { en.target.classList.add('seen'); wipeIO.unobserve(en.target); }
-        });
-      }, { threshold: 0.25 });
-      document.querySelectorAll('.plx-wrap').forEach(function (el) { wipeIO.observe(el); });
-    }
-
-    /* ==========================================================
-       4b. IMAGE FALLBACKS — an image file that fails to load
-       becomes a clean neutral fill in the site palette instead of
-       the browser's broken-image icon.
-       ========================================================== */
-    document.querySelectorAll('img').forEach(function (img) {
-      function fail() {
-        if (img.classList.contains('vj-logo') || img.classList.contains('trav-face')) {
-          img.style.display = 'none';               /* reveals initials / icon behind */
-        } else if (img.classList.contains('hero-photo')) {
-          var d = document.createElement('div');   /* initials medallion */
-          d.className = 'hero-photo-ph';
-          d.textContent = 'AD';
-          img.replaceWith(d);
-        } else {
-          var host = img.closest('.plx-wrap, .panel') || img.parentNode;
-          if (host && host.classList) host.classList.add('ph');
-        }
-      }
-      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) fail();
-      else img.addEventListener('error', fail, { once: true });
+    $$('.lang button').forEach(function (b) {
+      var on = b.getAttribute('data-lang') === l;
+      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
     });
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    requestAnimationFrame(build);
+  }
+  $$('.lang button').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); }); });
 
-    /* ==========================================================
-       5. NAV — frosted after 60px, brand appears after the hero,
-       mobile hamburger menu.
-       ========================================================== */
-    var nav = document.getElementById('nav');
-    var navBrand = document.getElementById('navBrand');
-    var burger = document.getElementById('burger');
-    var mobileMenu = document.getElementById('mobileMenu');
-    var hero = document.getElementById('top');
+  /* ---------- nav ---------- */
+  var nav = $('#nav'), burger = $('#burger'), menu = $('#menu');
+  function onScrollNav() { nav.classList.toggle('solid', scrollY > 40 || menu.classList.contains('open')); }
+  burger.addEventListener('click', function () {
+    var open = !menu.classList.contains('open');
+    menu.classList.toggle('open', open); burger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : ''; onScrollNav();
+  });
+  $$('#menu a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }); });
 
-    function updateNav(scY) {
-      nav.classList.toggle('scrolled', scY > 60);
-      navBrand.classList.toggle('show', scY > hero.offsetHeight * 0.55);
-    }
+  /* ---------- hero name ---------- */
+  var h1 = $('#heroName');
+  if (!REDUCED) {
+    var txt = h1.textContent, i = 0;
+    h1.setAttribute('aria-label', txt);
+    h1.innerHTML = txt.split(' ').map(function (w) {
+      return '<span style="white-space:nowrap" aria-hidden="true">' + w.split('').map(function (c) {
+        return '<span class="ch" style="transition-delay:' + (120 + (i++) * 26) + 'ms">' + c + '</span>';
+      }).join('') + '</span>';
+    }).join(' ');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { h1.classList.add('go'); }); });
+  }
 
-    burger.addEventListener('click', function () {
-      var open = !mobileMenu.classList.contains('open');
-      mobileMenu.classList.toggle('open', open);
-      burger.classList.toggle('open', open);
-      burger.setAttribute('aria-expanded', String(open));
+  /* ---------- reveal on scroll ---------- */
+  if ('IntersectionObserver' in window && !REDUCED) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    $$('.rise, .stop').forEach(function (el) { io.observe(el); });
+  } else {
+    $$('.rise, .stop').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- cards: open / close ---------- */
+  $$('.card-head').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var open = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', open);
+      setTimeout(build, 480);
     });
-    mobileMenu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        mobileMenu.classList.remove('open');
-        burger.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-      });
+  });
+
+  /* ---------- filters ---------- */
+  var jr = $('#jr');
+  $$('.filters button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('.filters button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      jr.setAttribute('data-f', b.getAttribute('data-f'));
     });
+  });
 
-    /* ==========================================================
-       6. VERTICAL UNIVERSITY JOURNEY (About) — the line draws
-       downward as the rail moves through the viewport (scroll-
-       linked stroke-dashoffset; pathLength="1" makes the offset
-       simply 1 − progress). Each node reveals when the line
-       reaches its badge. Reduced motion: CSS shows everything.
-       ========================================================== */
-    var vjRail  = document.getElementById('vjRail');
-    var vjDraw  = document.getElementById('vjDraw');
-    var vjItems = Array.prototype.slice.call(document.querySelectorAll('.vj-item'));
+  /* ---------- the journey line ---------- */
+  var svg = $('#jrSvg'), ghost = $('#jrGhost'), draw = $('#jrDraw');
+  var plane = $('#plane'), bike = $('#bike');
+  var L = 0, table = [], anchors = [];
+  var stops = $$('.jr > li');
 
-    /* path-length fractions at which the serpentine reaches each badge
-       centre — measured in vjBuild(), used for reveals and travellers */
-    var vjFrac = [0.1, 0.5, 0.9];
-    var vjLen = 0;
-
-    /* scroll-driven travellers (plane UU→PUC, bike PUC→RSM) */
-    var planeTrav = document.getElementById('planeTrav');
-    var planeIcon = planeTrav && planeTrav.querySelector('.trav-rot');
-    var bikeTrav  = document.getElementById('bikeTrav');
-    var bikeIcon  = bikeTrav && bikeTrav.querySelector('.trav-rot');
-
-    /* Place a traveller at a fraction of the path length and aim its
-       vehicle along the local tangent (sampled ±2px). Travelling right
-       to left mirrors the vehicle instead of rotating it past vertical,
-       so it never flies upside-down; maxTilt keeps the pose readable. */
-    function placeTrav(el, icon, frac, maxTilt) {
-      if (!el || !vjLen) return;
-      var L = vjLen * frac;
-      var pt = vjDraw.getPointAtLength(L);
-      var a = vjDraw.getPointAtLength(Math.max(0, L - 2));
-      var b = vjDraw.getPointAtLength(Math.min(vjLen, L + 2));
-      var dx = b.x - a.x, dy = b.y - a.y;
-      var flip = dx < 0 ? -1 : 1;
-      var ang = Math.atan2(dy * flip, dx * flip) * 180 / Math.PI;
-      if (maxTilt) ang = Math.max(-maxTilt, Math.min(maxTilt, ang));
-      el.style.transform = 'translate(' + pt.x + 'px,' + pt.y + 'px)';
-      if (icon) {
-        icon.style.setProperty('--ang', ang + 'deg');
-        icon.style.setProperty('--flip', flip);
-      }
+  function centre(el) {
+    var n = el.classList.contains('yr') ? el.firstElementChild : el.querySelector('.node');
+    return { x: n.offsetLeft + n.offsetWidth / 2, y: el.offsetTop + n.offsetTop + n.offsetHeight / 2, el: el };
+  }
+  function build() {
+    if (!jr) return;
+    var W = jr.clientWidth, H = jr.clientHeight;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    anchors = stops.map(centre);
+    var bulge = mobile() ? 13 : 42, d = 'M' + anchors[0].x + ',' + (anchors[0].y - 30) + ' L' + anchors[0].x + ',' + anchors[0].y;
+    for (var k = 0; k < anchors.length - 1; k++) {
+      var a = anchors[k], b = anchors[k + 1], dy = b.y - a.y, bx = a.x + (k % 2 ? -bulge : bulge);
+      d += ' C' + bx + ',' + (a.y + dy * .38) + ' ' + bx + ',' + (a.y + dy * .62) + ' ' + b.x + ',' + b.y;
     }
-
-    /* Build the serpentine in REAL pixel coordinates: it runs down the
-       badge column (x≈32px) and bulges right then left between the three
-       badge centres, staying inside the 120px band so text never meets
-       it. The svg is 120px wide so 1 user unit == 1px (no stretching).
-       We then measure the path-length fraction of each badge centre. */
-    function vjBuild() {
-      if (!vjRail || REDUCED || !vjItems.length) return;
-      var W = vjRail.clientWidth, H = vjRail.clientHeight;
-      if (!W || !H) return;
-      var svg = document.getElementById('vjSvg');
-      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-      var d, anchors, i, y0, y1, dy;
-
-      if (isMobile()) {
-        /* phone: serpentine down the badge column, text beside it */
-        var cx = 26, bulge = 28;
-        var cy = vjItems.map(function (it) { return it.offsetTop + it.offsetHeight / 2; });
-        anchors = cy.map(function (y) { return { x: cx, y: y }; });
-        d = 'M' + cx + ',' + (cy[0] - 26) + ' L' + cx + ',' + cy[0];
-        for (i = 0; i < cy.length - 1; i++) {
-          var bx = cx + ((i % 2 === 0) ? bulge : -bulge);
-          y0 = cy[i]; y1 = cy[i + 1]; dy = y1 - y0;
-          d += ' C' + bx + ',' + (y0 + dy * 0.35) + ' ' + bx + ',' + (y0 + dy * 0.65) + ' ' + cx + ',' + y1;
-        }
-        d += ' L' + cx + ',' + (cy[cy.length - 1] + 26);
-      } else {
-        /* desktop: a wide S across the page. Control points sit directly
-           above/below each anchor, so the curve leaves every node
-           vertically and does all its sweeping in the middle band —
-           which is exactly where no text sits. */
-        var xl = 0.15 * W, xr = 0.85 * W;
-        var ya = 0.11 * H, yb = 0.50 * H, yc = 0.89 * H;
-        anchors = [{ x: xl, y: ya }, { x: xr, y: yb }, { x: xl, y: yc }];
-        /* hold the line vertical for a stretch above and below every node,
-           so each text block sits beside a straight run and the sweep
-           happens only in the empty middle */
-        var hold = Math.max(78, 0.10 * H);
-        var s1 = (yb - hold) - (ya + hold), s2 = (yc - hold) - (yb + hold);
-        d = 'M' + xl + ',' + (ya - hold) + ' L' + xl + ',' + (ya + hold)
-          + ' C' + xl + ',' + (ya + hold + s1 * 0.42) + ' ' + xr + ',' + (yb - hold - s1 * 0.42) + ' ' + xr + ',' + (yb - hold)
-          + ' L' + xr + ',' + (yb + hold)
-          + ' C' + xr + ',' + (yb + hold + s2 * 0.42) + ' ' + xl + ',' + (yc - hold - s2 * 0.42) + ' ' + xl + ',' + (yc - hold)
-          + ' L' + xl + ',' + (yc + hold);
-      }
-
-      document.getElementById('vjGhost').setAttribute('d', d);
-      vjDraw.setAttribute('d', d);
-      vjLen = vjDraw.getTotalLength();
-      vjDraw.style.strokeDasharray = vjLen;
-
-      /* measure where along the path each badge centre falls */
-      vjFrac = anchors.map(function (pt) {
-        var best = 0, bestD = Infinity;
-        for (var s = 0; s <= 240; s++) {
-          var L = vjLen * s / 240;
-          var q = vjDraw.getPointAtLength(L);
-          var dd = Math.abs(q.y - pt.y) + Math.abs(q.x - pt.x);
-          if (dd < bestD) { bestD = dd; best = L / vjLen; }
-        }
-        return best;
-      });
+    ghost.setAttribute('d', d); draw.setAttribute('d', d);
+    L = draw.getTotalLength();
+    table = [];
+    for (var s = 0; s <= 400; s++) { var p = draw.getPointAtLength(L * s / 400); table.push([L * s / 400, p.y]); }
+    anchors.forEach(function (an) { an.len = lenAtY(an.y); });
+    draw.style.strokeDasharray = L + ' ' + L;
+    tick();
+  }
+  function lenAtY(y) {
+    if (!table.length) return 0;
+    if (y <= table[0][1]) return 0;
+    for (var i = 1; i < table.length; i++) {
+      if (table[i][1] >= y) { var a = table[i - 1], b = table[i], t = (y - a[1]) / ((b[1] - a[1]) || 1); return a[0] + (b[0] - a[0]) * t; }
     }
+    return L;
+  }
+  function place(el, len) {
+    var p = draw.getPointAtLength(len), a = draw.getPointAtLength(Math.max(0, len - 2)), b = draw.getPointAtLength(Math.min(L, len + 2));
+    var dx = b.x - a.x, dy = b.y - a.y, flip = dx < 0 ? -1 : 1;
+    var ang = Math.atan2(dy * flip, dx * flip) * 180 / Math.PI;
+    var lim = el.id === "plane" ? 16 : 10; ang = Math.max(-lim, Math.min(lim, ang));
+    el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px)';
+    var r = el.firstElementChild; r.style.setProperty('--ang', ang + 'deg'); r.style.setProperty('--flip', flip);
+  }
+  function ride(el, fromId, toId, y) {
+    var A = anchors.filter(function (a) { return a.el.id === fromId; })[0], B = anchors.filter(function (a) { return a.el.id === toId; })[0];
+    if (!A || !B) return;
+    var t = (y - A.y) / (B.y - A.y);
+    if (t <= 0.02 || t >= 0.98) { el.classList.remove('on'); return; }
+    el.classList.add('on');
+    place(el, A.len + (B.len - A.len) * t);
+  }
+  function tick() {
+    if (!L) return;
+    var r = jr.getBoundingClientRect(), y = innerHeight * 0.55 - r.top;
+    var len = REDUCED ? L : Math.max(0, Math.min(L, lenAtY(y)));
+    draw.style.strokeDashoffset = L - len;
+    anchors.forEach(function (a) { if (a.el.classList.contains('stop')) a.el.classList.toggle('lit', REDUCED || a.y <= y); });
+    if (!REDUCED) { ride(plane, 's-ath', 's-puc', y); ride(bike, 's-exp', 's-rsm', y); }
+  }
 
-    function vjourneyUpdate() {
-      if (!vjRail || !vjLen) return;
-      var r = vjRail.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (window.innerHeight * 0.85 - r.top) / r.height));
-      vjDraw.style.strokeDashoffset = vjLen * (1 - p);
-      for (var i = 0; i < vjItems.length; i++) {
-        vjItems[i].classList.toggle('on', p >= vjFrac[i] - 0.02);
-      }
+  var ticking = false;
+  addEventListener('scroll', function () {
+    onScrollNav();
+    if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; tick(); }); }
+  }, { passive: true });
+  var rt; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  addEventListener('load', build);
 
-      /* Travellers ride the leading edge of the drawn line across their
-         segment: plane over UU→PUC, bike over PUC→RSM. Clamped to their
-         segment; shown only mid-segment so they never cover a badge. */
-      var f0 = vjFrac[0], f1 = vjFrac[1], f2 = vjFrac[2];
-      if (planeTrav) {
-        placeTrav(planeTrav, planeIcon, Math.min(f1, Math.max(f0, p)), 55);
-        planeTrav.classList.toggle('on', p > f0 + 0.02 && p < f1 - 0.02);
-      }
-      if (bikeTrav) {
-        placeTrav(bikeTrav, bikeIcon, Math.min(f2, Math.max(f1, p)), 30);
-        bikeTrav.classList.toggle('on', p > f1 + 0.02 && p < f2 - 0.02);
-      }
-    }
-
-    /* ==========================================================
-       6b. EXPERIENCE TIMELINE — same mechanic, straight rail:
-       the line draws downward and entries light up as it reaches
-       their badges.
-       ========================================================== */
-    var xtlEl    = document.getElementById('xtl');
-    var xtlDraw  = document.getElementById('xtlDraw');
-    var xtlItems = Array.prototype.slice.call(document.querySelectorAll('.xtl-item'));
-    var xtlLen = 0;
-
-    function xtlBuild() {
-      if (!xtlEl || REDUCED) return;
-      var H = xtlEl.clientHeight;
-      if (!H) return;
-      var svg = document.getElementById('xtlSvg');
-      svg.setAttribute('viewBox', '0 0 2 ' + H);
-      xtlEl.querySelectorAll('.xtl-svg path').forEach(function (pth) {
-        pth.setAttribute('d', 'M1,0 L1,' + H);
-      });
-      xtlLen = H;
-      xtlDraw.style.strokeDasharray = xtlLen;
-    }
-
-    function xtlUpdate() {
-      if (!xtlEl || !xtlLen) return;
-      var r = xtlEl.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (window.innerHeight * 0.85 - r.top) / r.height));
-      xtlDraw.style.strokeDashoffset = xtlLen * (1 - p);
-      for (var i = 0; i < xtlItems.length; i++) {
-        var f = (xtlItems[i].offsetTop + 44) / xtlEl.offsetHeight;
-        xtlItems[i].classList.toggle('on', p >= f);
-      }
-    }
-
-    /* ==========================================================
-       6c. THESIS STATS COUNT-UP
-       ========================================================== */
-    var tViz  = document.getElementById('thesisViz');
-    var tNums = Array.prototype.slice.call(document.querySelectorAll('.tnum'));
-
-    function setStatsFinal() {
-      tNums.forEach(function (n) {
-        n.textContent = parseFloat(n.getAttribute('data-target'))
-          .toFixed(parseInt(n.getAttribute('data-decimals'), 10));
-      });
-    }
-
-    if (REDUCED) {
-      setStatsFinal();                 /* markup already holds the figures */
-    } else if (tViz) {
-      new IntersectionObserver(function (entries, obs) {
-        if (!entries[0].isIntersecting) return;
-        obs.disconnect();
-        /* Only now do we zero the figures — up to this point the real
-           values from the markup have been on screen, so a blocked or
-           slow script can never leave the reader looking at 0. */
-        var t0 = performance.now();
-        (function tick(now) {
-          var tt = Math.min(1, (now - t0) / 1800);
-          var e  = 1 - Math.pow(1 - tt, 3);
-          tNums.forEach(function (n) {
-            n.textContent = (parseFloat(n.getAttribute('data-target')) * e)
-              .toFixed(parseInt(n.getAttribute('data-decimals'), 10));
-          });
-          if (tt < 1) requestAnimationFrame(tick); else setStatsFinal();
-        })(t0);
-      }, { threshold: 0.35 }).observe(tViz);
-    }
-
-    /* ==========================================================
-       7. PROJECTS SHOWCASE — 3D circular carousel.
-       The three panels are stacked on the same centre point. Each
-       frame every panel gets a SIGNED CIRCULAR OFFSET d in
-       [-1.5, 1.5] — the shortest way round a 3-slot ring — and that
-       single number drives its whole transform: sideways travel,
-       Y-rotation, depth, scale, blur and dimming. d == 0 is the
-       active card: flat, sharp, dead centre. Its neighbours turn
-       away and sink back, so they only PEEK past the centre card.
-       Because d is computed modulo 3 the ring never ends: it keeps
-       turning in either direction with no clones and no seam.
-       In .stacked mode (mobile / reduced motion) the panels become
-       plain vertical cards and each meta block moves beneath one.
-       ========================================================== */
-    var showEl    = document.getElementById('projects');
-    var showTrack = document.getElementById('showTrack');
-    var panels    = Array.prototype.slice.call(document.querySelectorAll('.panel'));
-    var metaBox   = document.getElementById('showMeta');
-    var metaItems = Array.prototype.slice.call(document.querySelectorAll('.meta-item'));
-    var volImg    = document.getElementById('volImg');
-    var showDots  = Array.prototype.slice.call(document.querySelectorAll('#showDots button'));
-    var showPrev  = document.getElementById('showPrev');
-    var showNext  = document.getElementById('showNext');
-
-    var N = panels.length || 3;
-    var show = { s: 0, target: 0, active: -1, stacked: false, modeSet: false, volFront: false };
-
-    /* ring geometry — tuned so a neighbour shows ~34% of itself */
-    var RING = {
-      spread: 0.62,   /* sideways travel, in panel widths     */
-      rot:    38,     /* deg of Y-rotation per step away      */
-      depth:  150,    /* px pushed back in Z per step away    */
-      scale:  0.14,   /* size lost per step away              */
-      blur:   3.2,    /* px of blur per step away             */
-      fade:   0.45    /* opacity lost per step away           */
-    };
-
-    /* shortest signed distance from panel i to position s around the
-       ring: wraps into [-N/2, N/2) so panel 0 is 1 step from panel 2,
-       not 2 steps. This is what makes the rotation truly circular. */
-    function ringDelta(i, s) {
-      var d = (i - s) % N;
-      if (d >  N / 2) d -= N;
-      if (d < -N / 2) d += N;
-      return d;
-    }
-
-    function volPop() {                         /* volunteers photo scale-up */
-      if (!volImg) return;
-      volImg.classList.remove('pop');
-      void volImg.offsetWidth;                  /* restart the keyframe animation */
-      volImg.classList.add('pop');
-    }
-
-    /* choose stacked vs carousel; idempotent, safe to call on resize */
-    function showApplyMode() {
-      if (!showEl) return;
-      var st = REDUCED || isMobile();
-      if (show.modeSet && st === show.stacked) return;
-      show.stacked = st; show.modeSet = true;
-      showEl.classList.toggle('stacked', st);
-      var i;
-      if (st) {
-        for (i = 0; i < N; i++) panels[i].insertAdjacentElement('afterend', metaItems[i]);
-        for (i = 0; i < N; i++) {
-          metaItems[i].classList.add('on');
-          panels[i].style.transform = '';
-          panels[i].style.opacity = '';
-          panels[i].style.filter = '';
-          panels[i].style.zIndex = '';
-          panels[i].classList.add('front');
-        }
-      } else {
-        for (i = 0; i < N; i++) metaBox.appendChild(metaItems[i]);
-        for (i = 0; i < N; i++) metaItems[i].classList.toggle('on', i === Math.max(0, show.active));
-      }
-    }
-
-    function showMeasure() { showApplyMode(); }
-
-    /* scroll does not drive the carousel — navigation is manual only */
-    function showUpdate() {}
-
-    /* every frame: turn the ring toward its target and write the
-       transform of all three panels from their circular offset. */
-    function showFrame() {
-      if (!showEl || show.stacked || !showTrack) return;
-
-      var diff = show.target - show.s;
-      if (Math.abs(diff) < 0.0005) {
-        show.s = show.target;
-        /* fold both position and target back into [0, N) together, so
-           the ring can spin forever without the numbers drifting */
-        var w0 = ((show.s % N) + N) % N;
-        show.s = w0; show.target = w0;
-      } else {
-        show.s += diff * 0.12;
-      }
-
-      var w = panels[0].offsetWidth;
-      if (!w) return;
-
-      for (var i = 0; i < N; i++) {
-        var d  = ringDelta(i, show.s);       /* signed, [-1.5, 1.5]  */
-        var ad = Math.abs(d);
-        var p  = panels[i];
-
-        p.style.transform =
-          'translate(-50%, -50%)' +
-          ' translateX(' + (d * RING.spread * w).toFixed(1) + 'px)' +
-          ' translateZ(' + (-ad * RING.depth).toFixed(1) + 'px)' +
-          ' rotateY(' + (-d * RING.rot).toFixed(2) + 'deg)' +
-          ' scale(' + (1 - ad * RING.scale).toFixed(4) + ')';
-        p.style.filter  = ad > 0.01 ? 'blur(' + (ad * RING.blur).toFixed(2) + 'px)' : 'none';
-        p.style.opacity = Math.max(0, 1 - ad * RING.fade).toFixed(3);
-        p.style.zIndex  = String(100 - Math.round(ad * 20));
-
-        var front = ad < 0.12;
-        p.classList.toggle('front', front);
-        p.setAttribute('aria-hidden', front ? 'false' : 'true');
-        if (i === 2) { if (front && !show.volFront) volPop(); show.volFront = front; }
-      }
-
-      var a = ((Math.round(show.s) % N) + N) % N;
-      if (a !== show.active) {
-        show.active = a;
-        for (var m = 0; m < N; m++) {
-          metaItems[m].classList.toggle('on', m === a);
-          if (showDots[m]) {
-            showDots[m].classList.toggle('on', m === a);
-            showDots[m].setAttribute('aria-selected', m === a ? 'true' : 'false');
-          }
-        }
-      }
-    }
-
-    /* Step the ring. Always travels the SHORT way round, so going
-       "next" from the last slide rolls forward onto the first. */
-    function showStep(dir) {
-      if (!showEl || show.stacked) return;
-      show.target = Math.round(show.target) + dir;
-    }
-    function showGoTo(k) {
-      if (!showEl || show.stacked) return;
-      show.target = show.target + ringDelta(k, show.target);
-    }
-
-    /* navigation is purely manual — no autoplay, no setInterval */
-    if (showPrev) showPrev.addEventListener('click', function () { showStep(-1); });
-    if (showNext) showNext.addEventListener('click', function () { showStep(1); });
-    showDots.forEach(function (dot, idx) {
-      dot.addEventListener('click', function () { showGoTo(idx); });
-    });
-
-    /* keyboard: arrows step the ring when the carousel has focus */
-    if (showEl) {
-      showEl.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowLeft')  { showStep(-1); e.preventDefault(); }
-        if (e.key === 'ArrowRight') { showStep(1);  e.preventDefault(); }
-      });
-    }
-
-    /* Drag to turn the ring — one gesture for mouse, pen and touch.
-       The ring follows the pointer live (dragging left pulls the next
-       project in from the right, exactly like pushing a physical
-       carousel) and snaps to the nearest slot on release. */
-    (function () {
-      if (!showTrack) return;
-      var drag = null;   /* { id, x0, y0, s0, moved, horizontal } */
-
-      function stepPx() {
-        var w = panels[0].offsetWidth || 320;
-        return w * RING.spread;          /* px of travel per slot */
-      }
-
-      showTrack.addEventListener('pointerdown', function (e) {
-        if (show.stacked || e.button === 1 || e.button === 2) return;
-        drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY,
-                 s0: show.target, moved: false, horizontal: false };
-        showTrack.classList.add('dragging');
-      });
-
-      showTrack.addEventListener('pointermove', function (e) {
-        if (!drag || e.pointerId !== drag.id) return;
-        var dx = e.clientX - drag.x0;
-        var dy = e.clientY - drag.y0;
-
-        /* Decide once whether this gesture is a horizontal drag. Until
-           it is, let the page scroll normally — never hijack a vertical
-           swipe on a phone. */
-        if (!drag.moved) {
-          if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-          drag.moved = true;
-          drag.horizontal = Math.abs(dx) > Math.abs(dy);
-          if (drag.horizontal) {
-            try { showTrack.setPointerCapture(drag.id); } catch (err) {}
-          }
-        }
-        if (!drag.horizontal) return;
-
-        e.preventDefault();
-        show.target = drag.s0 - dx / stepPx();
-      });
-
-      function endDrag(e) {
-        if (!drag || (e && e.pointerId !== drag.id)) return;
-        if (drag.horizontal) show.target = Math.round(show.target);
-        try { showTrack.releasePointerCapture(drag.id); } catch (err) {}
-        showTrack.classList.remove('dragging');
-        drag = null;
-      }
-      showTrack.addEventListener('pointerup', endDrag);
-      showTrack.addEventListener('pointercancel', endDrag);
-
-      /* a real drag must not also fire the panel's click/link */
-      showTrack.addEventListener('click', function (e) {
-        if (drag && drag.moved && drag.horizontal) { e.preventDefault(); e.stopPropagation(); }
-      }, true);
-
-      /* never let the browser start its own image drag */
-      showTrack.addEventListener('dragstart', function (e) { e.preventDefault(); });
-    })();
-
-    /* stacked mode: volunteers pop once on scroll-into-view instead */
-    if (!REDUCED && panels.length === 3) {
-      new IntersectionObserver(function (en, obs) {
-        if (en[0].isIntersecting && show.stacked) { volPop(); obs.disconnect(); }
-      }, { threshold: 0.5 }).observe(panels[2]);
-    }
-
-    /* ==========================================================
-       8. PARALLAX IMAGES — every .plx drifts slightly slower than
-       scroll (max ±6% of its height, halved on mobile) and scales
-       1.00 → 1.05 as it passes through the viewport.
-       ========================================================== */
-    var plxItems = Array.prototype.slice.call(document.querySelectorAll('.plx'));
-
-    function parallaxUpdate() {
-      var vh = window.innerHeight;
-      var factor = isMobile() ? 0.04 : 0.08;
-      for (var i = 0; i < plxItems.length; i++) {
-        var img = plxItems[i];
-        var r = img.parentNode.getBoundingClientRect();
-        if (r.bottom < -80 || r.top > vh + 80) continue;    /* offscreen */
-        var shift = (r.top + r.height / 2 - vh / 2) * factor;
-        var lim = r.height * 0.06;
-        if (shift >  lim) shift =  lim;
-        if (shift < -lim) shift = -lim;
-        var pr = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-        img.style.transform = 'translate3d(0,' + shift.toFixed(2) + 'px,0) scale(' + (1 + 0.05 * pr).toFixed(4) + ')';
-      }
-    }
-
-    /* ==========================================================
-       9. CUSTOM CURSOR + MAGNETIC ELEMENTS (desktop only)
-       Both live inside the single rAF loop below and lerp toward
-       their targets, so everything feels springy but cheap.
-       ========================================================== */
-    var mx = window.innerWidth / 2, my = window.innerHeight / 2;   /* pointer */
-    window.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
-
-    var cursorEl = document.getElementById('cursor');
-    var curX = mx, curY = my;
-    function cursorFrame() {
-      curX += (mx - curX) * 0.12;                                  /* the lag */
-      curY += (my - curY) * 0.12;
-      cursorEl.style.transform = 'translate3d(' + curX + 'px,' + curY + 'px,0) translate(-50%,-50%)';
-    }
-    /* ring state via event delegation — cheaper than per-frame hit tests */
-    document.addEventListener('mouseover', function (e) {
-      cursorEl.classList.toggle('ring',
-        !!(e.target.closest && e.target.closest('a, button, .panel, canvas')));
-    }, { passive: true });
-
-    var magnets = Array.prototype.slice.call(document.querySelectorAll('.magnetic'))
-      .map(function (el) { return { el: el, x: 0, y: 0 }; });
-    function magneticFrame() {
-      for (var i = 0; i < magnets.length; i++) {
-        var m = magnets[i], r = m.el.getBoundingClientRect();
-        /* distance from pointer to the nearest edge of the element */
-        var nx = Math.max(r.left, Math.min(mx, r.right));
-        var ny = Math.max(r.top,  Math.min(my, r.bottom));
-        var dist = Math.hypot(mx - nx, my - ny);
-        var tx = 0, ty = 0;
-        if (dist < 60) {                                            /* within pull range */
-          tx = Math.max(-8, Math.min(8, (mx - (r.left + r.width  / 2)) * 0.18));
-          ty = Math.max(-8, Math.min(8, (my - (r.top  + r.height / 2)) * 0.18));
-        }
-        m.x += (tx - m.x) * 0.16;                                   /* lerp = spring feel */
-        m.y += (ty - m.y) * 0.16;
-        m.el.style.transform = (Math.abs(m.x) + Math.abs(m.y) > 0.05)
-          ? 'translate3d(' + m.x.toFixed(2) + 'px,' + m.y.toFixed(2) + 'px,0)' : '';
-      }
-    }
-
-    /* Enable/disable the cursor (and its cursor:none CSS) on the fly —
-       e.g. when a window is resized across the 768px breakpoint. */
-    function fxUpdate() {
-      document.documentElement.classList.remove('cur');   /* native cursor: instant, familiar */
-    }
-
-    /* ==========================================================
-       10. MAIN LOOP — one rAF for everything scroll- and
-       pointer-driven. Scroll work only runs on frames where the
-       scroll position actually changed (flag set by a passive
-       listener), which is the throttle.
-       ========================================================== */
-    var progressEl = document.getElementById('progress');
-    var lastScY = -1, scrollDirty = true;
-    window.addEventListener('scroll', function () { scrollDirty = true; }, { passive: true });
-
-    function mainFrame() {
-      var scY = window.scrollY;
-      if (scrollDirty || scY !== lastScY) {
-        lastScY = scY; scrollDirty = false;
-        var max = document.documentElement.scrollHeight - window.innerHeight;
-        progressEl.style.transform = 'scaleX(' + (max > 0 ? scY / max : 0) + ')';
-        updateNav(scY);
-        if (!REDUCED) {
-          parallaxUpdate();
-          vjourneyUpdate();
-          xtlUpdate();
-          showUpdate();
-        }
-      }
-      if (!REDUCED) showFrame();          /* wheel lerp + transforms — every frame */
-      if (desktopFx()) { magneticFrame(); }
-      requestAnimationFrame(mainFrame);
-    }
-
-    /* Re-measure everything that depends on layout. Throttled resize. */
-    function measureAll() { vjBuild(); xtlBuild(); showMeasure(); scrollDirty = true; fxUpdate(); }
-    var resizeTimer = null;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(measureAll, 150);
-    });
-    window.addEventListener('load', measureAll);   /* fonts/images shift layout */
-    /* re-measure when the mobile breakpoint flips, even without a
-       resize event (stale initial innerWidth, zoom changes) */
-    try {
-      window.matchMedia('(max-width: 768px)')
-            .addEventListener('change', measureAll);
-    } catch (e) { /* older engines: resize listener still covers it */ }
-
-    measureAll();
-    requestAnimationFrame(mainFrame);
-
-
-  })();
-  </script>
+  var saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
+  var nl = (navigator.language || '').slice(0, 2);
+  applyLang(saved || (TR[nl] ? nl : 'en'));
+  onScrollNav();
+})();
+</script>
 </body>
 </html>
