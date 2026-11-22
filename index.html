@@ -13,17 +13,19 @@
   <!-- Social preview: what a recruiter sees when the link is pasted
        into LinkedIn, Slack or WhatsApp. -->
   <meta property="og:type"        content="website">
-  <meta property="og:title"       content="Antonio Di Domenico — Portfolio">
+  <meta property="og:title"       content="Antonio Di Domenico, PE, VC and M&amp;A internships 2027">
   <meta property="og:description" content="MSc Finance & Investments student at RSM Rotterdam, looking for PE, VC and M&A internships for summer 2027.">
   <meta property="og:url"         content="https://antodid.github.io/">
-  <meta property="og:image"       content="https://antodid.github.io/images/antonio.jpg">
+  <meta property="og:image"       content="https://antodid.github.io/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
   <meta property="og:locale"      content="en_GB">
   <meta property="og:locale:alternate" content="nl_NL">
   <meta property="og:locale:alternate" content="it_IT">
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Antonio Di Domenico — Portfolio">
+  <meta name="twitter:title"       content="Antonio Di Domenico, PE, VC and M&amp;A internships 2027">
   <meta name="twitter:description" content="MSc Finance & Investments student at RSM Rotterdam.">
-  <meta name="twitter:image"       content="https://antodid.github.io/images/antonio.jpg">
+  <meta name="twitter:image"       content="https://antodid.github.io/images/og-card.png">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/overpass-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -178,10 +180,24 @@
     .trip p { color: var(--mut); margin: .5rem 0 .8rem; }
     .tools { display: flex; flex-wrap: wrap; gap: .35rem; }
     .tools li { font: 500 .78rem var(--mono); padding: .2rem .5rem; border-radius: 4px; background: var(--mist); color: var(--mut); }
-    .nl { background: #17375B; color: #fff; display: flex; flex-direction: column; justify-content: space-between; padding: 1.3rem 1.4rem; font-family: Inter, system-ui, sans-serif; }
-    .nl-c { font-size: .58rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #FFCE00; }
-    .nl-m { font-size: 1.8rem; font-weight: 700; line-height: 1; margin-top: .4rem; }
-    .nl-h { font-size: 1.45rem; font-weight: 700; line-height: 1.1; } .nl-h em { font-style: normal; color: #FFCE00; }
+    .nl { background: #17375B; display: grid; place-items: center; overflow: hidden; }
+    .nl::before { content: ''; position: absolute; width: 150%; height: 150%; background: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 2px, transparent 2px 14px); }
+    .sheet { position: absolute; width: 44%; aspect-ratio: 0.72; background: #fff; border-radius: 4px; box-shadow: 0 18px 30px -12px rgba(0,0,0,.45); padding: 7% 7% 0; display: flex; flex-direction: column; gap: 5%; font-family: var(--f); color: var(--ink); }
+    .sheet.back { transform: translate(-48%, 8%) rotate(-8deg); opacity: .9; }
+    .sheet.back2 { transform: translate(48%, 10%) rotate(7deg); opacity: .9; }
+    .sheet.front { transform: translateY(3%); }
+    .sh-mast { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 4%; }
+    .sh-mast b { font-weight: 800; font-size: clamp(.8rem, 1.6vw, 1.05rem); letter-spacing: -.02em; }
+    .sh-mast span { font-size: .5rem; font-weight: 700; color: #C99A00; }
+    .sh-h { font-weight: 800; font-size: clamp(.8rem, 1.25vw, 1.05rem); line-height: 1.05; letter-spacing: -.02em; }
+    .sh-h em { font-style: normal; background: var(--amber); padding: 0 .15em; }
+    .sh-img { height: 26%; border-radius: 3px; background: linear-gradient(160deg, #A9C1E0, #5C7FB0); position: relative; }
+    .sh-img::after { content: ''; position: absolute; left: 18%; bottom: 0; width: 26%; height: 70%; border-radius: 50% 50% 0 0; background: rgba(23,55,91,.55); box-shadow: 34px 6px 0 -4px rgba(23,55,91,.4); }
+    .sh-l { display: grid; gap: 5px; }
+    .sh-l i { display: block; height: 4px; border-radius: 2px; background: var(--rule); }
+    .sh-l i:nth-child(3n) { width: 70%; }
+    .sh-q { border-left: 3px solid var(--amber); padding-left: 6%; display: grid; gap: 4px; }
+    .sh-q i { display: block; height: 4px; border-radius: 2px; background: #9AA6BC; } .sh-q i + i { width: 60%; }
 
     /* contact */
     #contact { background: var(--board); color: #fff; padding: clamp(4rem, 8vw, 6rem) 0; }
@@ -544,7 +560,7 @@
           <figcaption><span class="kind" data-i18n="sp1.kicker">Map app</span><h3 data-i18n="sp1.title">Noce</h3><p data-i18n="sp1.cap">Noce was built as a community map, where small areas or hidden gems can be valued through the eyes of locals. It was developed for the AI Scouts Academy and it uses AI to create social points, protect against fake news, censor inappropriate images and create personalised paths.</p><ul class="tools"><li>Lovable</li><li>Supabase</li><li>Antigravity</li><li>Google Maps API</li></ul></figcaption>
         </figure>
         <figure class="trip">
-          <div class="vis"><div class="nl" aria-hidden="true"><div><div class="nl-c">UU Honours Community</div><div class="nl-m">Honours</div></div><div class="nl-h">The <em>Interview</em> Issue</div></div></div>
+          <div class="vis"><div class="nl" aria-hidden="true"><div class="sheet back"><div class="sh-mast"><b>Honours</b></div><div class="sh-l"><i></i><i></i><i></i><i></i></div><div class="sh-l"><i></i><i></i><i></i><i></i></div></div><div class="sheet back2"><div class="sh-mast"><b>Honours</b></div><div class="sh-l"><i></i><i></i><i></i><i></i></div><div class="sh-l"><i></i><i></i><i></i><i></i></div></div><div class="sheet front"><div class="sh-mast"><b>Honours</b><span>UU</span></div><div class="sh-h">The <em>Interview</em> Issue</div><div class="sh-img"></div><div class="sh-l"><i></i><i></i><i></i><i></i></div><div class="sh-q"><i></i><i></i></div></div></div></div>
           <figcaption><span class="kind" data-i18n="sp2.kicker">Editorial</span><h3 data-i18n="sp2.title">Honours Newsletter</h3><p data-i18n="sp2.cap">Two years leading the editorial team and the LinkedIn page of the Utrecht Honours Programme. Writing, editing, and making sure it actually went out each month.</p><ul class="tools"><li>Canva</li><li>LinkedIn</li></ul></figcaption>
         </figure>
         <figure class="trip">
